@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Motion Mamba 2.0: Autoregressive Diffusion Mamba for Efficient Humanoid Motion Control">
+  <title>Motion Mamba 2.0 | Humanoid Motion Control</title>
+  <style>
+    :root {
+      --page: #0b1014;
+      --surface: #131c22;
+      --surface-hover: #18262d;
+      --ink: #eff4f2;
+      --muted: #a4b1b4;
+      --faint: #728189;
+      --line: #293a42;
+      --aqua: #70dfcc;
+      --amber: #f6b56e;
+      --sky: #8ab9e9;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1240px, calc(100% - 52px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11, 16, 20, .93);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 760;
+      letter-spacing: .025em;
+      text-decoration: none;
+    }
+
+    .brand span { color: var(--aqua); }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible { color: var(--aqua); }
+
+    .hero {
+      padding: 82px 0 76px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-inner { max-width: 1060px; }
+
+    h1 {
+      max-width: 1040px;
+      margin: 0;
+      font-size: clamp(42px, 5.3vw, 72px);
+      line-height: 1.025;
+      letter-spacing: -.045em;
+      font-weight: 770;
+    }
+
+    h1 span { color: var(--aqua); }
+
+    .hero-rule {
+      width: 80px;
+      height: 3px;
+      margin-top: 29px;
+      background: var(--amber);
+    }
+
+    main { padding: 60px 0 88px; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      max-width: 100%;
+      margin: 0;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.06;
+      letter-spacing: -.035em;
+      font-weight: 735;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 64px;
+      height: 3px;
+      margin-top: 17px;
+      background: var(--aqua);
+    }
+
+    .section-note {
+      max-width: 340px;
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .video-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      transition: border-color .2s ease, transform .2s ease, background-color .2s ease;
+    }
+
+    .video-card:hover {
+      border-color: #55717a;
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+
+    .video-frame {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: #060a0d;
+    }
+
+    .video-frame video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #060a0d;
+    }
+
+    .video-label {
+      position: absolute;
+      top: 13px;
+      left: 13px;
+      padding: 5px 8px;
+      background: rgba(6, 12, 15, .8);
+      color: var(--aqua);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .video-card:nth-child(2) .video-label { color: var(--amber); }
+    .video-card:nth-child(3) .video-label { color: var(--sky); }
+    .video-card:nth-child(4) .video-label { color: #d6a5ee; }
+
+    .video-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 53px;
+      padding: 12px 14px 13px;
+    }
+
+    .video-title {
+      margin: 0;
+      color: #dbe7e5;
+      font-size: 14px;
+      font-weight: 660;
+    }
+
+    .video-meta {
+      flex: 0 0 auto;
+      color: var(--faint);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 22px 0 30px;
+      color: var(--faint);
+      font-size: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: calc(100% - 30px); max-width: calc(100% - 30px); }
+      .topbar-inner { min-height: 59px; }
+      .nav { gap: 14px; font-size: 12px; }
+      .nav a:last-child { display: none; }
+      .hero { padding: 53px 0 49px; }
+      h1 { font-size: 39px; overflow-wrap: anywhere; word-break: break-word; }
+      main { padding: 47px 0 64px; }
+      .section-head { display: block; margin-bottom: 24px; }
+      h2 { font-size: 35px; overflow-wrap: anywhere; word-break: break-word; }
+      .section-note { margin-top: 12px; text-align: left; }
+      .video-grid { grid-template-columns: 1fr; gap: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="#top" aria-label="Motion Mamba 2.0 home"><span>Motion</span> Mamba 2.0</a>
+      <nav class="nav" aria-label="Page navigation">
+        <a href="#paper">Paper</a>
+        <a href="#evaluation">Real World Evaluation</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="top"></div>
+  <section class="hero" id="paper">
+    <div class="shell hero-inner">
+      <h1><span>Motion Mamba 2.0</span>: Autoregressive Diffusion Mamba for Efficient Humanoid Motion Control</h1>
+      <div class="hero-rule"></div>
+    </div>
+  </section>
+
+  <main id="evaluation">
+    <div class="shell">
+      <div class="section-head">
+        <h2>Real World Evaluation</h2>
+      </div>
+
+      <div class="video-grid">
+        <article class="video-card">
+          <div class="video-frame">
+            <video autoplay muted loop playsinline preload="metadata" controls aria-label="Real-world demonstration 1"><source src="real-world-video/real-1.mp4" type="video/mp4"></video>
+            <span class="video-label">Demo 01</span>
+          </div>
+          <div class="video-caption"><p class="video-title">Real-world demonstration</p><span class="video-meta">01 / 04</span></div>
+        </article>
+        <article class="video-card">
+          <div class="video-frame">
+            <video autoplay muted loop playsinline preload="metadata" controls aria-label="Real-world demonstration 2"><source src="real-world-video/real-2.mp4" type="video/mp4"></video>
+            <span class="video-label">Demo 02</span>
+          </div>
+          <div class="video-caption"><p class="video-title">Real-world demonstration</p><span class="video-meta">02 / 04</span></div>
+        </article>
+        <article class="video-card">
+          <div class="video-frame">
+            <video autoplay muted loop playsinline preload="metadata" controls aria-label="Real-world demonstration 3"><source src="real-world-video/real-3.mp4" type="video/mp4"></video>
+            <span class="video-label">Demo 03</span>
+          </div>
+          <div class="video-caption"><p class="video-title">Real-world demonstration</p><span class="video-meta">03 / 04</span></div>
+        </article>
+        <article class="video-card">
+          <div class="video-frame">
+            <video autoplay muted loop playsinline preload="metadata" controls aria-label="Real-world demonstration 4"><source src="real-world-video/real-4.mp4" type="video/mp4"></video>
+            <span class="video-label">Demo 04</span>
+          </div>
+          <div class="video-caption"><p class="video-title">Real-world demonstration</p><span class="video-meta">04 / 04</span></div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell">Motion Mamba 2.0 &middot; Humanoid motion control</div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('video').forEach((video) => {
+      video.muted = true;
+      video.play().catch(() => {});
+    });
+  </script>
+</body>
+</html>
