@@ -1,0 +1,8 @@
+{
+  "stage": "A",
+  "status": "FAIL",
+  "official_humanml3d_metrics_allowed": false,
+  "roundtrip_fid": 14.984515039656628,
+  "paired_embedding_cosine_mean": 0.8807299137115479,
+  "next_action": "validate a rotation-preserving retarget asset or use explicitly labelled Core27-native metrics"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "d2_learned_causal_memory_summary_v1",
+  "date": "2026-09-03",
+  "status": "PASS",
+  "raw_results": "/data4/zts/result/stage_d2_learned_causal_memory_v2_20260903/results.json",
+  "raw_results_sha256": "0947b382f2e7c2550267dc99ca7c41028b480609f281a2fd93170145fb5e3524",
+  "config_sha256": "14adde67eae33c87912feb90562ca9ba9a0b39ce9d723d327dba7cf8938b1165",
+  "protocol": {
+    "seed": 20260903,
+    "steps": 800,
+    "batch_size": 64,
+    "eval_samples": 512,
+    "attention_window_chunks": 4,
+    "persistent_memory_slots": 2,
+    "direct_mamba_readout_scale": 0.0,
+    "state_address_scale": 0.0,
+    "cue_write_windows": [1]
+  },
+  "accuracy": {
+    "correct": 1.0,
+    "zero_delta_at_W1": 1.0,
+    "permute_delta_at_W1": 0.5,
+    "write_off_at_W1": 0.5,
+    "readout_off_after_W4": 0.5,
+    "permute_memory_after_W4": 0.0,
+    "direct_mamba_readout_off_after_W4": 1.0,
+    "state_address_off_after_W4": 1.0,
+    "minimal_W4_control": 0.50390625
+  },
+  "nonzero_gradient_updates": {
+    "content_decoder": 799,
+    "write_gate": 799,
+    "read_scale": 800,
+    "state_projector": 799,
+    "mamba": 799
+  },
+  "gate": {
+    "correct_accuracy_at_least_0_90": true,
+    "correct_minus_best_core_causal_ablation_at_least_0_25": true,
+    "at_least_one_read_write_or_permute_drop": true,
+    "W1_evicted_before_W8": true,
+    "fixed_memory_capacity": true,
+    "status": "PASS"
+  },
+  "claim_boundary": "Mechanism benchmark only. BONES real-motion causal usage remains unestablished."
+}

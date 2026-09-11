@@ -1,0 +1,13 @@
+representation: ardy_core27
+motion_dim: 330
+stats_dim: 334
+fps: 20
+stats_policy: mixture_weighted_unified_train_only
+sources:
+  bones_seed:
+    weight: 0.50
+    manifest: /data4/zts/datasets/motion_fusion/releases/bones_seed_core27_20fps/train.jsonl
+  hiphi_body:
+    weight: 0.50
+    manifest: /data4/zts/datasets/motion_fusion/releases/hiphi_body_hq_v1/train.jsonl
+output_stats: /data4/zts/datasets/motion_fusion/releases/bones_hiphi_body_v1/stats

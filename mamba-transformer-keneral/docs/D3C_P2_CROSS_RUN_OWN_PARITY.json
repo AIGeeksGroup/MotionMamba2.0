@@ -1,0 +1,7 @@
+{
+  "schema_version": "d3c_p2_cross_run_own_v1",
+  "status": "NOT_RUN",
+  "blocked_by": "P1 recorded same-run replay not yet completed",
+  "p0_shadow_status": "PASS",
+  "reason": "The prior D3b durable-slot replay is retained as a known FAIL and is not reused as an exact-read P2 bank."
+}

@@ -1,0 +1,6 @@
+{
+  "schema_version": "d3b_common_specific_v1",
+  "status": "NOT_RUN",
+  "blocked_by": "offline-own replay parity failure",
+  "bank_geometry_only": "Donor bank was built and audited; generation interventions were not run."
+}

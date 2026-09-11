@@ -1,0 +1,305 @@
+{
+  "schema_version": "d3_memory_trace_v2",
+  "status": "COMPLETE",
+  "normal_trace": "/data4/zts/result/stage_d3_memory_specificity_20260905/memory_trace/normal/memory_trace.pt",
+  "permuted_trace": "/data4/zts/result/stage_d3_memory_specificity_20260905/memory_trace/permute_memory/memory_trace.pt",
+  "layers": {
+    "body:0": {
+      "across_trajectory_cosine_mean": 0.7939411177144696,
+      "across_trajectory_l2_mean": 17.867946487093967,
+      "per_slot_variance_mean": 0.11520584637764841,
+      "temporal_cosine_mean": 0.9845716000387543,
+      "slot_collapse_cosine_mean": 0.0706478372158017
+    },
+    "body:1": {
+      "across_trajectory_cosine_mean": 0.7423308959370479,
+      "across_trajectory_l2_mean": 19.269336706797283,
+      "per_slot_variance_mean": 0.13771425116574393,
+      "temporal_cosine_mean": 0.9781181714252422,
+      "slot_collapse_cosine_mean": 0.028600915504648584
+    },
+    "body:2": {
+      "across_trajectory_cosine_mean": 0.9441065301994482,
+      "across_trajectory_l2_mean": 8.51209218133241,
+      "per_slot_variance_mean": 0.020048464287538082,
+      "temporal_cosine_mean": 0.9721464371602786,
+      "slot_collapse_cosine_mean": -0.07971055429661647
+    },
+    "body:3": {
+      "across_trajectory_cosine_mean": 0.8927225734045108,
+      "across_trajectory_l2_mean": 14.320104422948013,
+      "per_slot_variance_mean": 0.06351103225897532,
+      "temporal_cosine_mean": 0.9827188094587702,
+      "slot_collapse_cosine_mean": -0.11816520125139504
+    },
+    "body:4": {
+      "across_trajectory_cosine_mean": 0.9700395683944225,
+      "across_trajectory_l2_mean": 7.927175679989159,
+      "per_slot_variance_mean": 0.01898438500793418,
+      "temporal_cosine_mean": 0.9937985027699094,
+      "slot_collapse_cosine_mean": -0.04684546285352553
+    },
+    "body:5": {
+      "across_trajectory_cosine_mean": 0.7107656753684084,
+      "across_trajectory_l2_mean": 20.973304159082474,
+      "per_slot_variance_mean": 0.13296622437774203,
+      "temporal_cosine_mean": 0.9597842609019656,
+      "slot_collapse_cosine_mean": -0.05351611763762776
+    },
+    "body:6": {
+      "across_trajectory_cosine_mean": 0.983927859266599,
+      "across_trajectory_l2_mean": 5.728941999711096,
+      "per_slot_variance_mean": 0.00937995562562719,
+      "temporal_cosine_mean": 0.9928093668269483,
+      "slot_collapse_cosine_mean": 0.015823651768732815
+    },
+    "body:7": {
+      "across_trajectory_cosine_mean": 0.9478102926661571,
+      "across_trajectory_l2_mean": 9.359076571421078,
+      "per_slot_variance_mean": 0.030909871190669947,
+      "temporal_cosine_mean": 0.9904886341016543,
+      "slot_collapse_cosine_mean": -0.01726360330503667
+    },
+    "root:0": {
+      "across_trajectory_cosine_mean": 0.8537303118531903,
+      "across_trajectory_l2_mean": 11.316502684274068,
+      "per_slot_variance_mean": 0.05197761077433825,
+      "temporal_cosine_mean": 0.9963385952930701,
+      "slot_collapse_cosine_mean": 0.3171455313451588
+    },
+    "root:1": {
+      "across_trajectory_cosine_mean": 0.8948917606472969,
+      "across_trajectory_l2_mean": 12.287267485503108,
+      "per_slot_variance_mean": 0.05463137759361416,
+      "temporal_cosine_mean": 0.994410273864081,
+      "slot_collapse_cosine_mean": 0.5164481533691287
+    },
+    "root:2": {
+      "across_trajectory_cosine_mean": 0.7628997993096709,
+      "across_trajectory_l2_mean": 15.438439326876154,
+      "per_slot_variance_mean": 0.09426389862783253,
+      "temporal_cosine_mean": 0.9906754946630252,
+      "slot_collapse_cosine_mean": 0.13463576125213877
+    },
+    "root:3": {
+      "across_trajectory_cosine_mean": 0.715828438916554,
+      "across_trajectory_l2_mean": 13.15824001463945,
+      "per_slot_variance_mean": 0.08002775897039101,
+      "temporal_cosine_mean": 0.9966372592668784,
+      "slot_collapse_cosine_mean": 0.37100048749707637
+    },
+    "root:4": {
+      "across_trajectory_cosine_mean": 0.7243396628700429,
+      "across_trajectory_l2_mean": 18.871432486080256,
+      "per_slot_variance_mean": 0.15894265817478298,
+      "temporal_cosine_mean": 0.9937671609222889,
+      "slot_collapse_cosine_mean": 0.44237237800844015
+    },
+    "root:5": {
+      "across_trajectory_cosine_mean": 0.6267867617898931,
+      "across_trajectory_l2_mean": 14.791980028666245,
+      "per_slot_variance_mean": 0.1153752702230122,
+      "temporal_cosine_mean": 0.9958342262788823,
+      "slot_collapse_cosine_mean": 0.13116146397296688
+    },
+    "root:6": {
+      "across_trajectory_cosine_mean": 0.6548784371386864,
+      "across_trajectory_l2_mean": 19.56856629174979,
+      "per_slot_variance_mean": 0.18038208356592805,
+      "temporal_cosine_mean": 0.9904230215439671,
+      "slot_collapse_cosine_mean": 0.10876887686754344
+    },
+    "root:7": {
+      "across_trajectory_cosine_mean": 0.6453535888569119,
+      "across_trajectory_l2_mean": 17.05717348385156,
+      "per_slot_variance_mean": 0.1428065565880388,
+      "temporal_cosine_mean": 0.9975262752881175,
+      "slot_collapse_cosine_mean": -0.051507317501818764
+    }
+  },
+  "layerwise_runtime_diagnostics": {
+    "root:0": {
+      "content_memory_norm": 16.56392884850502,
+      "content_memory_update_norm": 1.4283545570448042,
+      "content_memory_write_gate_mean": 0.0704299335484393,
+      "content_memory_read_residual_scale": -0.30381524562835693,
+      "content_memory_proposal_norm": 31.99981826543808,
+      "state_summary_norm": 15.852870792150497,
+      "state_delta_norm": 1.6152164014056325,
+      "augmented_minus_base_attention_norm": 235.16000749915838
+    },
+    "root:1": {
+      "content_memory_norm": 22.552871945500375,
+      "content_memory_update_norm": 2.5945369243621825,
+      "content_memory_write_gate_mean": 0.1694450072478503,
+      "content_memory_read_residual_scale": -0.314695805311203,
+      "content_memory_proposal_norm": 31.99982942342758,
+      "state_summary_norm": 14.341496896743774,
+      "state_delta_norm": 1.0422596194781364,
+      "augmented_minus_base_attention_norm": 241.91898743584753
+    },
+    "root:2": {
+      "content_memory_norm": 19.28123004436493,
+      "content_memory_update_norm": 2.2781615786254408,
+      "content_memory_write_gate_mean": 0.13527230126783252,
+      "content_memory_read_residual_scale": 0.2982662320137024,
+      "content_memory_proposal_norm": 31.99977000951767,
+      "state_summary_norm": 13.12429437637329,
+      "state_delta_norm": 1.2406805688515306,
+      "augmented_minus_base_attention_norm": 151.9163630988449
+    },
+    "root:3": {
+      "content_memory_norm": 15.071592917107045,
+      "content_memory_update_norm": 1.3279929470270873,
+      "content_memory_write_gate_mean": 0.07146650027716532,
+      "content_memory_read_residual_scale": -0.2852403223514557,
+      "content_memory_proposal_norm": 31.99976623058319,
+      "state_summary_norm": 14.894597953557968,
+      "state_delta_norm": 1.572059275675565,
+      "augmented_minus_base_attention_norm": 247.06612904295326
+    },
+    "root:4": {
+      "content_memory_norm": 24.13668814599514,
+      "content_memory_update_norm": 2.4734783891588448,
+      "content_memory_write_gate_mean": 0.17222016947343946,
+      "content_memory_read_residual_scale": -0.285519540309906,
+      "content_memory_proposal_norm": 31.999703788757323,
+      "state_summary_norm": 12.746089363098145,
+      "state_delta_norm": 1.3201363923959435,
+      "augmented_minus_base_attention_norm": 264.6647378668189
+    },
+    "root:5": {
+      "content_memory_norm": 12.21765780672431,
+      "content_memory_update_norm": 1.257752929907292,
+      "content_memory_write_gate_mean": 0.07093472059350461,
+      "content_memory_read_residual_scale": 0.2047550082206726,
+      "content_memory_proposal_norm": 31.999672961235046,
+      "state_summary_norm": 12.438978612422943,
+      "state_delta_norm": 1.4076877493411302,
+      "augmented_minus_base_attention_norm": 96.77805259535089
+    },
+    "root:6": {
+      "content_memory_norm": 22.048895168304444,
+      "content_memory_update_norm": 3.350622806698084,
+      "content_memory_write_gate_mean": 0.20896671763621272,
+      "content_memory_read_residual_scale": 0.2381047010421753,
+      "content_memory_proposal_norm": 31.999610161781312,
+      "state_summary_norm": 11.352948951721192,
+      "state_delta_norm": 1.5009629741311072,
+      "augmented_minus_base_attention_norm": 110.43527228888124
+    },
+    "root:7": {
+      "content_memory_norm": 15.61058488637209,
+      "content_memory_update_norm": 1.390352754946798,
+      "content_memory_write_gate_mean": 0.08898136126808823,
+      "content_memory_read_residual_scale": 0.23325768113136292,
+      "content_memory_proposal_norm": 31.99955633878708,
+      "state_summary_norm": 13.652565193176269,
+      "state_delta_norm": 1.4257094121538103,
+      "augmented_minus_base_attention_norm": 138.39926706403494
+    },
+    "body:0": {
+      "content_memory_norm": 24.896436321735383,
+      "content_memory_update_norm": 3.0822088330984116,
+      "content_memory_write_gate_mean": 0.22351575093343853,
+      "content_memory_read_residual_scale": -0.07946916669607162,
+      "content_memory_proposal_norm": 31.999843180179596,
+      "state_summary_norm": 13.80453868508339,
+      "state_delta_norm": 2.7723974246531724,
+      "augmented_minus_base_attention_norm": 58.8170086350292
+    },
+    "body:1": {
+      "content_memory_norm": 23.25630636960268,
+      "content_memory_update_norm": 3.3340973779559135,
+      "content_memory_write_gate_mean": 0.21881090772803874,
+      "content_memory_read_residual_scale": 0.038769129663705826,
+      "content_memory_proposal_norm": 31.999668776988983,
+      "state_summary_norm": 12.265611863136291,
+      "state_delta_norm": 2.315892770700157,
+      "augmented_minus_base_attention_norm": 50.22921767681837
+    },
+    "body:2": {
+      "content_memory_norm": 21.555573411285877,
+      "content_memory_update_norm": 2.702970403805375,
+      "content_memory_write_gate_mean": 0.13871078102383763,
+      "content_memory_read_residual_scale": -0.020443815737962723,
+      "content_memory_proposal_norm": 31.99978151321411,
+      "state_summary_norm": 12.34138851761818,
+      "state_delta_norm": 2.4475197995081546,
+      "augmented_minus_base_attention_norm": 72.51647130772471
+    },
+    "body:3": {
+      "content_memory_norm": 23.911868961155413,
+      "content_memory_update_norm": 3.876093289256096,
+      "content_memory_write_gate_mean": 0.2374110549222678,
+      "content_memory_read_residual_scale": -0.033586788922548294,
+      "content_memory_proposal_norm": 31.99976885318756,
+      "state_summary_norm": 11.47533592581749,
+      "state_delta_norm": 2.2191577892750503,
+      "augmented_minus_base_attention_norm": 69.55835204012692
+    },
+    "body:4": {
+      "content_memory_norm": 24.879312916845084,
+      "content_memory_update_norm": 2.8944176889956,
+      "content_memory_write_gate_mean": 0.2367549733724445,
+      "content_memory_read_residual_scale": 0.01800934597849846,
+      "content_memory_proposal_norm": 31.999893522262575,
+      "state_summary_norm": 11.654232227802277,
+      "state_delta_norm": 1.7651941457763314,
+      "augmented_minus_base_attention_norm": 66.34158261083067
+    },
+    "body:5": {
+      "content_memory_norm": 21.4596908159554,
+      "content_memory_update_norm": 5.110280210524797,
+      "content_memory_write_gate_mean": 0.23563117620069535,
+      "content_memory_read_residual_scale": -0.0389326848089695,
+      "content_memory_proposal_norm": 31.999714028835296,
+      "state_summary_norm": 11.301019215583802,
+      "state_delta_norm": 2.408586209639907,
+      "augmented_minus_base_attention_norm": 61.30977615546435
+    },
+    "body:6": {
+      "content_memory_norm": 25.371313968300818,
+      "content_memory_update_norm": 2.78063093572855,
+      "content_memory_write_gate_mean": 0.2375253581441939,
+      "content_memory_read_residual_scale": -0.018733084201812744,
+      "content_memory_proposal_norm": 31.999879491329192,
+      "state_summary_norm": 11.903238499164582,
+      "state_delta_norm": 2.4435143176466227,
+      "augmented_minus_base_attention_norm": 46.01789903230965
+    },
+    "body:7": {
+      "content_memory_norm": 25.706469844281674,
+      "content_memory_update_norm": 2.6679929956793784,
+      "content_memory_write_gate_mean": 0.24039873341098428,
+      "content_memory_read_residual_scale": 0.003726378781720996,
+      "content_memory_proposal_norm": 31.999823474884032,
+      "state_summary_norm": 12.665269792079926,
+      "state_delta_norm": 2.126587771810591,
+      "augmented_minus_base_attention_norm": 118.64898994714022
+    }
+  },
+  "one_shot_recovery_l2_by_completed_window": {
+    "4": 0.0,
+    "5": 7.870592359569855,
+    "6": 6.388994522741996,
+    "7": 5.359676121443044,
+    "8": 4.672819358471315,
+    "9": 4.061417352466378,
+    "10": 3.689612902031513,
+    "11": 3.4214449681167025,
+    "12": 3.165306427516043,
+    "13": 3.043555591168115,
+    "14": 2.977039136312669,
+    "15": 2.9571869706414873,
+    "16": 2.8463943955721334,
+    "17": 2.7750938479439355,
+    "18": 2.762868684309069,
+    "19": 2.74006135694799
+  },
+  "definitions": {
+    "recovery": "L2(permuted durable memory, matched normal durable memory), averaged across samples/root-body/layers",
+    "slot_collapse": "cosine(slot0,slot1)",
+    "trajectory_variance": "mean elementwise variance across trajectories at matched layer/window"
+  }
+}

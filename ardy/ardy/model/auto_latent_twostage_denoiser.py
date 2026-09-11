@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import contextlib
+import os
 from typing import Optional
 
 import torch
@@ -110,8 +111,23 @@ class AutoLatentTwostageDenoiser(nn.Module):
             self.global_root_hybrid_proj = nn.Linear(global_root_hybrid_token_dim, self.latent_dim)
             self.local_root_hybrid_proj = nn.Linear(local_root_hybrid_token_dim, self.latent_dim)
 
+        sequence_model = kwargs.pop("sequence_model", os.environ.get("ARDY_SEQUENCE_MODEL", "transformer")).lower()
+        if sequence_model in {"transformer", "attention"}:
+            denoiser_block_cls = TransformerEncoderBlock
+        elif sequence_model in {"mamba", "mamba3", "ardy_mamba"}:
+            from .ardy_mamba_block import ArdyMambaBlock
+
+            denoiser_block_cls = ArdyMambaBlock
+        else:
+            raise ValueError(
+                "Invalid sequence_model. Expected one of "
+                "{'transformer', 'attention', 'mamba', 'mamba3', 'ardy_mamba'}, "
+                f"got {sequence_model!r}."
+            )
+        self.sequence_model = sequence_model
+
         root_output_dim = self.nframe_root_dim
-        self.root_model = TransformerEncoderBlock(
+        self.root_model = denoiser_block_cls(
             add_input_proj=False,
             input_dim=-1,  # for compatibility
             output_dim=root_output_dim,
@@ -120,7 +136,7 @@ class AutoLatentTwostageDenoiser(nn.Module):
         )
 
         body_output_dim = self.latent_embedding_dim
-        self.body_model = TransformerEncoderBlock(
+        self.body_model = denoiser_block_cls(
             add_input_proj=False,
             input_dim=-1,  # for compatibility
             output_dim=body_output_dim,

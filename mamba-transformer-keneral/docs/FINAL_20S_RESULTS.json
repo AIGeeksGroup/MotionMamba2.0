@@ -1,0 +1,476 @@
+{
+  "status": "COMPLETE",
+  "dataset": "BONES-SEED-v004",
+  "seconds": 20,
+  "protocol": "Table 5 in-horizon duration extension",
+  "metric_direction": "lower_is_better",
+  "protocol_validation": {
+    "status": "PASS",
+    "panel": "20s_in_horizon",
+    "ordered_samples": 16,
+    "checked_fields": [
+      "panel_sha256",
+      "diffusion_steps",
+      "cfg_weight_text",
+      "cfg_weight_constraint",
+      "attention_window_chunks"
+    ],
+    "panel_sha256": "6c74297021acc97758000e2ca053c2cd9f5d55e9340ac9f13f4aae69aef41754"
+  },
+  "rows": [
+    {
+      "model": "ARDY",
+      "metrics": {
+        "constraint_error_cm_mean": 19.9725747667253,
+        "mobench_root_ade_cm_mean": 11.146031767129898,
+        "mobench_root_fde_cm_mean": 27.001147225499153,
+        "mobench_pa_mpjpe_cm_mean": 14.028540343046188,
+        "mobench_jitter_m_per_frame2_mean": 0.027428579633124173,
+        "mobench_angle_mae_deg_mean": 18.0342817902565,
+        "skate_percent_proxy": 50.58552631578947,
+        "latency_seconds_per_sample": 0.6511426684737671,
+        "root_ade_cm_mean_by_window": [
+          3.26337119191885,
+          6.064432211220264,
+          7.353726655244827,
+          8.236863762140274,
+          9.59012359380722,
+          11.472673088312149,
+          13.813987523317337,
+          16.993988782167435,
+          21.198746114969254,
+          26.267445608973503
+        ],
+        "constraint_error_cm_mean_by_window": [
+          16.918460823595524,
+          14.12046393752098,
+          17.549330830574036,
+          18.495177790522575,
+          16.09424901008606,
+          18.680289179086685,
+          22.644388511776924,
+          22.96989580988884,
+          21.674404874444008,
+          30.579086899757385
+        ],
+        "post_window5_root_ade_slope_cm_per_window": 3.697430363297461,
+        "post_window5_constraint_slope_cm_per_window": 2.2827611804008474,
+        "samples": 16,
+        "panel_sha256": "6c74297021acc97758000e2ca053c2cd9f5d55e9340ac9f13f4aae69aef41754",
+        "checkpoint": "/data4/zts/result/bones_seed_ardy_retrain_lr1e5_20260826_original/original_humanml3d_ddp.pt"
+      }
+    },
+    {
+      "model": "Minimal-W4",
+      "metrics": {
+        "constraint_error_cm_mean": 37.19378459453583,
+        "mobench_root_ade_cm_mean": 31.126540303230286,
+        "mobench_root_fde_cm_mean": 43.5957248210907,
+        "mobench_pa_mpjpe_cm_mean": 19.465516984462738,
+        "mobench_jitter_m_per_frame2_mean": 0.02225841418839991,
+        "mobench_angle_mae_deg_mean": 16.102993607521057,
+        "skate_percent_proxy": 47.213815789473685,
+        "latency_seconds_per_sample": 2.7683956131804734,
+        "root_ade_cm_mean_by_window": [
+          7.473539888858795,
+          18.211811244487762,
+          24.667076587677002,
+          30.453538060188293,
+          33.61931252479553,
+          36.73161423206329,
+          40.40161323547363,
+          42.532381653785706,
+          44.24672496318817,
+          42.83461630344391
+        ],
+        "constraint_error_cm_mean_by_window": [
+          19.82749617099762,
+          25.287435293197632,
+          28.79997479915619,
+          35.76974892616272,
+          40.86802923679352,
+          41.757444620132446,
+          42.16994535923004,
+          45.31700682640076,
+          46.785101771354675,
+          45.35566294193268
+        ],
+        "post_window5_root_ade_slope_cm_per_window": 1.6051115870475774,
+        "post_window5_constraint_slope_cm_per_window": 1.1811593055725123,
+        "samples": 16,
+        "panel_sha256": "6c74297021acc97758000e2ca053c2cd9f5d55e9340ac9f13f4aae69aef41754",
+        "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_minimal/minimal_humanml3d_ddp.pt"
+      }
+    },
+    {
+      "model": "Native Hybrid",
+      "metrics": {
+        "constraint_error_cm_mean": 27.853097933530808,
+        "mobench_root_ade_cm_mean": 21.03209763765335,
+        "mobench_root_fde_cm_mean": 38.06013751029968,
+        "mobench_pa_mpjpe_cm_mean": 14.766970872879028,
+        "mobench_jitter_m_per_frame2_mean": 0.016601191542577,
+        "mobench_angle_mae_deg_mean": 14.442090719938278,
+        "skate_percent_proxy": 29.799342105263158,
+        "latency_seconds_per_sample": 6.502815345738782,
+        "root_ade_cm_mean_by_window": [
+          3.6146974861621857,
+          9.266118675470352,
+          13.720926403999329,
+          17.471941649913788,
+          20.685387760400772,
+          25.43294084072113,
+          29.394293010234833,
+          32.087140679359436,
+          35.0163688659668,
+          37.92597854137421
+        ],
+        "constraint_error_cm_mean_by_window": [
+          11.61123512685299,
+          18.493359863758087,
+          16.778213277459145,
+          24.802109599113464,
+          25.812788903713226,
+          28.43675285577774,
+          34.29729127883911,
+          36.92044913768768,
+          41.002689480781555,
+          40.37608981132507
+        ],
+        "post_window5_root_ade_slope_cm_per_window": 3.0608151257038103,
+        "post_window5_constraint_slope_cm_per_window": 3.058407211303712,
+        "samples": 16,
+        "panel_sha256": "6c74297021acc97758000e2ca053c2cd9f5d55e9340ac9f13f4aae69aef41754",
+        "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt"
+      }
+    },
+    {
+      "model": "D2R-L",
+      "metrics": {
+        "constraint_error_cm_mean": 23.594108587503435,
+        "mobench_root_ade_cm_mean": 15.759516835212708,
+        "mobench_root_fde_cm_mean": 25.55132168531418,
+        "mobench_pa_mpjpe_cm_mean": 15.927022635936737,
+        "mobench_jitter_m_per_frame2_mean": 0.019692043657414615,
+        "mobench_angle_mae_deg_mean": 14.782811999320984,
+        "skate_percent_proxy": 30.542763157894736,
+        "latency_seconds_per_sample": 10.764559246803401,
+        "root_ade_cm_mean_by_window": [
+          3.3399611487984657,
+          7.178970381617546,
+          10.726102590560913,
+          15.042437374591827,
+          16.28429341316223,
+          19.02503478527069,
+          21.955940425395966,
+          22.458548426628113,
+          24.3526793718338,
+          25.325443387031555
+        ],
+        "constraint_error_cm_mean_by_window": [
+          11.813555672764778,
+          15.848165825009346,
+          19.959357231855392,
+          25.110660314559937,
+          25.408103227615356,
+          23.53516972064972,
+          29.9252228140831,
+          25.387782633304596,
+          29.18574446439743,
+          29.767323970794678
+        ],
+        "post_window5_root_ade_slope_cm_per_window": 1.499755614995956,
+        "post_window5_constraint_slope_cm_per_window": 1.1724830150604253,
+        "samples": 16,
+        "panel_sha256": "6c74297021acc97758000e2ca053c2cd9f5d55e9340ac9f13f4aae69aef41754",
+        "checkpoint": "/data4/zts/result/stage_d2rl_bones_long_20260904/step5000/full/hybrid_humanml3d_ddp.pt"
+      }
+    }
+  ],
+  "paired_actor_cluster_bootstrap": {
+    "unit": "actor_then_motion_within_actor",
+    "resamples": 20000,
+    "seed": 20260907,
+    "comparisons": [
+      {
+        "baseline": "Native Hybrid",
+        "candidate": "D2R-L",
+        "panel": "20s_in_horizon",
+        "difference_definition": "candidate_minus_baseline; negative favors candidate",
+        "ordered_exact_pairs": 16,
+        "metrics": {
+          "root_post_w5_auc_cm_windows": {
+            "mean_difference": -37.98244777747563,
+            "ci95": [
+              -54.30877858868667,
+              -19.501273036854613
+            ],
+            "effect_size": -2.332073603089814,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0003,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_auc_cm_windows": {
+            "mean_difference": -33.46895543166569,
+            "ci95": [
+              -52.546659250344554,
+              -17.0555862984487
+            ],
+            "effect_size": -2.176739135140065,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_post_w5_slope_cm_per_window": {
+            "mean_difference": -1.2973858186176843,
+            "ci95": [
+              -2.2713262194395063,
+              -0.48326642564364847
+            ],
+            "effect_size": -1.1020715044075693,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0005,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_slope_cm_per_window": {
+            "mean_difference": -1.5731015273502886,
+            "ci95": [
+              -3.2602785829135335,
+              0.2087760261126928
+            ],
+            "effect_size": -0.9498752778614973,
+            "win_fraction": 0.7142857142857143,
+            "p_value_two_sided": 0.0785,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_final_window_cm": {
+            "mean_difference": -12.223996571132115,
+            "ci95": [
+              -17.66604126862117,
+              -6.740698243890494
+            ],
+            "effect_size": -2.2048962598904227,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_final_window_cm": {
+            "mean_difference": -9.754974739892143,
+            "ci95": [
+              -15.678684612682888,
+              -4.809211085523879
+            ],
+            "effect_size": -2.597668762573304,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          }
+        }
+      },
+      {
+        "baseline": "Minimal-W4",
+        "candidate": "D2R-L",
+        "panel": "20s_in_horizon",
+        "difference_definition": "candidate_minus_baseline; negative favors candidate",
+        "ordered_exact_pairs": 16,
+        "metrics": {
+          "root_post_w5_auc_cm_windows": {
+            "mean_difference": -72.69054525239127,
+            "ci95": [
+              -98.93612778271948,
+              -51.21194270764082
+            ],
+            "effect_size": -3.644020822896512,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_auc_cm_windows": {
+            "mean_difference": -64.62967128413064,
+            "ci95": [
+              -92.90490635633468,
+              -37.51568608284
+            ],
+            "effect_size": -2.330177945370686,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_post_w5_slope_cm_per_window": {
+            "mean_difference": 0.13970200674874528,
+            "ci95": [
+              -0.9698089398656558,
+              1.3391390541621635
+            ],
+            "effect_size": 0.09870197578196353,
+            "win_fraction": 0.42857142857142855,
+            "p_value_two_sided": 0.8294,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_slope_cm_per_window": {
+            "mean_difference": 0.13818380492074217,
+            "ci95": [
+              -1.5219140357630583,
+              2.134676611934386
+            ],
+            "effect_size": 0.0628848002488078,
+            "win_fraction": 0.5714285714285714,
+            "p_value_two_sided": 0.9414,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_final_window_cm": {
+            "mean_difference": -16.510071890694753,
+            "ci95": [
+              -23.811646798678805,
+              -10.096914289678848
+            ],
+            "effect_size": -2.5076865811280133,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_final_window_cm": {
+            "mean_difference": -15.033432245254517,
+            "ci95": [
+              -22.263193388496127,
+              -8.355035084486012
+            ],
+            "effect_size": -2.8044770214711296,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          }
+        }
+      },
+      {
+        "baseline": "ARDY",
+        "candidate": "D2R-L",
+        "panel": "20s_in_horizon",
+        "difference_definition": "candidate_minus_baseline; negative favors candidate",
+        "ordered_exact_pairs": 16,
+        "metrics": {
+          "root_post_w5_auc_cm_windows": {
+            "mean_difference": 29.601729793207987,
+            "ci95": [
+              -2.5605500925864484,
+              52.62816191911697
+            ],
+            "effect_size": 0.8040841402461555,
+            "win_fraction": 0.14285714285714285,
+            "p_value_two_sided": 0.0659,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_auc_cm_windows": {
+            "mean_difference": 28.72568964958191,
+            "ci95": [
+              -6.49978750007493,
+              58.51056249865456
+            ],
+            "effect_size": 0.65672194865413,
+            "win_fraction": 0.2857142857142857,
+            "p_value_two_sided": 0.1047,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_post_w5_slope_cm_per_window": {
+            "mean_difference": -1.0151201759065913,
+            "ci95": [
+              -4.868963833110673,
+              1.2437002299513105
+            ],
+            "effect_size": -0.23733631501040894,
+            "win_fraction": 0.42857142857142855,
+            "p_value_two_sided": 0.6795,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_slope_cm_per_window": {
+            "mean_difference": 0.18475339753287204,
+            "ci95": [
+              -4.008651026785375,
+              2.9568547314405436
+            ],
+            "effect_size": 0.03802840590968459,
+            "win_fraction": 0.2857142857142857,
+            "p_value_two_sided": 0.8236,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_final_window_cm": {
+            "mean_difference": 4.424085021018982,
+            "ci95": [
+              -12.799192062020303,
+              14.783098857743393
+            ],
+            "effect_size": 0.22753489572872782,
+            "win_fraction": 0.14285714285714285,
+            "p_value_two_sided": 0.4891,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_final_window_cm": {
+            "mean_difference": 4.306555237088885,
+            "ci95": [
+              -13.1107322709901,
+              15.560722870486112
+            ],
+            "effect_size": 0.22217616189234535,
+            "win_fraction": 0.14285714285714285,
+            "p_value_two_sided": 0.5041,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          }
+        }
+      }
+    ]
+  }
+}

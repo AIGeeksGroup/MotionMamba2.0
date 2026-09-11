@@ -1,0 +1,7 @@
+{
+  "schema_version": "d3c_p1_recorded_replay_v1",
+  "status": "NOT_RUN",
+  "blocked_by": "D3b offline-own replay failed before exact read-ready capture was available",
+  "p0_shadow_status": "PASS",
+  "reason": "P1 requires a full ARDY run that records the exact pre-Attention read-ready tensor at every read epoch."
+}

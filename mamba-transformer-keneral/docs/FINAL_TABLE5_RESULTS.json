@@ -1,0 +1,280 @@
+{
+  "status": "COMPLETE",
+  "dataset": "BONES-SEED-v004",
+  "protocol": "standard 9-second Table 5 proxy panel",
+  "metric_direction": "lower_is_better",
+  "protocol_validation": [
+    {
+      "status": "PASS",
+      "panel": "9s_in_horizon",
+      "ordered_samples": 64,
+      "checked_fields": [
+        "panel_sha256",
+        "diffusion_steps",
+        "cfg_weight_text",
+        "cfg_weight_constraint",
+        "attention_window_chunks"
+      ],
+      "panel_sha256": "9007499704361c63d579f9f1eb6aed187b1aad99a47da32d980b225f9e8d4653"
+    },
+    {
+      "status": "PASS",
+      "panel": "9s_out_of_horizon",
+      "ordered_samples": 64,
+      "checked_fields": [
+        "panel_sha256",
+        "diffusion_steps",
+        "cfg_weight_text",
+        "cfg_weight_constraint",
+        "attention_window_chunks"
+      ],
+      "panel_sha256": "3696795df96fa1e1d3a8543c1f7c0d47bb661ab60de55802841f5444c102cfa4"
+    }
+  ],
+  "protocols": {
+    "9s_in_horizon": [
+      {
+        "model": "ARDY",
+        "metrics": {
+          "constraint_error_cm_mean": 23.64476224919781,
+          "mobench_root_ade_cm_mean": 13.51732063665986,
+          "mobench_root_fde_cm_mean": 21.935837822034955,
+          "mobench_pa_mpjpe_cm_mean": 16.000227943062782,
+          "mobench_jitter_m_per_frame2_mean": 0.019753717075218447,
+          "mobench_angle_mae_deg_mean": 18.05495113134384,
+          "skate_percent_proxy": 37.5625,
+          "latency_seconds_per_sample": 0.1883988512272481,
+          "root_ade_cm_mean_by_window": [
+            7.626701980829239,
+            12.242207430303097,
+            15.848953725770116,
+            19.103393593803048
+          ],
+          "constraint_error_cm_mean_by_window": [
+            18.367784159258008,
+            21.54166679829359,
+            25.68755767121911,
+            28.982040368020535
+          ],
+          "post_window5_root_ade_slope_cm_per_window": null,
+          "post_window5_constraint_slope_cm_per_window": null,
+          "samples": 64,
+          "panel_sha256": "9007499704361c63d579f9f1eb6aed187b1aad99a47da32d980b225f9e8d4653",
+          "checkpoint": "/data4/zts/result/bones_seed_ardy_retrain_lr1e5_20260826_original/original_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "Minimal-W4",
+        "metrics": {
+          "constraint_error_cm_mean": 27.04083285899833,
+          "mobench_root_ade_cm_mean": 18.878333374857903,
+          "mobench_root_fde_cm_mean": 32.25431601330638,
+          "mobench_pa_mpjpe_cm_mean": 16.7323297560215,
+          "mobench_jitter_m_per_frame2_mean": 0.02613732113968581,
+          "mobench_angle_mae_deg_mean": 16.378086231648922,
+          "skate_percent_proxy": 46.595703125,
+          "latency_seconds_per_sample": 1.2367616971823736,
+          "root_ade_cm_mean_by_window": [
+            7.612382473424077,
+            16.28802341222763,
+            24.05220276489854,
+            28.911324813961983
+          ],
+          "constraint_error_cm_mean_by_window": [
+            16.570691108703613,
+            23.807950431481004,
+            29.931272603571415,
+            37.85341729223728
+          ],
+          "post_window5_root_ade_slope_cm_per_window": null,
+          "post_window5_constraint_slope_cm_per_window": null,
+          "samples": 64,
+          "panel_sha256": "9007499704361c63d579f9f1eb6aed187b1aad99a47da32d980b225f9e8d4653",
+          "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_minimal/minimal_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "Native Hybrid",
+        "metrics": {
+          "constraint_error_cm_mean": 25.338762359693646,
+          "mobench_root_ade_cm_mean": 16.527712911367416,
+          "mobench_root_fde_cm_mean": 30.780285023152828,
+          "mobench_pa_mpjpe_cm_mean": 15.498136349022388,
+          "mobench_jitter_m_per_frame2_mean": 0.02062345478043426,
+          "mobench_angle_mae_deg_mean": 15.737787455320358,
+          "skate_percent_proxy": 37.91015625,
+          "latency_seconds_per_sample": 2.450897240472841,
+          "root_ade_cm_mean_by_window": [
+            6.706989843398333,
+            14.199021611362696,
+            19.21853318810463,
+            27.457647070288658
+          ],
+          "constraint_error_cm_mean_by_window": [
+            16.349612019956112,
+            20.574472799897194,
+            28.33914117515087,
+            36.09182344377041
+          ],
+          "post_window5_root_ade_slope_cm_per_window": null,
+          "post_window5_constraint_slope_cm_per_window": null,
+          "samples": 64,
+          "panel_sha256": "9007499704361c63d579f9f1eb6aed187b1aad99a47da32d980b225f9e8d4653",
+          "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "D2R-L",
+        "metrics": {
+          "constraint_error_cm_mean": 23.45170476520434,
+          "mobench_root_ade_cm_mean": 14.557667475193739,
+          "mobench_root_fde_cm_mean": 25.767574552446604,
+          "mobench_pa_mpjpe_cm_mean": 15.931115478277206,
+          "mobench_jitter_m_per_frame2_mean": 0.021071002585813403,
+          "mobench_angle_mae_deg_mean": 15.26002573221922,
+          "skate_percent_proxy": 33.568359375,
+          "latency_seconds_per_sample": 4.13774420581467,
+          "root_ade_cm_mean_by_window": [
+            6.4560739090666175,
+            12.209527131170034,
+            17.407880757004023,
+            23.33933709934354
+          ],
+          "constraint_error_cm_mean_by_window": [
+            14.458554238080978,
+            18.922953201457858,
+            26.827073700726032,
+            33.59823792055249
+          ],
+          "post_window5_root_ade_slope_cm_per_window": null,
+          "post_window5_constraint_slope_cm_per_window": null,
+          "samples": 64,
+          "panel_sha256": "9007499704361c63d579f9f1eb6aed187b1aad99a47da32d980b225f9e8d4653",
+          "checkpoint": "/data4/zts/result/stage_d2rl_bones_long_20260904/step5000/full/hybrid_humanml3d_ddp.pt"
+        }
+      }
+    ],
+    "9s_out_of_horizon": [
+      {
+        "model": "ARDY",
+        "metrics": {
+          "constraint_error_cm_mean": 31.570575019344687,
+          "mobench_root_ade_cm_mean": 19.522381156682968,
+          "mobench_root_fde_cm_mean": 27.929657634347677,
+          "mobench_pa_mpjpe_cm_mean": 17.1594597697258,
+          "mobench_jitter_m_per_frame2_mean": 0.01985433741356246,
+          "mobench_angle_mae_deg_mean": 18.34808249026537,
+          "skate_percent_proxy": 34.7421875,
+          "latency_seconds_per_sample": 0.1940328366108588,
+          "root_ade_cm_mean_by_window": [
+            9.945662464946508,
+            19.269138116389513,
+            23.579895611852407,
+            26.192769147455692
+          ],
+          "constraint_error_cm_mean_by_window": [
+            null,
+            null,
+            null,
+            31.570575019344687
+          ],
+          "post_window5_root_ade_slope_cm_per_window": null,
+          "post_window5_constraint_slope_cm_per_window": null,
+          "samples": 64,
+          "panel_sha256": "3696795df96fa1e1d3a8543c1f7c0d47bb661ab60de55802841f5444c102cfa4",
+          "checkpoint": "/data4/zts/result/bones_seed_ardy_retrain_lr1e5_20260826_original/original_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "Minimal-W4",
+        "metrics": {
+          "constraint_error_cm_mean": 40.87832748144865,
+          "mobench_root_ade_cm_mean": 22.27328684926033,
+          "mobench_root_fde_cm_mean": 36.61117622628808,
+          "mobench_pa_mpjpe_cm_mean": 18.595800884068012,
+          "mobench_jitter_m_per_frame2_mean": 0.02462158093112521,
+          "mobench_angle_mae_deg_mean": 16.02839980274439,
+          "skate_percent_proxy": 45.98828125,
+          "latency_seconds_per_sample": 1.0701858540051035,
+          "root_ade_cm_mean_by_window": [
+            8.244629338383675,
+            18.634279942139983,
+            28.68850836902857,
+            35.27611589431763
+          ],
+          "constraint_error_cm_mean_by_window": [
+            null,
+            null,
+            null,
+            40.87832748144865
+          ],
+          "post_window5_root_ade_slope_cm_per_window": null,
+          "post_window5_constraint_slope_cm_per_window": null,
+          "samples": 64,
+          "panel_sha256": "3696795df96fa1e1d3a8543c1f7c0d47bb661ab60de55802841f5444c102cfa4",
+          "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_minimal/minimal_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "Native Hybrid",
+        "metrics": {
+          "constraint_error_cm_mean": 24.916728764772415,
+          "mobench_root_ade_cm_mean": 13.672381516546011,
+          "mobench_root_fde_cm_mean": 22.51100453734398,
+          "mobench_pa_mpjpe_cm_mean": 13.868297547101974,
+          "mobench_jitter_m_per_frame2_mean": 0.01967960558249615,
+          "mobench_angle_mae_deg_mean": 15.918861113488674,
+          "skate_percent_proxy": 37.1953125,
+          "latency_seconds_per_sample": 2.3761674408669933,
+          "root_ade_cm_mean_by_window": [
+            6.15842143073678,
+            11.758264791220427,
+            17.25023591145873,
+            20.432641848921776
+          ],
+          "constraint_error_cm_mean_by_window": [
+            null,
+            null,
+            null,
+            24.916728764772415
+          ],
+          "post_window5_root_ade_slope_cm_per_window": null,
+          "post_window5_constraint_slope_cm_per_window": null,
+          "samples": 64,
+          "panel_sha256": "3696795df96fa1e1d3a8543c1f7c0d47bb661ab60de55802841f5444c102cfa4",
+          "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "D2R-L",
+        "metrics": {
+          "constraint_error_cm_mean": 24.748770992271602,
+          "mobench_root_ade_cm_mean": 13.140526626259089,
+          "mobench_root_fde_cm_mean": 19.52843528613448,
+          "mobench_pa_mpjpe_cm_mean": 14.599786102771759,
+          "mobench_jitter_m_per_frame2_mean": 0.020078597401152365,
+          "mobench_angle_mae_deg_mean": 15.077593214809895,
+          "skate_percent_proxy": 32.91796875,
+          "latency_seconds_per_sample": 4.3843151731052785,
+          "root_ade_cm_mean_by_window": [
+            6.5056006433442235,
+            11.45531190186739,
+            16.394605070352554,
+            18.9946464933455
+          ],
+          "constraint_error_cm_mean_by_window": [
+            null,
+            null,
+            null,
+            24.748770992271602
+          ],
+          "post_window5_root_ade_slope_cm_per_window": null,
+          "post_window5_constraint_slope_cm_per_window": null,
+          "samples": 64,
+          "panel_sha256": "3696795df96fa1e1d3a8543c1f7c0d47bb661ab60de55802841f5444c102cfa4",
+          "checkpoint": "/data4/zts/result/stage_d2rl_bones_long_20260904/step5000/full/hybrid_humanml3d_ddp.pt"
+        }
+      }
+    ]
+  }
+}

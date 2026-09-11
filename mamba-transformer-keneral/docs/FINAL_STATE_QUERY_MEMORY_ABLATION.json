@@ -1,0 +1,817 @@
+{
+  "status": "COMPLETE",
+  "dataset": "BONES-SEED-v004",
+  "budget_steps": 5000,
+  "native_parent": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt",
+  "provenance_caveat": "The two new single-component ablations start from the exact Native Hybrid 50k parent. Historical D2R-L instead has the recorded D2R step250-to-step5000 lineage, so the four-way comparison is not a perfectly parent-matched factorial.",
+  "protocol_validation": [
+    {
+      "status": "PASS",
+      "panel": "table4",
+      "ordered_samples": 64,
+      "checked_fields": [
+        "panel_sha256",
+        "diffusion_steps",
+        "cfg_weight_text",
+        "cfg_weight_constraint",
+        "attention_window_chunks"
+      ],
+      "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31"
+    },
+    {
+      "status": "PASS",
+      "panel": "40s_in_horizon",
+      "ordered_samples": 16,
+      "checked_fields": [
+        "panel_sha256",
+        "diffusion_steps",
+        "cfg_weight_text",
+        "cfg_weight_constraint",
+        "attention_window_chunks"
+      ],
+      "panel_sha256": "41909e76aa2a0011bb76cddec77048dd4bdb9aaa4cb8feac78a42e57dfa4579a"
+    }
+  ],
+  "panels": {
+    "table4": [
+      {
+        "model": "Native Hybrid",
+        "metrics": {
+          "constraint_error_cm_mean": 27.064339455217123,
+          "mobench_root_ade_cm_mean": 20.912063458934426,
+          "mobench_root_fde_cm_mean": 21.31429272145033,
+          "mobench_pa_mpjpe_cm_mean": 14.504513878375292,
+          "mobench_jitter_m_per_frame2_mean": 0.024441208341158926,
+          "mobench_angle_mae_deg_mean": 17.613718956708908,
+          "skate_percent_proxy": 36.92555147058823,
+          "latency_seconds_per_sample": 0.6016434897755971,
+          "samples": 64,
+          "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31",
+          "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "Native Hybrid + state_query",
+        "metrics": {
+          "constraint_error_cm_mean": 25.69087889790535,
+          "mobench_root_ade_cm_mean": 19.761179957538843,
+          "mobench_root_fde_cm_mean": 19.952320240437984,
+          "mobench_pa_mpjpe_cm_mean": 14.485147789120674,
+          "mobench_jitter_m_per_frame2_mean": 0.02464360346493777,
+          "mobench_angle_mae_deg_mean": 17.618536919355392,
+          "skate_percent_proxy": 36.243872549019606,
+          "latency_seconds_per_sample": 0.7042479614538024,
+          "samples": 64,
+          "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31",
+          "checkpoint": "/data4/zts/result/stage_d2rl_fair_ablations_5k_20260906/state_query_only/hybrid_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "Native Hybrid + persistent memory",
+        "metrics": {
+          "constraint_error_cm_mean": 26.858765175566077,
+          "mobench_root_ade_cm_mean": 20.902684027329087,
+          "mobench_root_fde_cm_mean": 21.250937715172768,
+          "mobench_pa_mpjpe_cm_mean": 14.476306702941656,
+          "mobench_jitter_m_per_frame2_mean": 0.02444360769004561,
+          "mobench_angle_mae_deg_mean": 17.628631450235844,
+          "skate_percent_proxy": 36.848958333333336,
+          "latency_seconds_per_sample": 0.9693566947680665,
+          "samples": 64,
+          "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31",
+          "checkpoint": "/data4/zts/result/stage_d2rl_fair_ablations_5k_20260906/persistent_memory_only_v3/hybrid_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "D2R-L",
+        "metrics": {
+          "constraint_error_cm_mean": 26.75209071673453,
+          "mobench_root_ade_cm_mean": 21.25620198622346,
+          "mobench_root_fde_cm_mean": 21.58640543371439,
+          "mobench_pa_mpjpe_cm_mean": 14.49116437882185,
+          "mobench_jitter_m_per_frame2_mean": 0.024523831234546378,
+          "mobench_angle_mae_deg_mean": 17.663702443242073,
+          "skate_percent_proxy": 36.68045343137255,
+          "latency_seconds_per_sample": 1.034339490790444,
+          "samples": 64,
+          "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31",
+          "checkpoint": "/data4/zts/result/stage_d2rl_bones_long_20260904/step5000/full/hybrid_humanml3d_ddp.pt"
+        }
+      }
+    ],
+    "40s_in_horizon": [
+      {
+        "model": "Native Hybrid",
+        "metrics": {
+          "constraint_error_cm_mean": 41.935022617641245,
+          "mobench_root_ade_cm_mean": 36.822330594062805,
+          "mobench_root_fde_cm_mean": 56.137152671813965,
+          "mobench_pa_mpjpe_cm_mean": 20.318170249462128,
+          "mobench_jitter_m_per_frame2_mean": 0.016325119882822037,
+          "mobench_angle_mae_deg_mean": 14.812085092067719,
+          "skate_percent_proxy": 26.919871794871796,
+          "latency_seconds_per_sample": 11.035265358601464,
+          "root_ade_cm_mean_by_window": [
+            3.6184478998184204,
+            9.310837745666504,
+            13.794467747211456,
+            17.71443372964859,
+            21.07218325138092,
+            26.04460370540619,
+            30.460548102855682,
+            33.24052572250366,
+            36.123199343681335,
+            39.700846791267395,
+            43.14061081409454,
+            46.71050751209259,
+            50.14788568019867,
+            52.43593156337738,
+            54.647656083106995,
+            56.3220636844635,
+            56.9776508808136,
+            56.445037603378296,
+            56.185309171676636
+          ],
+          "constraint_error_cm_mean_by_window": [
+            10.602990686893463,
+            16.112068980932236,
+            21.795875042676926,
+            20.164784133434296,
+            30.94447773694992,
+            31.101225078105927,
+            34.039484679698944,
+            39.14886462688446,
+            37.91885328292847,
+            42.54612994194031,
+            48.72326195240021,
+            49.89544594287872,
+            56.9813666343689,
+            56.32101368904114,
+            58.61802887916565,
+            60.62547850608826,
+            59.27052617073059,
+            60.87592840194702,
+            61.079625368118286
+          ],
+          "post_window5_root_ade_slope_cm_per_window": 2.5027299324234766,
+          "post_window5_constraint_slope_cm_per_window": 2.4949452434267316,
+          "samples": 16,
+          "panel_sha256": "41909e76aa2a0011bb76cddec77048dd4bdb9aaa4cb8feac78a42e57dfa4579a",
+          "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "Native Hybrid + state_query",
+        "metrics": {
+          "constraint_error_cm_mean": 39.2026262993091,
+          "mobench_root_ade_cm_mean": 35.36024296283722,
+          "mobench_root_fde_cm_mean": 56.30798816680908,
+          "mobench_pa_mpjpe_cm_mean": 19.745787382125854,
+          "mobench_jitter_m_per_frame2_mean": 0.018673317157663405,
+          "mobench_angle_mae_deg_mean": 15.084963142871857,
+          "skate_percent_proxy": 34.51923076923077,
+          "latency_seconds_per_sample": 13.761754009785363,
+          "root_ade_cm_mean_by_window": [
+            3.3477366268634796,
+            8.63388141989708,
+            13.071542143821716,
+            17.219299972057343,
+            20.207083106040955,
+            24.58538007736206,
+            29.37444257736206,
+            31.448355317115784,
+            33.906444907188416,
+            37.95948946475983,
+            40.903104186058044,
+            43.61517262458801,
+            47.73524785041809,
+            50.63117575645447,
+            52.404170870780945,
+            54.387643337249756,
+            55.60645830631256,
+            55.54098653793335,
+            56.03912973403931
+          ],
+          "constraint_error_cm_mean_by_window": [
+            10.93689789623022,
+            15.30967865884304,
+            21.257496118545532,
+            18.98138654232025,
+            27.740538954734802,
+            28.433973610401154,
+            29.93833816051483,
+            34.419232219457626,
+            35.913812041282654,
+            41.84308457374573,
+            43.7022362947464,
+            45.4719135761261,
+            53.063613057136536,
+            51.69703423976898,
+            56.107874274253845,
+            56.40022552013397,
+            57.38935041427612,
+            58.34071111679077,
+            57.90250241756439
+          ],
+          "post_window5_root_ade_slope_cm_per_window": 2.556153279084426,
+          "post_window5_constraint_slope_cm_per_window": 2.5242922570024215,
+          "samples": 16,
+          "panel_sha256": "41909e76aa2a0011bb76cddec77048dd4bdb9aaa4cb8feac78a42e57dfa4579a",
+          "checkpoint": "/data4/zts/result/stage_d2rl_fair_ablations_5k_20260906/state_query_only/hybrid_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "Native Hybrid + persistent memory",
+        "metrics": {
+          "constraint_error_cm_mean": 32.10414035265383,
+          "mobench_root_ade_cm_mean": 27.34945058822632,
+          "mobench_root_fde_cm_mean": 39.91264271736145,
+          "mobench_pa_mpjpe_cm_mean": 16.508900225162506,
+          "mobench_jitter_m_per_frame2_mean": 0.01824557746294886,
+          "mobench_angle_mae_deg_mean": 13.580477833747864,
+          "skate_percent_proxy": 24.064102564102566,
+          "latency_seconds_per_sample": 18.146488096623216,
+          "root_ade_cm_mean_by_window": [
+            3.743170529603958,
+            7.774135574698448,
+            12.114318519830704,
+            15.623229503631592,
+            17.105234563350677,
+            20.472825169563293,
+            24.109926283359528,
+            25.1226646900177,
+            26.899208545684814,
+            29.35329768061638,
+            32.18655653297901,
+            34.7538902759552,
+            37.0940997004509,
+            38.97382992506027,
+            38.00384929776192,
+            39.55553990602493,
+            40.79834723472595,
+            39.614036440849304,
+            39.03905129432678
+          ],
+          "constraint_error_cm_mean_by_window": [
+            12.466791488230228,
+            15.340273529291153,
+            20.014346331357956,
+            18.804720610380173,
+            28.10536390542984,
+            24.76309484243393,
+            28.985816091299057,
+            30.00741159915924,
+            29.90656930208206,
+            34.96392089128494,
+            34.02690985798836,
+            36.596475064754486,
+            41.77698349952698,
+            38.7762885093689,
+            41.3881171643734,
+            44.955114126205444,
+            43.61957597732544,
+            42.14556658267975,
+            43.335327327251434
+          ],
+          "post_window5_root_ade_slope_cm_per_window": 1.5550250581660114,
+          "post_window5_constraint_slope_cm_per_window": 1.4628465860099582,
+          "samples": 16,
+          "panel_sha256": "41909e76aa2a0011bb76cddec77048dd4bdb9aaa4cb8feac78a42e57dfa4579a",
+          "checkpoint": "/data4/zts/result/stage_d2rl_fair_ablations_5k_20260906/persistent_memory_only_v3/hybrid_humanml3d_ddp.pt"
+        }
+      },
+      {
+        "model": "D2R-L",
+        "metrics": {
+          "constraint_error_cm_mean": 32.42823628336191,
+          "mobench_root_ade_cm_mean": 28.730881690979004,
+          "mobench_root_fde_cm_mean": 42.33876967430115,
+          "mobench_pa_mpjpe_cm_mean": 17.650020718574524,
+          "mobench_jitter_m_per_frame2_mean": 0.01960283418884501,
+          "mobench_angle_mae_deg_mean": 14.630201935768127,
+          "skate_percent_proxy": 30.25801282051282,
+          "latency_seconds_per_sample": 20.49382226690068,
+          "root_ade_cm_mean_by_window": [
+            3.4241278171539307,
+            7.423949152231216,
+            11.878103822469711,
+            16.860515773296356,
+            18.73738867044449,
+            22.81493878364563,
+            27.021940529346466,
+            28.695834279060364,
+            30.869608759880066,
+            33.627349734306335,
+            35.42038977146149,
+            36.27967309951782,
+            37.89254641532898,
+            39.02734351158142,
+            38.235316157341,
+            39.46074032783508,
+            40.5454216003418,
+            39.69602310657501,
+            40.74899411201477
+          ],
+          "constraint_error_cm_mean_by_window": [
+            8.949397347867489,
+            13.272339582443237,
+            21.022667974233627,
+            20.32270884513855,
+            28.2987043261528,
+            25.81580150127411,
+            32.00679463148117,
+            33.85194891691208,
+            33.26240253448486,
+            37.106178641319275,
+            34.59359562397003,
+            38.21568024158478,
+            40.15197533369064,
+            39.51479625701904,
+            40.80540323257446,
+            42.047929883003235,
+            42.0534462928772,
+            42.250707030296326,
+            42.594011187553406
+          ],
+          "post_window5_root_ade_slope_cm_per_window": 1.2633305519491762,
+          "post_window5_constraint_slope_cm_per_window": 1.1017757144603102,
+          "samples": 16,
+          "panel_sha256": "41909e76aa2a0011bb76cddec77048dd4bdb9aaa4cb8feac78a42e57dfa4579a",
+          "checkpoint": "/data4/zts/result/stage_d2rl_bones_long_20260904/step5000/full/hybrid_humanml3d_ddp.pt"
+        }
+      }
+    ]
+  },
+  "paired_actor_cluster_bootstrap_40s": {
+    "unit": "actor_then_motion_within_actor",
+    "resamples": 20000,
+    "seed": 20260907,
+    "comparisons": [
+      {
+        "baseline": "Native Hybrid",
+        "candidate": "Native Hybrid + state_query",
+        "panel": "40s_in_horizon",
+        "difference_definition": "candidate_minus_baseline; negative favors candidate",
+        "ordered_exact_pairs": 16,
+        "metrics": {
+          "root_post_w5_auc_cm_windows": {
+            "mean_difference": -23.215573021343776,
+            "ci95": [
+              -50.364080322640284,
+              1.7242470745529401
+            ],
+            "effect_size": -0.7462207173792149,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0728,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_auc_cm_windows": {
+            "mean_difference": -43.74995342322758,
+            "ci95": [
+              -78.10852745217937,
+              -11.227750582354425
+            ],
+            "effect_size": -1.10698067806719,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0061,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_post_w5_slope_cm_per_window": {
+            "mean_difference": 0.16181517815103358,
+            "ci95": [
+              -0.23764514744188148,
+              0.5000451313420029
+            ],
+            "effect_size": 0.3263054823032477,
+            "win_fraction": 0.2857142857142857,
+            "p_value_two_sided": 0.3812,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_slope_cm_per_window": {
+            "mean_difference": 0.14152907071345638,
+            "ci95": [
+              -0.3496830812316485,
+              0.6262120002405234
+            ],
+            "effect_size": 0.2057841470908212,
+            "win_fraction": 0.2857142857142857,
+            "p_value_two_sided": 0.5731,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_final_window_cm": {
+            "mean_difference": 1.02706663949149,
+            "ci95": [
+              -3.3304344892501834,
+              4.978969969068251
+            ],
+            "effect_size": 0.1796099862653869,
+            "win_fraction": 0.42857142857142855,
+            "p_value_two_sided": 0.6078,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_final_window_cm": {
+            "mean_difference": -1.9579425539289201,
+            "ci95": [
+              -9.120634041513716,
+              4.5968089921133855
+            ],
+            "effect_size": -0.21018179690183875,
+            "win_fraction": 0.7142857142857143,
+            "p_value_two_sided": 0.5936,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          }
+        }
+      },
+      {
+        "baseline": "Native Hybrid",
+        "candidate": "Native Hybrid + persistent memory",
+        "panel": "40s_in_horizon",
+        "difference_definition": "candidate_minus_baseline; negative favors candidate",
+        "ordered_exact_pairs": 16,
+        "metrics": {
+          "root_post_w5_auc_cm_windows": {
+            "mean_difference": -130.97449783767973,
+            "ci95": [
+              -236.38675884519304,
+              -67.00846718123981
+            ],
+            "effect_size": -1.1603944618012634,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_auc_cm_windows": {
+            "mean_difference": -134.38855252947127,
+            "ci95": [
+              -248.51243713498116,
+              -72.65776418617799
+            ],
+            "effect_size": -1.0619148733339496,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_post_w5_slope_cm_per_window": {
+            "mean_difference": -0.5669729375577233,
+            "ci95": [
+              -1.696483809903989,
+              0.09613137874723025
+            ],
+            "effect_size": -0.41584140062933383,
+            "win_fraction": 0.5714285714285714,
+            "p_value_two_sided": 0.2204,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_slope_cm_per_window": {
+            "mean_difference": -0.6630666135057365,
+            "ci95": [
+              -1.7876848291751914,
+              0.05165274544450878
+            ],
+            "effect_size": -0.49128228712783534,
+            "win_fraction": 0.7142857142857143,
+            "p_value_two_sided": 0.0956,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_final_window_cm": {
+            "mean_difference": -12.295119285583496,
+            "ci95": [
+              -27.096696952411108,
+              -3.8868796757289346
+            ],
+            "effect_size": -0.7087464859185952,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_final_window_cm": {
+            "mean_difference": -12.567546061107091,
+            "ci95": [
+              -28.635719556467876,
+              -2.5569997991834494
+            ],
+            "effect_size": -0.6733517157828717,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0029,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          }
+        }
+      },
+      {
+        "baseline": "Native Hybrid",
+        "candidate": "D2R-L",
+        "panel": "40s_in_horizon",
+        "difference_definition": "candidate_minus_baseline; negative favors candidate",
+        "ordered_exact_pairs": 16,
+        "metrics": {
+          "root_post_w5_auc_cm_windows": {
+            "mean_difference": -122.54122771535602,
+            "ci95": [
+              -209.111203961713,
+              -56.05076344524114
+            ],
+            "effect_size": -1.3818041153139768,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_auc_cm_windows": {
+            "mean_difference": -140.11894047260284,
+            "ci95": [
+              -228.59275020786694,
+              -80.06807521581652
+            ],
+            "effect_size": -1.5708917658998853,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_post_w5_slope_cm_per_window": {
+            "mean_difference": -0.8277353461907835,
+            "ci95": [
+              -2.0646515742051923,
+              -0.09842681118981596
+            ],
+            "effect_size": -0.5580057580627015,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0068,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_slope_cm_per_window": {
+            "mean_difference": -1.0229330015706493,
+            "ci95": [
+              -2.2102706157375174,
+              -0.20748231936474346
+            ],
+            "effect_size": -0.7250755239070543,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0056,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_final_window_cm": {
+            "mean_difference": -10.902808598109655,
+            "ci95": [
+              -25.34712359053748,
+              -2.009419890812468
+            ],
+            "effect_size": -0.6527931582387934,
+            "win_fraction": 1.0,
+            "p_value_two_sided": 0.0012,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_final_window_cm": {
+            "mean_difference": -14.128248419080462,
+            "ci95": [
+              -29.20951293706894,
+              -3.204081068720139
+            ],
+            "effect_size": -0.8169508278521465,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0053,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          }
+        }
+      },
+      {
+        "baseline": "Native Hybrid + state_query",
+        "candidate": "D2R-L",
+        "panel": "40s_in_horizon",
+        "difference_definition": "candidate_minus_baseline; negative favors candidate",
+        "ordered_exact_pairs": 16,
+        "metrics": {
+          "root_post_w5_auc_cm_windows": {
+            "mean_difference": -99.32565469401223,
+            "ci95": [
+              -173.00536259157317,
+              -41.47521394320903
+            ],
+            "effect_size": -1.3025441033385172,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0001,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_auc_cm_windows": {
+            "mean_difference": -96.36898704937526,
+            "ci95": [
+              -177.43370737092835,
+              -33.486824257033305
+            ],
+            "effect_size": -1.056042043920418,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0014,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_post_w5_slope_cm_per_window": {
+            "mean_difference": -0.9895505243418169,
+            "ci95": [
+              -1.9422181995715981,
+              -0.37721617912385436
+            ],
+            "effect_size": -0.8802481229576429,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_slope_cm_per_window": {
+            "mean_difference": -1.1644620722841057,
+            "ci95": [
+              -2.0694712008992022,
+              -0.5149660591016197
+            ],
+            "effect_size": -1.127587840615682,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_final_window_cm": {
+            "mean_difference": -11.929875237601143,
+            "ci95": [
+              -23.486063652379173,
+              -4.04379731587002
+            ],
+            "effect_size": -0.9163631561463796,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0005,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_final_window_cm": {
+            "mean_difference": -12.170305865151542,
+            "ci95": [
+              -23.876474053519114,
+              -3.1294702223369057
+            ],
+            "effect_size": -0.8998381200286002,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.004,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          }
+        }
+      },
+      {
+        "baseline": "Native Hybrid + persistent memory",
+        "candidate": "D2R-L",
+        "panel": "40s_in_horizon",
+        "difference_definition": "candidate_minus_baseline; negative favors candidate",
+        "ordered_exact_pairs": 16,
+        "metrics": {
+          "root_post_w5_auc_cm_windows": {
+            "mean_difference": 8.433270122323718,
+            "ci95": [
+              -45.84536906821387,
+              62.051402390641805
+            ],
+            "effect_size": 0.11033880686693026,
+            "win_fraction": 0.42857142857142855,
+            "p_value_two_sided": 0.7638,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_auc_cm_windows": {
+            "mean_difference": -5.730387943131583,
+            "ci95": [
+              -55.46108388219561,
+              48.6889985833849
+            ],
+            "effect_size": -0.0777885341284688,
+            "win_fraction": 0.7142857142857143,
+            "p_value_two_sided": 0.8216,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_post_w5_slope_cm_per_window": {
+            "mean_difference": -0.26076240863306027,
+            "ci95": [
+              -0.503516078262913,
+              -0.024422516596841946
+            ],
+            "effect_size": -1.066206049044,
+            "win_fraction": 0.8571428571428571,
+            "p_value_two_sided": 0.0329,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_post_w5_slope_cm_per_window": {
+            "mean_difference": -0.3598663880649129,
+            "ci95": [
+              -0.6488536921101428,
+              -0.015667242413413454
+            ],
+            "effect_size": -1.0135337478819706,
+            "win_fraction": 0.7142857142857143,
+            "p_value_two_sided": 0.041,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "root_final_window_cm": {
+            "mean_difference": 1.392310687473842,
+            "ci95": [
+              -2.867212867736816,
+              5.6755139555249885
+            ],
+            "effect_size": 0.24628504618736738,
+            "win_fraction": 0.2857142857142857,
+            "p_value_two_sided": 0.5184,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          },
+          "constraint_final_window_cm": {
+            "mean_difference": -1.5607023579733712,
+            "ci95": [
+              -6.815314865112305,
+              3.751992627552575
+            ],
+            "effect_size": -0.21194175623012054,
+            "win_fraction": 0.5714285714285714,
+            "p_value_two_sided": 0.5778,
+            "actors": 7,
+            "motions": 16,
+            "resamples": 20000,
+            "seed": 20260907
+          }
+        }
+      }
+    ]
+  }
+}

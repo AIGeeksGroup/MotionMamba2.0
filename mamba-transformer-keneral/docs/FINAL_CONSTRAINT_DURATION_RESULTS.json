@@ -1,0 +1,75 @@
+{
+  "status": "COMPLETE",
+  "dataset": "BONES-SEED-v004",
+  "metric": "constraint_error_cm_mean",
+  "protocol": "out_of_horizon endpoint across durations",
+  "durations_seconds": [
+    2.08,
+    9.0,
+    20.0,
+    40.0
+  ],
+  "panel_note": "W1/9s use 64-sample panels; 20s/40s use the 16-sample selection panels.",
+  "rows": [
+    {
+      "model": "ARDY",
+      "values_cm": [
+        31.653971415013075,
+        31.570575019344687,
+        67.30208580195904,
+        1773.5846477746964
+      ],
+      "source_panels": [
+        "table4",
+        "9s_out_of_horizon",
+        "20s_out_of_horizon",
+        "40s_out_of_horizon"
+      ]
+    },
+    {
+      "model": "Minimal-W4",
+      "values_cm": [
+        37.58404268324375,
+        40.87832748144865,
+        82.52002620697021,
+        161.72222757339478
+      ],
+      "source_panels": [
+        "table4",
+        "9s_out_of_horizon",
+        "20s_out_of_horizon",
+        "40s_out_of_horizon"
+      ]
+    },
+    {
+      "model": "Native Hybrid",
+      "values_cm": [
+        27.064339455217123,
+        24.916728764772415,
+        42.05231821537018,
+        84.79627823829651
+      ],
+      "source_panels": [
+        "table4",
+        "9s_out_of_horizon",
+        "20s_out_of_horizon",
+        "40s_out_of_horizon"
+      ]
+    },
+    {
+      "model": "D2R-L",
+      "values_cm": [
+        26.75209071673453,
+        24.748770992271602,
+        26.99531051516533,
+        49.92531931400299
+      ],
+      "source_panels": [
+        "table4",
+        "9s_out_of_horizon",
+        "20s_out_of_horizon",
+        "40s_out_of_horizon"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "status": "COMPLETE",
+  "dataset": "BONES-SEED-v004",
+  "protocol": "52-frame Table 4 proxy panel",
+  "metric_direction": "lower_is_better",
+  "protocol_validation": {
+    "status": "PASS",
+    "panel": "table4",
+    "ordered_samples": 64,
+    "checked_fields": [
+      "panel_sha256",
+      "diffusion_steps",
+      "cfg_weight_text",
+      "cfg_weight_constraint",
+      "attention_window_chunks"
+    ],
+    "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31"
+  },
+  "rows": [
+    {
+      "model": "ARDY",
+      "metrics": {
+        "constraint_error_cm_mean": 31.653971415013075,
+        "mobench_root_ade_cm_mean": 21.335813261568546,
+        "mobench_root_fde_cm_mean": 17.187874442897737,
+        "mobench_pa_mpjpe_cm_mean": 18.582275055348873,
+        "mobench_jitter_m_per_frame2_mean": 0.021826199677889235,
+        "mobench_angle_mae_deg_mean": 21.67433536052704,
+        "skate_percent_proxy": 36.619178921568626,
+        "latency_seconds_per_sample": 0.049546167872904334,
+        "samples": 64,
+        "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31",
+        "checkpoint": "/data4/zts/result/bones_seed_ardy_retrain_lr1e5_20260826_original/original_humanml3d_ddp.pt"
+      }
+    },
+    {
+      "model": "Minimal-W4",
+      "metrics": {
+        "constraint_error_cm_mean": 37.58404268324375,
+        "mobench_root_ade_cm_mean": 31.06764531135559,
+        "mobench_root_fde_cm_mean": 32.606334276497364,
+        "mobench_pa_mpjpe_cm_mean": 15.579241536557674,
+        "mobench_jitter_m_per_frame2_mean": 0.024946171906776726,
+        "mobench_angle_mae_deg_mean": 18.055168859660625,
+        "skate_percent_proxy": 44.4546568627451,
+        "latency_seconds_per_sample": 0.286967976266169,
+        "samples": 64,
+        "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31",
+        "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_minimal/minimal_humanml3d_ddp.pt"
+      }
+    },
+    {
+      "model": "Native Hybrid",
+      "metrics": {
+        "constraint_error_cm_mean": 27.064339455217123,
+        "mobench_root_ade_cm_mean": 20.912063458934426,
+        "mobench_root_fde_cm_mean": 21.31429272145033,
+        "mobench_pa_mpjpe_cm_mean": 14.504513878375292,
+        "mobench_jitter_m_per_frame2_mean": 0.024441208341158926,
+        "mobench_angle_mae_deg_mean": 17.613718956708908,
+        "skate_percent_proxy": 36.92555147058823,
+        "latency_seconds_per_sample": 0.6016434897755971,
+        "samples": 64,
+        "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31",
+        "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt"
+      }
+    },
+    {
+      "model": "D2R-L",
+      "metrics": {
+        "constraint_error_cm_mean": 26.75209071673453,
+        "mobench_root_ade_cm_mean": 21.25620198622346,
+        "mobench_root_fde_cm_mean": 21.58640543371439,
+        "mobench_pa_mpjpe_cm_mean": 14.49116437882185,
+        "mobench_jitter_m_per_frame2_mean": 0.024523831234546378,
+        "mobench_angle_mae_deg_mean": 17.663702443242073,
+        "skate_percent_proxy": 36.68045343137255,
+        "latency_seconds_per_sample": 1.034339490790444,
+        "samples": 64,
+        "panel_sha256": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31",
+        "checkpoint": "/data4/zts/result/stage_d2rl_bones_long_20260904/step5000/full/hybrid_humanml3d_ddp.pt"
+      }
+    }
+  ]
+}

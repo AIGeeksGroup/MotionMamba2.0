@@ -1,0 +1,48 @@
+{
+  "manifest_version": "2026-09-02",
+  "git_commit": "6ed79b1b9ea6234480eb64d50a4e950551645385",
+  "dataset": "BONES-SEED v004 G1",
+  "split": {
+    "contract": "actor-disjoint BONES-SEED v004 G1",
+    "train_actors": 463,
+    "selection_actors": 31,
+    "locked_final_actors": 28,
+    "training_protocol": "docs/BONES_SEED_TRAINING_PROTOCOL_20260824.md"
+  },
+  "model": {
+    "name": "Native Hybrid 50k contract-fix",
+    "architecture": "naive_gated_add Hybrid with bounded W4 Attention cache and carried Mamba state",
+    "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt",
+    "checkpoint_sha256": "cfa9d44d9a804e3f71dbfde98cbad7faceed98bca83b5417c3afb5bca6071a4a",
+    "training_metrics": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/metrics.json",
+    "training_status": "PASS",
+    "steps": 50000,
+    "commit_protocol": "canonical_history_v2",
+    "attention_window_chunks": 4,
+    "state_carry": true,
+    "released_rigplay_mixer_weights": false
+  },
+  "evaluation": {
+    "seed": 20260824,
+    "samples_per_protocol": 64,
+    "diffusion_steps": 10,
+    "cfg_text": 2.0,
+    "cfg_constraint": 2.0,
+    "attention_backend": "sdpa",
+    "table4_panel_sha256": "fe9d8c63b8c7f8cc45e0d4f43874cd065b29ca462a2dc119718adad3f2e0e8bd",
+    "table5_panel_sha256": "7c7c980fc18fa80d080d9edf5fab554a22497be7fc43f272ae6bcea804da505e",
+    "long_panel_sha256": "86b0f2f94f2b6317a6b2e53d42dffe588b5857c55921d88e8120c08e561c6db2",
+    "artifacts": "/data4/zts/result/bones_seed_contract_dual_eval_20260824",
+    "long_memory_artifacts": "/data4/zts/result/bones_seed_long_memory_stage_b_selection_eval_20260831"
+  },
+  "metrics_scope": {
+    "official_r_precision_fid_fvmd_tm_sim": "N/A; no calibrated BONES-SEED learned evaluator",
+    "reported_metrics": ["constraint_error_cm", "root_ade_cm", "root_fde_cm", "pa_mpjpe_cm", "jitter", "angle_mae", "skate_proxy", "post_w5_auc", "post_w5_slope"],
+    "selection_final_status": "The 2026-08-31 long-memory preregistered gate is FAIL and locked-final actors remain unread."
+  },
+  "commands": {
+    "training_protocol": "examples/run_bones_seed_contract_full50k_20260824.sh",
+    "table4_table5_eval": "examples/run_bones_seed_contract_dual_eval_20260824.sh",
+    "long_memory_eval": "examples/run_bones_seed_long_memory_stage_b_selection_eval_20260831.sh"
+  }
+}

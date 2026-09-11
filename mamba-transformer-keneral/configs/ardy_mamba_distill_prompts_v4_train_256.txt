@@ -1,0 +1,258 @@
+# Curated ARDY-Mamba text-to-motion distillation prompts.
+# split=train num_prompts=256 seed=0
+A person walks backward carefully, then turns around.
+A person jumps twice, then stands still.
+A person jogs in place, then raises both arms.
+A person leans backward.
+A person squats down, then raises both arms.
+A person shuffles forward smoothly.
+A person kicks with the left leg.
+A person walks forward carefully, then turns around.
+A person reaches to the right.
+A person points forward smoothly.
+A person waves slowly.
+A person walks forward slowly, then turns around.
+A person bends down carefully.
+A person kneels down with control.
+A person points forward while standing still.
+A person squats down carefully.
+A person jumps with control.
+A person kicks with the right leg and then steps back.
+A person turns around and then waves.
+A person walks to the right carefully, then turns around.
+A person walks in a circle while waving.
+A person walks forward carefully, then waves.
+A person reaches to the left while standing still.
+A person walks to the right with small steps.
+A person leans backward, then returns upright.
+A person leans backward with control.
+A person spins once slowly, then stands still.
+A person reaches to the left and then returns to center.
+A person walks forward and then turns around.
+A person leans forward smoothly, then returns upright.
+A person raises the left hand smoothly, then lowers the left hand.
+A person runs forward slowly.
+A person marches in place and then stops.
+A person jumps and then lands softly.
+A person raises both arms quickly.
+A person walks backward with steady steps.
+A person kicks with the left leg quickly, then steps back.
+A person walks forward quickly.
+A person jumps energetically.
+A person walks forward while raising both arms.
+A person walks forward quickly, then waves.
+A person walks forward, then waves.
+A person walks to the right slowly.
+A person turns around carefully.
+A person jumps energetically, then lands softly.
+A person leans forward carefully, then returns upright.
+A person shuffles backward carefully.
+A person shuffles forward with steady steps.
+A person bends down.
+A person reaches forward slowly, then returns the arms.
+A person walks forward while raising the right hand.
+A person raises the right hand while standing still.
+A person reaches forward with both feet planted.
+A person spins once smoothly, then stands still.
+A person dances happily while waving.
+A person spins once while keeping balance.
+A person stands up carefully.
+A person jumps twice with control.
+A person marches in place with small steps.
+A person walks to the right quickly, then turns around.
+A person bends down slowly, then stands up.
+A person kneels down slowly, then stands up.
+A person bends down and then stands up.
+A person spins once carefully, then stands still.
+A person runs forward carefully.
+A person walks to the right slowly, then turns around.
+A person reaches to the left.
+A person raises both arms with both feet planted.
+A person walks backward with small steps.
+A person turns around smoothly.
+A person walks forward while clapping.
+A person waves.
+A person walks to the right with steady steps.
+A person waves quickly, then lowers the hand.
+A person leans forward smoothly.
+A person bends down with control.
+A person points forward.
+A person walks forward slowly.
+A person waves and then lowers the hand.
+A person reaches forward smoothly.
+A person squats down with control.
+A person squats down smoothly, then stands up.
+A person waves smoothly.
+A person walks to the right, then turns around.
+A person jumps smoothly.
+A person runs forward and then slows to a walk.
+A person kicks with the right leg smoothly, then steps back.
+A person raises the left hand slowly, then lowers the left hand.
+A person marches in place slowly, then stops.
+A person raises the left hand.
+A person marches in place, then claps.
+A person kicks with the left leg quickly.
+A person jumps twice energetically, then stands still.
+A person squats down slowly.
+A person raises the left hand smoothly.
+A person raises the right hand slowly.
+A person waves while standing still.
+A person raises the left hand while standing still.
+A person walks backward slowly.
+A person reaches to the right while standing still.
+A person walks to the right.
+A person points forward quickly.
+A person raises both arms slowly.
+A person kneels down.
+A person spins once carefully.
+A person stands up, then waves.
+A person raises both arms.
+A person squats down slowly, then stands up.
+A person leans backward while keeping balance.
+A person reaches to the left quickly, then returns to center.
+A person raises the right hand slowly, then lowers the right hand.
+A person reaches to the right smoothly, then returns to center.
+A person kicks with the left leg smoothly, then steps back.
+A person kneels down carefully.
+A person claps with both feet planted.
+A person kicks with the right leg energetically.
+A person kicks with the right leg energetically, then steps back.
+A person jumps quickly.
+A person bends down smoothly.
+A person walks in a circle.
+A person shuffles backward with small steps.
+A person raises the left hand slowly.
+A person bends down carefully, then stands up.
+A person bends down smoothly, then stands up.
+A person walks to the right carefully.
+A person spins once, then stands still.
+A person leans backward smoothly, then returns upright.
+A person dances happily.
+A person waves with both feet planted.
+A person raises both arms, then lowers both arms.
+A person kicks with the right leg quickly, then steps back.
+A person walks in a circle with small steps.
+A person leans forward slowly, then returns upright.
+A person stands up slowly.
+A person turns around.
+A person kicks with the left leg energetically, then steps back.
+A person jumps twice.
+A person walks in a circle with steady steps.
+A person jogs in place while raising both arms.
+A person points forward slowly.
+A person runs forward quickly, then slows to a walk.
+A person marches in place quickly, then stops.
+A person dances happily, then waves.
+A person raises both arms smoothly.
+A person reaches to the right and then returns to center.
+A person dances happily quickly.
+A person runs forward smoothly.
+A person shuffles backward with steady steps.
+A person spins once smoothly.
+A person raises the left hand, then lowers the left hand.
+A person bends down slowly.
+A person raises the left hand with both feet planted.
+A person leans backward slowly.
+A person raises the right hand quickly, then lowers the right hand.
+A person dances happily energetically, then spins once.
+A person walks forward carefully.
+A person jogs in place quickly.
+A person leans forward and then returns upright.
+A person reaches forward quickly.
+A person walks backward quickly, then turns around.
+A person jumps twice smoothly.
+A person kicks with the right leg smoothly.
+A person kneels down smoothly.
+A person turns around carefully, then waves.
+A person runs forward with small steps.
+A person walks to the left.
+A person marches in place carefully.
+A person marches in place carefully, then stops.
+A person dances happily smoothly.
+A person turns around, then waves.
+A person turns around slowly.
+A person reaches to the right smoothly.
+A person dances happily, then spins once.
+A person runs forward slowly, then slows to a walk.
+A person reaches to the right with both feet planted.
+A person shuffles forward with small steps.
+A person walks backward carefully.
+A person raises both arms while standing still.
+A person walks forward, then claps.
+A person points forward with both feet planted.
+A person raises both arms smoothly, then lowers both arms.
+A person turns around while pointing forward.
+A person kneels down while keeping balance.
+A person stands up while keeping balance.
+A person leans forward with control.
+A person jogs in place and then stops.
+A person reaches to the left slowly, then returns to center.
+A person walks to the left carefully.
+A person spins once and then stands still.
+A person jogs in place carefully, then stops.
+A person walks forward, then raises the right hand.
+A person claps.
+A person kicks with the left leg energetically.
+A person jumps, then lands softly.
+A person reaches forward.
+A person marches in place, then stops.
+A person reaches to the right slowly.
+A person marches in place smoothly.
+A person leans forward, then returns upright.
+A person squats down, then stands up.
+A person spins once while waving.
+A person reaches forward and then returns the arms.
+A person marches in place.
+A person walks forward with small steps.
+A person walks to the left and then turns around.
+A person walks backward quickly.
+A person dances happily quickly, then spins once.
+A person dances happily and then spins once.
+A person walks to the right quickly.
+A person spins once with control.
+A person walks in a circle quickly.
+A person raises the right hand and then lowers the right hand.
+A person walks to the left, then turns around.
+A person squats down while raising both arms.
+A person jumps twice smoothly, then stands still.
+A person reaches to the right quickly, then returns to center.
+A person walks backward while waving.
+A person walks forward with steady steps.
+A person walks to the left smoothly.
+A person reaches forward slowly.
+A person kicks with the right leg, then steps back.
+A person kicks with the right leg with control.
+A person raises both arms slowly, then lowers both arms.
+A person dances happily with control.
+A person walks backward slowly, then turns around.
+A person walks backward smoothly.
+A person jumps quickly, then lands softly.
+A person reaches forward while standing still.
+A person walks to the right and then turns around.
+A person dances happily smoothly, then spins once.
+A person turns around slowly, then waves.
+A person walks to the right smoothly.
+A person walks to the left slowly.
+A person walks backward and then turns around.
+A person claps slowly.
+A person stands up while waving.
+A person jogs in place slowly.
+A person walks forward and then waves.
+A person waves slowly, then lowers the hand.
+A person jumps.
+A person reaches to the left slowly.
+A person kneels down, then stands up.
+A person squats down smoothly.
+A person reaches to the right quickly.
+A person walks forward smoothly.
+A person jumps twice quickly.
+A person walks backward, then waves.
+A person walks to the left carefully, then turns around.
+A person kneels down slowly.
+A person reaches to the right slowly, then returns to center.
+A person shuffles forward carefully.
+A person walks forward, then raises both arms.
+A person walks in a circle slowly.
+A person shuffles backward quickly.
+A person bends down while keeping balance.
+A person jogs in place.

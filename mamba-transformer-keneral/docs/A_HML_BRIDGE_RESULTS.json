@@ -1,0 +1,21 @@
+{
+  "stage": "A",
+  "date": "2026-09-02",
+  "status": "FAIL",
+  "gate": "official HumanML3D bridge",
+  "thresholds": {
+    "roundtrip_fid_max": 1.0,
+    "paired_embedding_cosine_min": 0.95
+  },
+  "observed": {
+    "roundtrip_fid": 14.984515039656628,
+    "paired_embedding_cosine_mean": 0.8807299137115479,
+    "paired_embedding_cosine_min": 0.5712764859199524,
+    "samples": 64,
+    "source": "/data4/zts/result/humanml3d_mobench_dual_eval_20260822/conversion_validation.json"
+  },
+  "failure_reason": "The bridge selects Core27 positions and recomputes HumanML3D rotations; original Ardy/SMPL rotation and twist semantics are not preserved.",
+  "official_metrics_allowed": false,
+  "fallback": "Core27-native evaluator with explicit non-official naming",
+  "next_stage_policy": "HumanML3D official-metric branch remains stopped until a rotation-preserving retarget asset is validated. Other dataset-mechanism work may proceed with proxy metrics only."
+}

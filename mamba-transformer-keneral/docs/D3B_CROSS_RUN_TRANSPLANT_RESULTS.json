@@ -1,0 +1,8 @@
+{
+  "schema_version": "d3b_cross_run_transplant_v1",
+  "status": "NOT_RUN",
+  "blocked_by": "D3B_OWN_REPLAY_PARITY_RESULTS.json",
+  "reason": "Offline own-memory replay did not reproduce normal inference on an exact repeated normal baseline.",
+  "donor_conditions": ["nearest", "random", "farthest"],
+  "no_model_or_checkpoint_changes": true
+}

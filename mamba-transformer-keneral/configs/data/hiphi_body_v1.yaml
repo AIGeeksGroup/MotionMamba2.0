@@ -1,0 +1,10 @@
+dataset: hiphi
+version: body_hq_v1
+representation: ardy_core27
+motion_dim: 330
+stats_dim: 334
+fps: 20
+include_body_only: true
+include_hoi: false
+manifest_root: /data4/zts/datasets/motion_fusion/releases/hiphi_body_hq_v1
+split_policy: actor_and_mirror_family_disjoint

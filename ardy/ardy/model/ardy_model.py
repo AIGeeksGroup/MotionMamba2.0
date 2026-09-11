@@ -670,8 +670,29 @@ class Ardy(nn.Module):
                     self.motion_rep.global_root_stats.unnormalize(new_root_motion),
                 )
                 full_history_len = new_root_motion.shape[1]
-                cropped_history_start_frame = max(0, full_history_len - crop_history_length)
+                # A zero explicit-history crop is valid for sequence kernels
+                # that carry accepted history exclusively in KV/SSM state.
+                # Clamp to the last available root frame instead of indexing
+                # one-past-the-end when crop_history_length == 0.
+                cropped_history_start_frame = min(
+                    full_history_len - 1,
+                    max(0, full_history_len - crop_history_length),
+                )
                 first_heading_angle = heading_angles[:, cropped_history_start_frame]
+
+            # Optional sequence-kernel lifecycle hook. It is intentionally
+            # absent for native ARDY, preserving the original behavior. The
+            # hook runs only after recentering, translation, and next-window
+            # heading have all been resolved.
+            post_window_hook = getattr(self, "_sequence_kernel_post_window_hook", None)
+            if post_window_hook is not None:
+                post_window_hook(
+                    history_sequence,
+                    center_pos,
+                    new_root_motion,
+                    first_heading_angle,
+                    auto_step,
+                )
 
         root_motion, latent_body_motion = self.hybrid.get_root_and_latent_body_motion_from_hybrid(
             history_sequence,

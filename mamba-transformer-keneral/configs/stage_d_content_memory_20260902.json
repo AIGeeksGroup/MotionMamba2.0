@@ -1,0 +1,14 @@
+{
+  "stage": "D",
+  "architecture": "state-aware Hybrid plus fixed-capacity persistent content memory",
+  "base_interaction": "state_query or state_kv_modulation",
+  "state_definition": "s_t=P(S_t); delta_s_t=P(S_t)-P(S_(t-1))",
+  "content_memory_enabled": true,
+  "content_memory_slots": 2,
+  "content_memory_read_enabled": true,
+  "content_memory_use_state_delta": true,
+  "write_timing": "pending after a chunk; installed only by SequenceKernel.commit",
+  "read_timing": "committed prior slots only",
+  "interventions": ["d_no_delta", "zero_delta", "permute_delta", "write_off", "readout_off", "content_memory_permutation"],
+  "status": "IMPLEMENTED; real-motion training/evaluation NOT RUN"
+}

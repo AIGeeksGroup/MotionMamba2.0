@@ -1,0 +1,19 @@
+{
+  "stage": "C",
+  "date": "2026-09-02",
+  "status": "FAIL",
+  "evidence_kind": "historical real-cache gate, consolidated without rerun",
+  "source": "docs/stage06_contribution1_closeout.md",
+  "gate": {
+    "100_step_completed": true,
+    "250_step_authorized": false,
+    "reason": "Neither state_query variant substantially overfit the fixed real sequential case; state delta did not improve on state-only."
+  },
+  "variants": [
+    {"name": "state_query_state_only", "first_loss": 0.6960473, "final_loss": 0.6678084, "loss_reduction_percent": 4.06, "final_eval": 0.8190935},
+    {"name": "state_query_state_delta", "first_loss": 0.6960473, "final_loss": 0.6684049, "loss_reduction_percent": 3.97, "final_eval": 0.7930969},
+    {"name": "naive_gated_add", "status": "NOT COMPLETED; external GPU memory contention"},
+    {"name": "state_kv_modulation", "status": "NOT COMPLETED; external GPU memory contention"}
+  ],
+  "next_stage": "D implementation/mechanism test only; no long-rollout escalation"
+}

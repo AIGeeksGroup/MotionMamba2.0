@@ -1,0 +1,66 @@
+# Curated ARDY-Mamba text-to-motion distillation prompts.
+# split=eval num_prompts=64 seed=0
+A person reaches to the left smoothly.
+A person leans backward carefully, then returns upright.
+A person jogs in place quickly, then stops.
+A person kicks with the left leg smoothly.
+A person walks to the left slowly, then turns around.
+A person claps quickly.
+A person raises the right hand.
+A person kicks with the left leg with control.
+A person walks forward quickly, then turns around.
+A person kicks with the left leg, then steps back.
+A person walks to the left with small steps.
+A person stands up with control.
+A person squats down.
+A person jogs in place carefully.
+A person runs forward.
+A person jumps twice and then stands still.
+A person reaches to the left, then returns to center.
+A person walks to the left quickly.
+A person turns around while keeping balance.
+A person spins once.
+A person turns around with control.
+A person shuffles forward slowly.
+A person raises the right hand smoothly.
+A person leans forward slowly.
+A person walks in a circle, then waves.
+A person turns around, then points forward.
+A person jogs in place, then stops.
+A person shuffles forward.
+A person raises the left hand and then lowers the left hand.
+A person reaches to the right, then returns to center.
+A person waves smoothly, then lowers the hand.
+A person leans backward slowly, then returns upright.
+A person reaches forward quickly, then returns the arms.
+A person jumps twice energetically.
+A person shuffles forward quickly.
+A person reaches to the left smoothly, then returns to center.
+A person shuffles backward.
+A person marches in place with steady steps.
+A person squats down carefully, then stands up.
+A person kneels down carefully, then stands up.
+A person leans forward carefully.
+A person runs forward with steady steps.
+A person jogs in place smoothly.
+A person jogs in place slowly, then stops.
+A person raises both arms and then lowers both arms.
+A person stands up.
+A person raises the right hand quickly.
+A person claps while standing still.
+A person raises the left hand quickly, then lowers the left hand.
+A person spins once slowly.
+A person walks in a circle smoothly.
+A person leans forward while keeping balance.
+A person raises the right hand with both feet planted.
+A person leans backward smoothly.
+A person bends down, then stands up.
+A person walks forward.
+A person walks forward slowly, then waves.
+A person jogs in place with small steps.
+A person walks backward.
+A person raises both arms quickly, then lowers both arms.
+A person walks in a circle carefully.
+A person kicks with the right leg quickly.
+A person turns around smoothly, then waves.
+A person runs forward carefully, then slows to a walk.

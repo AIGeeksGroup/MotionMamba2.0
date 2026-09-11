@@ -1,0 +1,39 @@
+{
+  "schema_version": "stage_d2r_contextual_delta_v1",
+  "date": "2026-09-03",
+  "parent_checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt",
+  "parent_sha256": "cfa9d44d9a804e3f71dbfde98cbad7faceed98bca83b5417c3afb5bca6071a4a",
+  "architecture": {
+    "token_state_interaction": "state_query",
+    "state_aware_output_mode": "native_gated_add",
+    "content_memory_slots": 2,
+    "content_memory_conditioning": "text",
+    "content_memory_normalize_delta": true,
+    "content_memory_normalize_slots": true,
+    "content_memory_max_write_rate": 0.25,
+    "content_memory_write_gate_context": "previous_memory",
+    "content_memory_read_scale_init": 0.0
+  },
+  "training": {
+    "restart_from_parent": true,
+    "train_scope": "state_memory",
+    "screening_steps": 100,
+    "confirmation_steps_total": 250,
+    "confirmation_requires_step100_gate": true,
+    "learning_rate": 0.0001,
+    "global_batch_size": 4,
+    "rollout_windows": 6,
+    "target_window": 6,
+    "generated_history_bptt_windows": 4,
+    "attach_seed_write": true,
+    "sampling_is_no_grad": true,
+    "locked_final_actors": "MUST NOT READ"
+  },
+  "safety": {
+    "short_horizon_relative_degradation_max": 0.05,
+    "all_gradients_and_states_must_be_finite": true,
+    "memory_slot_norm_is_architecturally_bounded": true,
+    "never_resume_failed_d2_step250": true,
+    "stop_before_250_unless_100_step_gate_passes": true
+  }
+}

@@ -1,0 +1,66 @@
+# ARDY-Mamba distillation prompts, v2.
+# Keep one prompt per line. Blank lines and comments are ignored.
+A person walks forward.
+A person walks backward.
+A person walks sideways.
+A person walks in a circle.
+A person walks with a heavy limp.
+A person walks slowly and carefully.
+A person takes several quick steps backward.
+A person jogs in place.
+A person runs forward.
+A person runs and then stops.
+A person jumps.
+A person jumps twice.
+A person jumps and lands softly.
+A person hops on one foot.
+A person squats down.
+A person squats down and stands up.
+A person bends down then stands upright.
+A person kneels briefly and stands up.
+A person turns around.
+A person spins in place.
+A person steps sideways and turns.
+A person turns around and waves.
+A person waves.
+A person raises both arms.
+A person raises the right hand.
+A person raises the left hand.
+A person claps their hands.
+A person stretches.
+A person stretches both arms overhead.
+A person bows.
+A person kicks with the right leg.
+A person kicks with the left leg.
+A person kicks with one leg.
+A person dances happily.
+A person dances with small steps.
+A person sways from side to side.
+A person marches in place.
+A person shuffles forward.
+A person shuffles backward.
+A person takes a wide step to the left.
+A person takes a wide step to the right.
+A person pivots on the spot.
+A person leans forward and recovers.
+A person leans backward and recovers.
+A person reaches forward with both hands.
+A person reaches to the left.
+A person reaches to the right.
+A person points forward.
+A person looks around while standing.
+A person steps forward and waves.
+A person steps backward and raises arms.
+A person walks forward then turns left.
+A person walks forward then turns right.
+A person walks backward then turns around.
+A person does a small jump and wave.
+A person does a squat and a turn.
+A person does a kick and steps back.
+A person makes a quick celebratory motion.
+A person performs a cautious side step.
+A person moves in a playful dance.
+A person moves arms while standing still.
+A person transitions from standing to walking.
+A person slows down after walking.
+A person changes direction while walking.

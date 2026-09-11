@@ -1,0 +1,176 @@
+{
+  "schema_version": "d3_semantic_mismatch_v1",
+  "random_persistent_minus_normal": {
+    "root_post_w5_auc_cm_windows": {
+      "mean_difference": 17.862729924065725,
+      "ci95": [
+        -23.367710052217756,
+        58.54909004739347
+      ],
+      "effect_size": 0.38331794662202073,
+      "win_fraction": 0.42857142857142855,
+      "p_value_two_sided": 0.38,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260906
+    },
+    "constraint_post_w5_auc_cm_windows": {
+      "mean_difference": 17.50742789677211,
+      "ci95": [
+        -18.64761556982994,
+        54.47208227089472
+      ],
+      "effect_size": 0.44184782112315557,
+      "win_fraction": 0.2857142857142857,
+      "p_value_two_sided": 0.3406,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260906
+    },
+    "root_post_w5_slope_cm_per_window": {
+      "mean_difference": 0.46704451315444173,
+      "ci95": [
+        0.01652252054663643,
+        1.1604313793567889
+      ],
+      "effect_size": 0.7153596153226917,
+      "win_fraction": 0.14285714285714285,
+      "p_value_two_sided": 0.0377,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260906
+    },
+    "constraint_post_w5_slope_cm_per_window": {
+      "mean_difference": 0.5203370075585143,
+      "ci95": [
+        -0.0058637250536467565,
+        1.2975577063968458
+      ],
+      "effect_size": 0.7299181201418753,
+      "win_fraction": 0.14285714285714285,
+      "p_value_two_sided": 0.0536,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260906
+    },
+    "root_final_window_cm": {
+      "mean_difference": 5.079637323107038,
+      "ci95": [
+        -0.08361753906522473,
+        12.433717417716974
+      ],
+      "effect_size": 0.7142034422889173,
+      "win_fraction": 0.14285714285714285,
+      "p_value_two_sided": 0.0553,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260906
+    },
+    "constraint_final_window_cm": {
+      "mean_difference": 5.306699344090053,
+      "ci95": [
+        -0.04485971076147893,
+        12.66448862041745
+      ],
+      "effect_size": 0.7588946975834181,
+      "win_fraction": 0.2857142857142857,
+      "p_value_two_sided": 0.0528,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260906
+    }
+  },
+  "semantic_persistent_minus_normal": {
+    "root_post_w5_auc_cm_windows": {
+      "mean_difference": 17.862729924065725,
+      "ci95": [
+        -23.53842982734953,
+        57.41852574007849
+      ],
+      "effect_size": 0.38331794662202073,
+      "win_fraction": 0.42857142857142855,
+      "p_value_two_sided": 0.3841,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260909
+    },
+    "constraint_post_w5_auc_cm_windows": {
+      "mean_difference": 17.50742789677211,
+      "ci95": [
+        -18.79638628959656,
+        53.85772998332976
+      ],
+      "effect_size": 0.44184782112315557,
+      "win_fraction": 0.2857142857142857,
+      "p_value_two_sided": 0.3475,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260909
+    },
+    "root_post_w5_slope_cm_per_window": {
+      "mean_difference": 0.46704451315444173,
+      "ci95": [
+        0.016019952843664576,
+        1.1516714761470512
+      ],
+      "effect_size": 0.7153596153226917,
+      "win_fraction": 0.14285714285714285,
+      "p_value_two_sided": 0.0364,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260909
+    },
+    "constraint_post_w5_slope_cm_per_window": {
+      "mean_difference": 0.5203370075585143,
+      "ci95": [
+        0.001889700951344025,
+        1.281069262549865
+      ],
+      "effect_size": 0.7299181201418753,
+      "win_fraction": 0.14285714285714285,
+      "p_value_two_sided": 0.0491,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260909
+    },
+    "root_final_window_cm": {
+      "mean_difference": 5.079637323107038,
+      "ci95": [
+        -0.07891323907034738,
+        12.447601771354648
+      ],
+      "effect_size": 0.7142034422889173,
+      "win_fraction": 0.14285714285714285,
+      "p_value_two_sided": 0.0562,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260909
+    },
+    "constraint_final_window_cm": {
+      "mean_difference": 5.306699344090053,
+      "ci95": [
+        -0.021103804452078587,
+        12.696313730307983
+      ],
+      "effect_size": 0.7588946975834181,
+      "win_fraction": 0.2857142857142857,
+      "p_value_two_sided": 0.0513,
+      "actors": 7,
+      "motions": 16,
+      "resamples": 20000,
+      "seed": 20260909
+    }
+  },
+  "interpretation": "With batch_size=2, the only derangement is the same swap for random and semantic pairing; semantic mismatch is therefore not an independent stronger intervention on this panel."
+}

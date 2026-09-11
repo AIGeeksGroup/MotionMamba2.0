@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "state-memory-operator"
+version = "0.1.0"
+description = "State-Transition Memory Operator: clean Mamba-3 sequence/memory operator for downstream motion integration"
+requires-python = ">=3.10"
+dependencies = [
+  "torch",
+  "einops",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

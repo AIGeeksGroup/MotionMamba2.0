@@ -1,0 +1,72 @@
+{
+  "schema_version": "stage_d2_native_preserving_v1",
+  "date": "2026-09-03",
+  "baseline_git_sha": "f4cea2ab8652edb7c5d1e3dc0a269434883d99e2",
+  "parent": {
+    "checkpoint": "/data4/zts/result/bones_seed_contract_full50k_20260824_hybrid/hybrid_humanml3d_ddp.pt",
+    "sha256": "cfa9d44d9a804e3f71dbfde98cbad7faceed98bca83b5417c3afb5bca6071a4a",
+    "manifest": "docs/B_BASELINE_MANIFEST.json"
+  },
+  "data": {
+    "dataset": "BONES-SEED v004 G1",
+    "train_manifest": "/data4/zts/result/bones_seed_ardy_train/manifest.jsonl",
+    "selection_manifest": "/data4/zts/result/bones_seed_ardy_val/manifest.jsonl",
+    "stats_dir": "/data4/zts/result/bones_seed_ardy_train",
+    "text_cache": "/data4/zts/result/bones_seed_text_cache_llm2vec",
+    "locked_final_policy": "MUST NOT READ"
+  },
+  "architecture": {
+    "mode": "hybrid",
+    "attention_window_chunks": 4,
+    "token_state_interaction": "state_query",
+    "state_aware_output_mode": "native_gated_add",
+    "state_summary_dim": 128,
+    "use_state_delta_for_address": true,
+    "state_conditioning_scale_init": 0.0,
+    "content_memory_enabled": true,
+    "content_memory_slots": 2,
+    "content_memory_write_gate_context": "previous_memory",
+    "content_memory_decoder_init_scale": 0.02,
+    "content_memory_write_gate_init_scale": 0.02,
+    "content_memory_write_gate_bias_init": 0.0,
+    "content_memory_read_scale_init": 0.0
+  },
+  "learned_delayed_cue_gate": {
+    "seed": 20260903,
+    "steps": 800,
+    "batch_size": 64,
+    "eval_samples": 512,
+    "learning_rate": 0.003,
+    "correct_accuracy_min": 0.9,
+    "correct_minus_best_core_causal_ablation_min": 0.25,
+    "core_causal_ablations": [
+      "write_off_at_W1",
+      "readout_off_after_W4",
+      "permute_memory_after_W4"
+    ]
+  },
+  "step100_training": {
+    "variants": ["D2-no-delta", "D2-full"],
+    "train_scope": "state_memory",
+    "steps": 100,
+    "world_size_per_variant": 4,
+    "per_rank_batch_size": 1,
+    "learning_rate": 0.0005,
+    "seed": 9032026,
+    "frames": 156,
+    "generated_history_probability": 1.0,
+    "generated_history_diffusion_steps": 10,
+    "generated_history_bptt_windows": 1,
+    "sequential_rollout_curriculum": "d2_three_window_v1",
+    "short_window_probability": 0.0
+  },
+  "step100_to_step250_gate": {
+    "nonzero_gradient_update_fraction_min": 0.5,
+    "short_horizon_relative_degradation_max": 0.05,
+    "requires_root_slope_or_auc_better_than_native": true,
+    "requires_constraint_slope_or_auc_better_than_native": true,
+    "forbids_all_four_primary_long_metrics_worse": true,
+    "requires_at_least_one_content_causal_ablation_worse": true
+  },
+  "claim_boundary": "No real-motion persistent-memory claim before the step100 causal gate; no Stage E-I work in this run."
+}

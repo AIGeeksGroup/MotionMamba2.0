@@ -1,0 +1,17 @@
+{
+  "stage": "C",
+  "status": "FAIL (historical real-cache gate; no 250-step escalation authorized)",
+  "architecture": "state_query Hybrid reusing StateProjector/state_summary/state_delta/state_to_address",
+  "parent_checkpoint": "/workspace/ardy_stage05/outputs/minimal_real_v1/sequence_minimal.pt",
+  "parent_sha256": "acbdcc78c6594ad690a1d3a76b129665198fd142e487a1eb64bf43163a1b949f",
+  "dataset": "historical real sequential teacher cache",
+  "seed": 61,
+  "steps_completed": 100,
+  "steps_escalated": 250,
+  "steps_escalated_reason": "The mandatory 100-step overfit gate failed.",
+  "variants": [
+    {"interaction": "state_query", "use_state_delta": false, "first_loss": 0.6960473, "final_loss": 0.6678084, "reduction_percent": 4.06, "final_eval": 0.8190935},
+    {"interaction": "state_query", "use_state_delta": true, "first_loss": 0.6960473, "final_loss": 0.6684049, "reduction_percent": 3.97, "final_eval": 0.7930969}
+  ],
+  "source_document": "docs/stage06_contribution1_closeout.md"
+}

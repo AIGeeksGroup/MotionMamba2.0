@@ -1,0 +1,10 @@
+stage,status,evidence,论文使用建议
+A,FAIL,"FID=14.9845; cosine=0.8807; official HML bridge biased","不可作为官方HumanML3D learned metrics"
+B,PASS,"Native Hybrid 50k locked; checkpoint SHA recorded","可作为实验设置/基线定义"
+C,FAIL,"real-cache 100-step state_query reduction 4.06%/3.97%; no causal gate","可作为失败消融与方法动机"
+D,IMPLEMENTATION_PASS_MECHANISM_NOT_RUN,"fixed-capacity memory; 58 contract tests pass; real-motion gate absent","仅可放方法实现与补充实验协议，不能放性能结论"
+E,NOT_RUN,"blocked by C/D gates","不放"
+F,NOT_RUN,"blocked by earlier gates","不放"
+G,NOT_RUN,"blocked by earlier gates","不放"
+H,NOT_RUN,"blocked by earlier gates","不放"
+I,NOT_RUN,"blocked by earlier gates","不放"

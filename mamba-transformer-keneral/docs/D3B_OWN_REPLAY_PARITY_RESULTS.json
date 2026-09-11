@@ -1,0 +1,24 @@
+{
+  "schema_version": "d3b_own_replay_parity_v1",
+  "status": "FAIL",
+  "classification": "Case E - intervention plumbing failure",
+  "normal": "/data4/zts/result/stage_d3b_memory_specificity_20260906/20s_normal/per_sample.jsonl",
+  "normal_rerun": "/data4/zts/result/stage_d3b_memory_specificity_20260906/20s_normal_rerun/per_sample.jsonl",
+  "own_replay_v1": "/data4/zts/result/stage_d3b_memory_specificity_20260906/20s_own_replay/per_sample.jsonl",
+  "own_replay_v2": "/data4/zts/result/stage_d3b_memory_specificity_20260906/20s_own_replay_v2/per_sample.jsonl",
+  "panel_rows": 32,
+  "normal_rerun_exact_match": true,
+  "v1": {
+    "root_post_w5_auc_mean_difference": 0.14097200334072113,
+    "constraint_post_w5_auc_mean_difference": 0.08891795575618744,
+    "root_post_w5_auc_max_abs_difference": 1.9193782806396484,
+    "constraint_post_w5_auc_max_abs_difference": 2.3817405700683594
+  },
+  "v2": {
+    "root_post_w5_auc_mean_difference": 0.19834443926811218,
+    "constraint_post_w5_auc_mean_difference": 0.16747157275676727,
+    "root_post_w5_auc_max_abs_difference": 3.1940536499023438,
+    "constraint_post_w5_auc_max_abs_difference": 3.9064598083496094
+  },
+  "decision": "STOP before donor comparisons; no specificity, decomposition, layerwise, or no-delta claim is valid."
+}

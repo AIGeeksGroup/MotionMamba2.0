@@ -1,0 +1,22 @@
+{
+  "stage": "D",
+  "date": "2026-09-02",
+  "status": "NOT RUN",
+  "mechanism_harness": {
+    "benchmark": "docs/CAUSAL_MEMORY_BENCHMARK_RESULTS.json",
+    "correct_carry_accuracy": 1.0,
+    "minimal_zero_fresh_accuracy": 0.5,
+    "permuted_accuracy": 0.0,
+    "scope": "deterministic bookkeeping harness only, not a trained-motion result"
+  },
+  "real_motion_interventions": {
+    "correct": "NOT RUN",
+    "d_no_delta": "NOT RUN",
+    "zero_delta": "NOT RUN",
+    "permute_delta": "NOT RUN",
+    "write_off": "NOT RUN",
+    "readout_off": "NOT RUN",
+    "content_memory_permutation": "NOT RUN"
+  },
+  "gate": "FAIL: no trained D checkpoint or real-motion causal results; C did not pass."
+}

@@ -1,0 +1,671 @@
+{
+  "schema_version": "d3_intervention_analysis_v1",
+  "git_sha": "52a8c90363442e66684e84c402f1b9e7742846a8",
+  "git_worktree_dirty": true,
+  "source_sha256": {
+    "src/ardy_adapter/diffusion_memory.py": "eb4a2cc84018619d81a52f4ce8bf88d92602093687ec9fad21928afda0db2f99",
+    "src/ardy_adapter/ardy_dit_block.py": "b8d9e63b4a814c500563d6869b21b7120026f28eb5e1346e46099e609a16c04d",
+    "src/sequence_kernel/operator.py": "72dfc18e4bf1516a79edfd59b8a6121bcca9fa48d2a40f567cf05b1480c4addd",
+    "examples/evaluate_ardy_official_table5.py": "8ec43790be987f1dd4799d285e2501aab28289a04c79932eedda2f360c88a795"
+  },
+  "checkpoint": "/data4/zts/result/stage_d2rl_bones_long_20260904/step5000/full/hybrid_humanml3d_ddp.pt",
+  "checkpoint_sha256": "f197e8d7c12fca6c82db0d36a1e31ccf34163074ec8ec9aa847f0a25ca696020",
+  "panel_manifest": "/data3/zts/MotionMamba2.0/mamba-transformer-keneral/docs/D3_PANEL_MANIFEST.json",
+  "protocol": {
+    "sample_ids": [
+      "selection:body_check_001__A186:60:1000:in_horizon",
+      "selection:body_check_001__A255:59:1000:in_horizon",
+      "selection:playing_recorder_R_003__A283:219:1000:in_horizon",
+      "selection:body_check_001__A256:10:1000:in_horizon",
+      "selection:inj_torso_walk_180_R_max_001__A090:214:1000:in_horizon",
+      "selection:body_check_001__A257:27:1000:in_horizon",
+      "selection:body_check_001__A483:3:1000:in_horizon",
+      "selection:body_check_001__A186_M:68:1000:in_horizon",
+      "selection:body_check_001__A255_M:55:1000:in_horizon",
+      "selection:playing_recorder_R_003__A283_M:201:1000:in_horizon",
+      "selection:body_check_001__A256_M:2:1000:in_horizon",
+      "selection:inj_torso_walk_180_R_max_001__A090_M:124:1000:in_horizon",
+      "selection:body_check_001__A257_M:29:1000:in_horizon",
+      "selection:body_check_001__A483_M:2:1000:in_horizon",
+      "selection:inj_torso_walk_180_R_max_002__A090:114:1000:in_horizon",
+      "selection:inj_torso_walk_180_R_max_002__A090_M:94:1000:in_horizon"
+    ],
+    "actor_uids": [
+      "A186",
+      "A255",
+      "A283",
+      "A256",
+      "A090",
+      "A257",
+      "A483",
+      "A186",
+      "A255",
+      "A283",
+      "A256",
+      "A090",
+      "A257",
+      "A483",
+      "A090",
+      "A090"
+    ],
+    "panel_sha256": "41909e76aa2a0011bb76cddec77048dd4bdb9aaa4cb8feac78a42e57dfa4579a",
+    "diffusion_steps": 10,
+    "cfg_weight_text": 2.0,
+    "cfg_weight_constraint": 2.0,
+    "attention_window_chunks": 4
+  },
+  "runtime": {
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4",
+    "gpu": "NVIDIA GeForce RTX 4090"
+  },
+  "bootstrap": {
+    "resamples": 20000,
+    "seed_base": 20260905,
+    "unit": "actor_then_motion_within_actor"
+  },
+  "comparisons": {
+    "one_shot_permute_memory": {
+      "root_post_w5_auc_cm_windows": {
+        "mean_difference": 0.05353735174451556,
+        "ci95": [
+          -38.36516929907459,
+          25.306511742728066
+        ],
+        "effect_size": 0.0014004702879246214,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.865,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260905
+      },
+      "constraint_post_w5_auc_cm_windows": {
+        "mean_difference": 0.019728899002075195,
+        "ci95": [
+          -36.05891385504177,
+          24.286995625495898
+        ],
+        "effect_size": 0.0005556241662251122,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.8713,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260905
+      },
+      "root_post_w5_slope_cm_per_window": {
+        "mean_difference": 0.0719937928243186,
+        "ci95": [
+          -0.021113759174451484,
+          0.20024368943281057
+        ],
+        "effect_size": 0.6953034618896982,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.1471,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260905
+      },
+      "constraint_post_w5_slope_cm_per_window": {
+        "mean_difference": 0.10710626019039171,
+        "ci95": [
+          -0.017639664856942426,
+          0.27324810692055007
+        ],
+        "effect_size": 0.6554392798163123,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.1146,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260905
+      },
+      "root_final_window_cm": {
+        "mean_difference": 0.5121022633143834,
+        "ci95": [
+          -1.2692817892347061,
+          2.0497104508536172
+        ],
+        "effect_size": 0.2892350149138018,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.5228,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260905
+      },
+      "constraint_final_window_cm": {
+        "mean_difference": 0.8012977327619281,
+        "ci95": [
+          -0.8458750724792481,
+          2.4543991667883724
+        ],
+        "effect_size": 0.47922264884986804,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.3344,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260905
+      }
+    },
+    "persistent_read_permutation": {
+      "root_post_w5_auc_cm_windows": {
+        "mean_difference": 17.862729924065725,
+        "ci95": [
+          -23.367710052217756,
+          58.54909004739347
+        ],
+        "effect_size": 0.38331794662202073,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.38,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260906
+      },
+      "constraint_post_w5_auc_cm_windows": {
+        "mean_difference": 17.50742789677211,
+        "ci95": [
+          -18.64761556982994,
+          54.47208227089472
+        ],
+        "effect_size": 0.44184782112315557,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.3406,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260906
+      },
+      "root_post_w5_slope_cm_per_window": {
+        "mean_difference": 0.46704451315444173,
+        "ci95": [
+          0.01652252054663643,
+          1.1604313793567889
+        ],
+        "effect_size": 0.7153596153226917,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0377,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260906
+      },
+      "constraint_post_w5_slope_cm_per_window": {
+        "mean_difference": 0.5203370075585143,
+        "ci95": [
+          -0.0058637250536467565,
+          1.2975577063968458
+        ],
+        "effect_size": 0.7299181201418753,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0536,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260906
+      },
+      "root_final_window_cm": {
+        "mean_difference": 5.079637323107038,
+        "ci95": [
+          -0.08361753906522473,
+          12.433717417716974
+        ],
+        "effect_size": 0.7142034422889173,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0553,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260906
+      },
+      "constraint_final_window_cm": {
+        "mean_difference": 5.306699344090053,
+        "ci95": [
+          -0.04485971076147893,
+          12.66448862041745
+        ],
+        "effect_size": 0.7588946975834181,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.0528,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260906
+      }
+    },
+    "freeze_write_after_w4": {
+      "root_post_w5_auc_cm_windows": {
+        "mean_difference": 3.289982489177159,
+        "ci95": [
+          -10.357794047253472,
+          17.351061150005883
+        ],
+        "effect_size": 0.20129469821161733,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.6398,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260907
+      },
+      "constraint_post_w5_auc_cm_windows": {
+        "mean_difference": 8.736231514385768,
+        "ci95": [
+          -4.13575268813542,
+          23.45963131615093
+        ],
+        "effect_size": 0.5691269603702503,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.2038,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260907
+      },
+      "root_post_w5_slope_cm_per_window": {
+        "mean_difference": -0.00565622043759307,
+        "ci95": [
+          -0.19534131118229447,
+          0.14259372635763562
+        ],
+        "effect_size": -0.029607829625729852,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.9617,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260907
+      },
+      "constraint_post_w5_slope_cm_per_window": {
+        "mean_difference": -0.11647389238258765,
+        "ci95": [
+          -0.36965528004772147,
+          0.08428056220431901
+        ],
+        "effect_size": -0.46695262322079917,
+        "win_fraction": 0.5714285714285714,
+        "p_value_two_sided": 0.3027,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260907
+      },
+      "root_final_window_cm": {
+        "mean_difference": 0.20464461190359934,
+        "ci95": [
+          -2.1670965586389817,
+          2.1065332531929015
+        ],
+        "effect_size": 0.08058175398440759,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.781,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260907
+      },
+      "constraint_final_window_cm": {
+        "mean_difference": 0.1982250213623047,
+        "ci95": [
+          -2.1026433944702148,
+          2.154427187783377
+        ],
+        "effect_size": 0.0846078834583332,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.7787,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260907
+      }
+    },
+    "one_shot_permute_plus_freeze_write": {
+      "root_post_w5_auc_cm_windows": {
+        "mean_difference": 22.53501989160265,
+        "ci95": [
+          -20.966341191955976,
+          70.42820181761468
+        ],
+        "effect_size": 0.42300496310031055,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.3339,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260908
+      },
+      "constraint_post_w5_auc_cm_windows": {
+        "mean_difference": 25.30793523788452,
+        "ci95": [
+          -13.788183327232089,
+          68.97334629893301
+        ],
+        "effect_size": 0.5332241889732582,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.221,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260908
+      },
+      "root_post_w5_slope_cm_per_window": {
+        "mean_difference": 0.515374644285469,
+        "ci95": [
+          -0.06443135009268566,
+          1.3066288535935549
+        ],
+        "effect_size": 0.5891698474421287,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.1038,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260908
+      },
+      "constraint_post_w5_slope_cm_per_window": {
+        "mean_difference": 0.5174127923076155,
+        "ci95": [
+          -0.1284224118767205,
+          1.3882916718225462
+        ],
+        "effect_size": 0.5499884249129123,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.1476,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260908
+      },
+      "root_final_window_cm": {
+        "mean_difference": 5.701389448983329,
+        "ci95": [
+          -1.0557889120919364,
+          14.574669410501196
+        ],
+        "effect_size": 0.5672337901329343,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.1256,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260908
+      },
+      "constraint_final_window_cm": {
+        "mean_difference": 6.539841038840158,
+        "ci95": [
+          -0.6935013089861188,
+          15.675545838900955
+        ],
+        "effect_size": 0.6430866314081255,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.087,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260908
+      }
+    },
+    "semantic_mismatch_persistent_read_permutation": {
+      "root_post_w5_auc_cm_windows": {
+        "mean_difference": 17.862729924065725,
+        "ci95": [
+          -23.53842982734953,
+          57.41852574007849
+        ],
+        "effect_size": 0.38331794662202073,
+        "win_fraction": 0.42857142857142855,
+        "p_value_two_sided": 0.3841,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260909
+      },
+      "constraint_post_w5_auc_cm_windows": {
+        "mean_difference": 17.50742789677211,
+        "ci95": [
+          -18.79638628959656,
+          53.85772998332976
+        ],
+        "effect_size": 0.44184782112315557,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.3475,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260909
+      },
+      "root_post_w5_slope_cm_per_window": {
+        "mean_difference": 0.46704451315444173,
+        "ci95": [
+          0.016019952843664576,
+          1.1516714761470512
+        ],
+        "effect_size": 0.7153596153226917,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0364,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260909
+      },
+      "constraint_post_w5_slope_cm_per_window": {
+        "mean_difference": 0.5203370075585143,
+        "ci95": [
+          0.001889700951344025,
+          1.281069262549865
+        ],
+        "effect_size": 0.7299181201418753,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0491,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260909
+      },
+      "root_final_window_cm": {
+        "mean_difference": 5.079637323107038,
+        "ci95": [
+          -0.07891323907034738,
+          12.447601771354648
+        ],
+        "effect_size": 0.7142034422889173,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0562,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260909
+      },
+      "constraint_final_window_cm": {
+        "mean_difference": 5.306699344090053,
+        "ci95": [
+          -0.021103804452078587,
+          12.696313730307983
+        ],
+        "effect_size": 0.7588946975834181,
+        "win_fraction": 0.2857142857142857,
+        "p_value_two_sided": 0.0513,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260909
+      }
+    },
+    "write_off": {
+      "root_post_w5_auc_cm_windows": {
+        "mean_difference": 120.55331611633301,
+        "ci95": [
+          53.79164945398058,
+          214.38142807824266
+        ],
+        "effect_size": 1.1962302846111117,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0001,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260910
+      },
+      "constraint_post_w5_auc_cm_windows": {
+        "mean_difference": 117.93475672176906,
+        "ci95": [
+          44.98169193778719,
+          218.68178238868708
+        ],
+        "effect_size": 1.0040544793000898,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0003,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260910
+      },
+      "root_post_w5_slope_cm_per_window": {
+        "mean_difference": 1.0070723896685352,
+        "ci95": [
+          0.3345155951404125,
+          2.0671607277868684
+        ],
+        "effect_size": 0.8030931324557146,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0001,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260910
+      },
+      "constraint_post_w5_slope_cm_per_window": {
+        "mean_difference": 1.1648263711944296,
+        "ci95": [
+          0.47864806108048064,
+          2.170756692218256
+        ],
+        "effect_size": 1.0121121428656807,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0001,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260910
+      },
+      "root_final_window_cm": {
+        "mean_difference": 13.916417394365583,
+        "ci95": [
+          4.953846529551915,
+          27.21087200811931
+        ],
+        "effect_size": 0.9055235531779503,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0004,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260910
+      },
+      "constraint_final_window_cm": {
+        "mean_difference": 14.35029241016933,
+        "ci95": [
+          4.42200677735465,
+          27.68541464635303
+        ],
+        "effect_size": 0.925038654292226,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0025,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260910
+      }
+    },
+    "readout_off": {
+      "root_post_w5_auc_cm_windows": {
+        "mean_difference": 69.32913170542035,
+        "ci95": [
+          25.26729127253805,
+          123.58868878994662
+        ],
+        "effect_size": 1.4518830365895903,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0021,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260911
+      },
+      "constraint_post_w5_auc_cm_windows": {
+        "mean_difference": 69.07604479789734,
+        "ci95": [
+          22.051247915199827,
+          129.74661725333758
+        ],
+        "effect_size": 1.1072831338963445,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0029,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260911
+      },
+      "root_post_w5_slope_cm_per_window": {
+        "mean_difference": 1.0791514806133615,
+        "ci95": [
+          0.4259496559041262,
+          2.0621495480271657
+        ],
+        "effect_size": 0.93108411808177,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0001,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260911
+      },
+      "constraint_post_w5_slope_cm_per_window": {
+        "mean_difference": 1.222245452392794,
+        "ci95": [
+          0.5731246253721758,
+          2.1373939820642183
+        ],
+        "effect_size": 1.1544012407561406,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260911
+      },
+      "root_final_window_cm": {
+        "mean_difference": 10.871100970676967,
+        "ci95": [
+          3.8946371759687155,
+          21.235009981904707
+        ],
+        "effect_size": 0.9783855848251278,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0008,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260911
+      },
+      "constraint_final_window_cm": {
+        "mean_difference": 11.480299745287214,
+        "ci95": [
+          3.4726159044674465,
+          22.01487209456307
+        ],
+        "effect_size": 0.9996158974962827,
+        "win_fraction": 0.14285714285714285,
+        "p_value_two_sided": 0.0042,
+        "actors": 7,
+        "motions": 16,
+        "resamples": 20000,
+        "seed": 20260911
+      }
+    }
+  }
+}

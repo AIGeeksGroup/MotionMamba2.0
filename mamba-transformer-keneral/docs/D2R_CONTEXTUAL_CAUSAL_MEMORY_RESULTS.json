@@ -1,0 +1,32 @@
+{
+  "schema_version": "d2r_contextual_causal_memory_summary_v1",
+  "status": "PASS",
+  "scope": "synthetic mechanism benchmark only",
+  "source_artifact": "/data4/zts/result/stage_d2r_contextual_cue_v3_20260903/results.json",
+  "task": "W1 cue XOR text context; W2-W7 distractors; W8 classification after W1 Attention eviction",
+  "seed": 20260903,
+  "train_steps": 800,
+  "eval_samples": 512,
+  "memory_slots": 2,
+  "accuracies": {
+    "correct": 1.0,
+    "zero_delta_at_W1": 0.5,
+    "permute_delta_at_W1": 0.0,
+    "write_off_at_W1": 0.5,
+    "readout_off_after_W4": 0.5,
+    "permute_memory_after_W4": 0.0,
+    "direct_mamba_readout_off_after_W4": 1.0,
+    "state_address_off_after_W4": 1.0,
+    "permute_context_at_W1": 0.0,
+    "minimal_W4_control": 0.509765625
+  },
+  "nonzero_gradient_updates": {
+    "content_decoder": 799,
+    "write_gate": 799,
+    "read_scale": 800,
+    "state_projector": 799,
+    "mamba": 799
+  },
+  "checkpoint_sha256": "402a2a3afef3db8c94e3ac29258feb8b794cfa485ac2f82761c75c38ded67d61",
+  "claim_boundary": "This establishes trainability and contextual-delta capacity in the controlled task, not real-motion delta causality."
+}

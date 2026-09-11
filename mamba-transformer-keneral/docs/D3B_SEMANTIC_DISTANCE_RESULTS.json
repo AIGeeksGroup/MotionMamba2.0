@@ -1,0 +1,6 @@
+{
+  "schema_version": "d3b_semantic_distance_v1",
+  "status": "NOT_RUN",
+  "blocked_by": "offline-own replay parity failure",
+  "pairing_manifest": "docs/D3B_DONOR_PAIRING_MANIFEST.json"
+}

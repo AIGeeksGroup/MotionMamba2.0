@@ -1,0 +1,33 @@
+{
+  "schema_version": "d3_panel_manifest_v1",
+  "panel_path": "/data4/zts/result/bones_seed_long_memory_panel_v2_20260831/selection/40s_in_horizon.jsonl",
+  "panel_sha256": "41909e76aa2a0011bb76cddec77048dd4bdb9aaa4cb8feac78a42e57dfa4579a",
+  "protocol": "BONES-SEED selection actors, 40s in-horizon, Attention W4",
+  "selection_actors_total": 31,
+  "eligible_40s_actor_count": 7,
+  "eligible_motion_count": 16,
+  "caption_available_count": 16,
+  "constraint_available_count": 16,
+  "target_motion_count": 32,
+  "target_actor_count": 10,
+  "target_attainable": false,
+  "eligibility_note": "The locked selection validation manifest contains exactly 16 rows at the 40s protocol span; no locked-final actors were used.",
+  "panel_ids": [
+    "selection:body_check_001__A186:60:1000:in_horizon",
+    "selection:body_check_001__A255:59:1000:in_horizon",
+    "selection:playing_recorder_R_003__A283:219:1000:in_horizon",
+    "selection:body_check_001__A256:10:1000:in_horizon",
+    "selection:inj_torso_walk_180_R_max_001__A090:214:1000:in_horizon",
+    "selection:body_check_001__A257:27:1000:in_horizon",
+    "selection:body_check_001__A483:3:1000:in_horizon",
+    "selection:body_check_001__A186_M:68:1000:in_horizon",
+    "selection:body_check_001__A255_M:55:1000:in_horizon",
+    "selection:playing_recorder_R_003__A283_M:201:1000:in_horizon",
+    "selection:body_check_001__A256_M:2:1000:in_horizon",
+    "selection:inj_torso_walk_180_R_max_001__A090_M:124:1000:in_horizon",
+    "selection:body_check_001__A257_M:29:1000:in_horizon",
+    "selection:body_check_001__A483_M:2:1000:in_horizon",
+    "selection:inj_torso_walk_180_R_max_002__A090:114:1000:in_horizon",
+    "selection:inj_torso_walk_180_R_max_002__A090_M:94:1000:in_horizon"
+  ]
+}

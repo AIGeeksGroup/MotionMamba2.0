@@ -1,0 +1,44 @@
+{
+  "benchmark": "w1_binary_cue_w4_eviction_w8",
+  "cache_windows": 4,
+  "cue_evicted_before_w8": true,
+  "expected_order": "correct >> chance; permute/zero/fresh ~= chance; minimal ~= chance",
+  "interpretation": "Deterministic harness validates intervention bookkeeping; it is not trained-model evidence.",
+  "interventions": {
+    "correct": {
+      "constraint_error_proxy": 0.0,
+      "cue_accuracy": 1.0,
+      "final_goal_success": 1.0,
+      "root_ade_proxy": 0.0,
+      "state_carry": true
+    },
+    "fresh": {
+      "constraint_error_proxy": 0.5,
+      "cue_accuracy": 0.5,
+      "final_goal_success": 0.5,
+      "root_ade_proxy": 0.5
+    },
+    "minimal": {
+      "constraint_error_proxy": 0.5,
+      "cue_accuracy": 0.5,
+      "final_goal_success": 0.5,
+      "root_ade_proxy": 0.5,
+      "state_carry": false
+    },
+    "permute": {
+      "constraint_error_proxy": 1.0,
+      "cue_accuracy": 0.0,
+      "final_goal_success": 0.0,
+      "root_ade_proxy": 1.0
+    },
+    "zero": {
+      "constraint_error_proxy": 0.5,
+      "cue_accuracy": 0.5,
+      "final_goal_success": 0.5,
+      "root_ade_proxy": 0.5
+    }
+  },
+  "samples": 256,
+  "seed": 20260902,
+  "status": "PASS"
+}

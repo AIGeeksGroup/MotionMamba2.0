@@ -1,0 +1,101 @@
+{
+  "actor_counts": {
+    "locked_final": 28,
+    "selection": 31,
+    "train": 463
+  },
+  "actor_set_sha256": {
+    "locked_final": "aed4604838e1e2cc0745266603a527c615881672b73543041154d4a531b2af6e",
+    "selection": "a833ae79ffc2038269a53e201a075219f2edc9c29ffa95e2f5c2b3c160eb5882",
+    "train": "9f4b58dde01ec0989b8c4aeca6fb6c19de92f7e30b16a1d10b59c033c6e0c54e"
+  },
+  "attention_window_chunks": 4,
+  "attention_window_variants": [
+    4,
+    8,
+    16
+  ],
+  "batch_size": 2,
+  "bootstrap_resamples": 20000,
+  "bootstrap_unit": "actor_then_motion_within_actor",
+  "cfg": {
+    "constraint": 2.0,
+    "text": 2.0
+  },
+  "checkpoint_selection": "selection_only_then_locked_final_once",
+  "dataset": "BONES-SEED-v004",
+  "diffusion_steps": 10,
+  "dtype": "float32_model_bf16_kernel_dependent",
+  "durations_seconds": [
+    9,
+    20,
+    40
+  ],
+  "evaluation_seed": 20260831,
+  "fps": 25,
+  "gt_prefix_frames": 24,
+  "horizon_frames": 52,
+  "locked_final_status": "unread",
+  "mamba_decay": {
+    "half_life_windows": 4.0,
+    "min_scale": 0.0,
+    "start_windows": 4
+  },
+  "manifest_sha256": {
+    "locked_final": "7b36fe0a8d45b3326a4e3af10c1865702f3a4dd547c71ec88d7779de6abc78eb",
+    "selection": "507cdb2def610e7917a3d9fed871e1d80fe41382711924bd4b5fb5c2113536b0",
+    "train": "7f5457913a6bf25a8b71c8b45d0316cdfa8f9ab0a1436d00b8160d08f049928f"
+  },
+  "panel_rows": {
+    "locked_final/20s_in_horizon": 16,
+    "locked_final/20s_out_of_horizon": 16,
+    "locked_final/40s_in_horizon": 16,
+    "locked_final/40s_out_of_horizon": 16,
+    "locked_final/9s_in_horizon": 64,
+    "locked_final/9s_out_of_horizon": 64,
+    "locked_final/table4": 64,
+    "selection/20s_in_horizon": 16,
+    "selection/20s_out_of_horizon": 16,
+    "selection/40s_in_horizon": 16,
+    "selection/40s_out_of_horizon": 16,
+    "selection/9s_in_horizon": 64,
+    "selection/9s_out_of_horizon": 64,
+    "selection/table4": 64
+  },
+  "panel_sha256": {
+    "locked_final/20s_in_horizon": "b317e1df9281f009e72a7475f59a5848d702fd4ec1a9cefe295166aa13000421",
+    "locked_final/20s_out_of_horizon": "6371182b7e6bfeea4323cf5947b4ff651221dee5c2237e584262dea818bea137",
+    "locked_final/40s_in_horizon": "ea54a4b274afbe7e10f9ba5196243e5c1aefda9e1ba0d4ff16f8ad1764afc3c7",
+    "locked_final/40s_out_of_horizon": "3737b1b5349fd54dc0de0de9f2fe2c3202889e63abc23fbff1d1d1219a64f20d",
+    "locked_final/9s_in_horizon": "d643824e3a239e7780f9377cc97fc9ad1c8799fb2cec6f4bf9a3feb66fc81bfa",
+    "locked_final/9s_out_of_horizon": "84ac0bf68933fb6b53cee3399d6151b797219282291134beaa99801d82ca791e",
+    "locked_final/table4": "9d8cc8df9ad3532600bab6a3f8f2c5c3a395f88bd20c79027456b5de92d5c063",
+    "selection/20s_in_horizon": "6c74297021acc97758000e2ca053c2cd9f5d55e9340ac9f13f4aae69aef41754",
+    "selection/20s_out_of_horizon": "e6536d9026d5a6685faca647f6e6eeea7f121d143dc5b51ee41494db6c1e7839",
+    "selection/40s_in_horizon": "41909e76aa2a0011bb76cddec77048dd4bdb9aaa4cb8feac78a42e57dfa4579a",
+    "selection/40s_out_of_horizon": "f52370f1d4d0d4a76f4b672a6ebf7b3bfb11745f298ac47039759a80789c0843",
+    "selection/9s_in_horizon": "9007499704361c63d579f9f1eb6aed187b1aad99a47da32d980b225f9e8d4653",
+    "selection/9s_out_of_horizon": "3696795df96fa1e1d3a8543c1f7c0d47bb661ab60de55802841f5444c102cfa4",
+    "selection/table4": "be23b88c53976ec40395905d385715bed8c4767cf1cc8ed8c13469a7571a7f31"
+  },
+  "primary_metrics": [
+    "root_post_w5_auc",
+    "root_post_w5_slope",
+    "root_final_window",
+    "constraint_post_w5_auc",
+    "constraint_post_w5_slope",
+    "constraint_final_window"
+  ],
+  "protocol_version": "bones_seed_long_memory_v2",
+  "secondary_multiple_comparison": "Holm",
+  "short_retention_threshold": 0.1,
+  "split_roles": {
+    "locked_final": "newly frozen confirmation set; not claimed as never-observed blind test",
+    "selection": "actor-disjoint validation used for all choices"
+  },
+  "training_seeds": [
+    827321,
+    827322,
+    827323
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": "d2_trainability_results_v1",
+  "date": "2026-09-03",
+  "status": "PASS",
+  "legacy_baseline": {
+    "git_sha": "f4cea2ab8652edb7c5d1e3dc0a269434883d99e2",
+    "protocol": "accepted W1; accepted W2; loss on W3",
+    "raw_artifact": "/data4/zts/result/stage_d2_trainability_20260903/legacy_default_init_gradient_probe.json",
+    "detach_true": {
+      "content_decoder.weight": 0.0,
+      "content_decoder.bias": 0.0,
+      "write_gate.weight": 0.0,
+      "write_gate.bias": 0.0,
+      "read_gate": 0.0,
+      "state_projector.weight": 0.0,
+      "token_state_interaction.weight": 0.0,
+      "token_state_interaction.scale": 0.00592011446133256,
+      "mamba.in_proj.weight": 0.0,
+      "attention.q_proj.weight": 0.19628854095935822
+    },
+    "detach_false": {
+      "content_decoder.weight": 0.0,
+      "content_decoder.bias": 0.0,
+      "write_gate.weight": 0.0,
+      "write_gate.bias": 0.0,
+      "read_gate": 0.0,
+      "state_projector.weight": 0.0,
+      "token_state_interaction.weight": 0.0,
+      "token_state_interaction.scale": 0.00592011446133256,
+      "mamba.in_proj.weight": 0.0,
+      "attention.q_proj.weight": 0.19628854095935822
+    },
+    "conclusion": "CONFIRMED_DEAD_START"
+  },
+  "fixed_default_initialization_cpu_microloop": {
+    "protocol": "same W1/W2/W3 path; two SGD micro-steps; read scale opens on step 1",
+    "detach_true_step2": {
+      "content_decoder.weight": 0.0,
+      "content_decoder.bias": 0.0,
+      "write_gate.weight": 0.0,
+      "write_gate.bias": 0.0,
+      "read_gate": 0.007633965462446213,
+      "state_projector.weight": 0.0,
+      "token_state_interaction.weight": 0.0002600336156319827,
+      "token_state_interaction.scale": 0.0064231837168335915,
+      "mamba.in_proj.weight": 0.0,
+      "attention.q_proj.weight": 0.15827161073684692
+    },
+    "detach_false_step2": {
+      "content_decoder.weight": 0.0002907194138970226,
+      "content_decoder.bias": 0.00021554458362516016,
+      "write_gate.weight": 5.807132197332976e-07,
+      "write_gate.bias": 6.758965582776e-07,
+      "read_gate": 0.009174004197120667,
+      "state_projector.weight": 0.0003411645593587309,
+      "token_state_interaction.weight": 0.0002699986507650465,
+      "token_state_interaction.scale": 0.005627613049000502,
+      "mamba.in_proj.weight": 0.00040019399602897465,
+      "attention.q_proj.weight": 0.15828372538089752
+    },
+    "test": "tests/test_content_memory_trainability.py"
+  },
+  "real_mamba_cuda": {
+    "test": "tests/test_content_memory_trainability.py::test_real_mamba_cross_window_gradient_attached_positive_detached_negative",
+    "result": "1 passed in 41.76s",
+    "torch": "2.6.0+cu124",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "attached_step2_smoke_grad_norms": {
+      "content_decoder": 6.7414616751193535e-06,
+      "write_gate": 5.352256238211339e-08,
+      "read_scale": 0.00031690660398453474,
+      "state_projector": 1.8863008222069766e-07,
+      "mamba": 1.1763813745346852e-07
+    },
+    "detach_control": "The mandatory test asserts exact zero decoder/write/StateProjector/Mamba gradient after two steps when accepted history is detached, while read-scale gradient remains nonzero."
+  },
+  "contracts": {
+    "native_parity_cpu": "PASS exact",
+    "nonzero_slot_zero_read_scale_parity_cpu": "PASS exact",
+    "previous_memory_changes_write_gate": "PASS",
+    "full_suite": "127 passed, 7 skipped",
+    "python_compile": "PASS",
+    "git_diff_check": "PASS"
+  }
+}

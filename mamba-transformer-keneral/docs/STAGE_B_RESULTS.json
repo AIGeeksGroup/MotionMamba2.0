@@ -1,0 +1,8 @@
+{
+  "stage": "B",
+  "status": "PASS",
+  "checkpoint_sha256": "cfa9d44d9a804e3f71dbfde98cbad7faceed98bca83b5417c3afb5bca6071a4a",
+  "steps": 50000,
+  "architecture": "Native Hybrid, bounded W4 attention cache, carried Mamba state",
+  "learned_metric_scope": "BONES-SEED proxy metrics only"
+}

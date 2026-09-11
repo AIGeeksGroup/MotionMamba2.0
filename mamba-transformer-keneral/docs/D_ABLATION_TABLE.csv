@@ -1,0 +1,8 @@
+variant,content_memory_use_state_delta,write_enabled,read_enabled,real_motion_status,causal_benchmark_status,interpretation
+D-full,true,true,true,NOT RUN,NOT RUN,Primary D mechanism
+D-no-delta,false,true,true,NOT RUN,NOT RUN,Same content path with zeroed delta input
+D-zero-delta,true,true,true,NOT RUN,NOT RUN,Pass zero content_memory_delta at cue write
+D-permute-delta,true,true,true,NOT RUN,NOT RUN,Pass row-permuted content_memory_delta at cue write
+D-write-off,true,false,true,NOT RUN,NOT RUN,No proposed slots are installed
+D-readout-off,true,true,false,NOT RUN,NOT RUN,Committed slots are not supplied to attention
+D-content-permute,true,true,true,NOT RUN,NOT RUN,Permute committed slots across trajectories
