@@ -54,8 +54,8 @@ def main():
         if relative:
             target = ROOT / "checkpoints" / relative
             shutil.copytree(snapshot, target, dirs_exist_ok=True)
-        if repo == "meta-llama/Meta-Llama-3-8B-Instruct":
-            # The unmodified LLM2Vec adapter names this base model without a
+        if repo != "nvidia/ARDY-G1-RP-25FPS-Horizon52":
+            # The unmodified LLM2Vec loader names these models without a
             # revision. A commit-pinned snapshot alone does not create refs/main;
             # register the pinned ref explicitly for its later offline lookup.
             ref = Path(cache)/("models--" + repo.replace("/", "--"))/"refs/main"

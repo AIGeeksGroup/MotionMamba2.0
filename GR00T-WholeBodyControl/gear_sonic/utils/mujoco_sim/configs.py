@@ -324,6 +324,12 @@ class BaseConfig(ArgsConfigTemplate):
         with open(config_path) as file:
             wbc_config = yaml.load(file, Loader=yaml.FullLoader)
 
+        if "SONIC_DDS_DOMAIN_ID" in os.environ:
+            domain = int(os.environ["SONIC_DDS_DOMAIN_ID"])
+            if not 0 <= domain <= 232:
+                raise ValueError("SONIC_DDS_DOMAIN_ID must be between 0 and 232")
+            wbc_config["DOMAIN_ID"] = domain
+
         wbc_config = override_wbc_config(wbc_config, self)
 
         return wbc_config

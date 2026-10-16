@@ -2198,7 +2198,12 @@ class G1Deploy {
                 << " lowcmd_publish_hz=" << (1.0 / publish_dt_) << std::endl;
       
       // Initialize ChannelFactory
-      ChannelFactory::Instance()->Init(0, networkInterface);
+      const char* ddsDomainEnv = std::getenv("SONIC_DDS_DOMAIN_ID");
+      const int ddsDomain = ddsDomainEnv ? std::stoi(ddsDomainEnv) : 0;
+      if (ddsDomain < 0 || ddsDomain > 232) {
+        throw std::runtime_error("SONIC_DDS_DOMAIN_ID must be between 0 and 232");
+      }
+      ChannelFactory::Instance()->Init(ddsDomain, networkInterface);
 
       // Initialize Dex3 hands (ChannelFactory already initialized above)
       dex3_hands_.initialize("");

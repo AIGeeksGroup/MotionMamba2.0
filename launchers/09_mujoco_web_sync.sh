@@ -2,7 +2,7 @@
 set -euo pipefail
 source "$(dirname "$0")/common.sh"
 
-PYTHON="$SONIC_ROOT/.venv_sim/bin/python"
+PYTHON="${MM2_SIM_PYTHON_ENV:-$SONIC_ROOT/.venv_sim}/bin/python"
 SCRIPT="$SONIC_ROOT/gear_sonic/scripts/run_sim_headless_web.py"
 if [ ! -x "$PYTHON" ] || [ ! -f "$SCRIPT" ]; then
   echo "[ERROR] MuJoCo environment or sync script is missing." >&2

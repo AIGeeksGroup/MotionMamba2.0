@@ -34,7 +34,9 @@ export CUDA_DEVICE_ORDER=PCI_BUS_ID
 export NO_PROXY="localhost,127.0.0.1,::1${NO_PROXY:+,$NO_PROXY}"
 export no_proxy="$NO_PROXY"
 export CHECKPOINTS_DIR="$MM2_ROOT/checkpoints/official"
-export TEXT_ENCODERS_DIR="$MM2_ROOT/checkpoints/text_encoders"
+# Resolve adapter repository IDs through the pinned Hub cache, just like the
+# deployed encoder. A local adapter folder is not a full base-model snapshot.
+unset TEXT_ENCODERS_DIR
 export PYTHONPATH="$MM2_ROOT/vendor/viser:$ARDY_ROOT:$SONIC_ROOT:$MM2_ROOT/ardy_sonic_web/backend${PYTHONPATH:+:$PYTHONPATH}"
 export PYTHONPATH="$MM2_ROOT/GR00T-WholeBodyControl/external_dependencies/unitree_sdk2_python:$PYTHONPATH"
 export LD_LIBRARY_PATH="$TENSORRT_ROOT/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"

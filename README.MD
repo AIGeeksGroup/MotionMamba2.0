@@ -6,7 +6,7 @@ SONIC/MuJoCo execution page. It includes the deployed acceleration code and the
 modified Viser TypeScript **and compiled client**. You do not need the original
 server's training directories, datasets or launcher files.
 
-The released model is named **moiton mamba 2.0** (spelling requested by its owner).
+The released model is named **moiton mamba 2.0**.
 It is the original Native G1 checkpoint at global step **117,000**: foundation
 112k followed by 5k future/interaction training. It has not been pruned or converted.
 
@@ -58,6 +58,10 @@ git clone --branch simulation --single-branch \
 cd MotionMamba2.0
 bash launchers/install.sh
 ```
+
+If the Python executables have different names, select them for installation:
+`PYTHON=/path/to/python3.11 SIM_PYTHON=/path/to/python3.10 bash launchers/install.sh`.
+Both interpreters must include `venv`/`ensurepip` support.
 
 The installer creates `.venv` for generation/viewing and a separate
 `GR00T-WholeBodyControl/.venv_sim` for MuJoCo. It installs the current deployment's
@@ -210,6 +214,11 @@ Sessions use a checkout-specific tmux prefix; stopping one checkout does not
 kill another checkout or unrelated training. Startup refuses ports owned by
 other processes and refuses a different already-running generator checkpoint.
 After editing the checkpoint, stop before starting again.
+
+When running multiple copies on one host, give each copy distinct TCP/ZMQ ports
+and set a distinct `SONIC_DDS_DOMAIN_ID` (0–232, default 0). Different ports alone
+do not isolate the policy-to-physics DDS channel. A normal single-copy setup
+needs no DDS override.
 
 ## 7. What is accelerated and what startup does
 
