@@ -10,6 +10,7 @@ from huggingface_hub import hf_hub_download, snapshot_download
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "Royalman1/Motion-mamba-2.0"
+HUB_ENDPOINT = "https://huggingface.co"
 WEIGHT = "moiton mamba 2.0.pt"
 WEIGHT_SHA = "2e828449addff3aa079387f319589cf4ac9b202c48577278a6d274f28b14f679"
 MODELS = [
@@ -39,21 +40,26 @@ def main():
     args = parser.parse_args()
     os.environ.setdefault("HF_HOME", str(ROOT / "cache/huggingface"))
     cache = str(ROOT / "cache/huggingface/hub")
+    options = dict(endpoint=HUB_ENDPOINT,
+        local_files_only=os.getenv("HF_HUB_OFFLINE", "").lower() in {"1", "true", "yes"})
     records = []
     if not args.skip_checkpoint:
-        source = hf_hub_download(REPOSITORY, WEIGHT, cache_dir=cache)
+        source = hf_hub_download(REPOSITORY, WEIGHT, cache_dir=cache, **options)
         target = ROOT / "checkpoints" / WEIGHT
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
         assert sha(target) == WEIGHT_SHA, "Downloaded checkpoint hash mismatch"
     for repo, revision, relative in MODELS:
         snapshot = Path(snapshot_download(repo, revision=revision, cache_dir=cache,
-            ignore_patterns=["*.trt", "*.engine", "*.bin", "*.pth", "original/*"]))
+            ignore_patterns=["*.trt", "*.engine", "*.bin", "*.pth", "original/*"], **options))
         # LLM2Vec's adapter config references the original Meta model ID. Keep
         # that pinned snapshot in the same Hub cache for offline resolution.
         if relative:
             target = ROOT / "checkpoints" / relative
-            shutil.copytree(snapshot, target, dirs_exist_ok=True)
+            # Offline lookup returns the complete cached snapshot, including
+            # files from earlier downloads. Never export cached GPU engines.
+            shutil.copytree(snapshot, target, dirs_exist_ok=True,
+                ignore=shutil.ignore_patterns("*.trt", "*.engine", "*.bin", "*.pth", "original"))
         if repo != "nvidia/ARDY-G1-RP-25FPS-Horizon52":
             # The unmodified LLM2Vec loader names these models without a
             # revision. A commit-pinned snapshot alone does not create refs/main;
@@ -65,7 +71,7 @@ def main():
     deploy = ROOT / "GR00T-WholeBodyControl/gear_sonic_deploy"
     for filename, (relative, expected) in SONIC.items():
         source = hf_hub_download("nvidia/GEAR-SONIC", filename,
-            revision="5e22ddc69abcea2a9aafc40536b14c232d3f9d7f", cache_dir=cache)
+            revision="5e22ddc69abcea2a9aafc40536b14c232d3f9d7f", cache_dir=cache, **options)
         if sha(source) != expected: raise RuntimeError("SONIC asset hash mismatch: " + filename)
         target = deploy / relative
         target.parent.mkdir(parents=True, exist_ok=True)

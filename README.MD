@@ -85,7 +85,7 @@ terms for your HF account and obtain read access to the required NVIDIA assets.
 Authenticate before downloading:
 
 ```bash
-.venv/bin/hf auth login
+HF_ENDPOINT=https://huggingface.co .venv/bin/hf auth login
 .venv/bin/python simulation/download_assets.py
 ```
 
@@ -108,7 +108,7 @@ The authoritative hash is also in the HF `checkpoint_manifest.json` and
 `simulation/download_assets.py`. To download only this weight manually:
 
 ```bash
-.venv/bin/hf download Royalman1/Motion-mamba-2.0 \
+HF_ENDPOINT=https://huggingface.co .venv/bin/hf download Royalman1/Motion-mamba-2.0 \
   "moiton mamba 2.0.pt" --local-dir checkpoints
 ```
 

@@ -1,4 +1,4 @@
-# Tested deployment dependency versions; Torch/CUDA/Triton are installed separately.
+# Tested SONIC/MuJoCo dependency versions for Python 3.10.
 absl-py==2.5.1
 click==8.5.0
 cyclonedds==0.10.2
