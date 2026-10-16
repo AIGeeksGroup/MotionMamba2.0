@@ -67,7 +67,9 @@ The installer creates `.venv` for generation/viewing and a separate
 `GR00T-WholeBodyControl/.venv_sim` for MuJoCo. It installs the current deployment's
 Python package versions. ARDY's editable source is installed with `--no-deps`;
 the deployment requirements in `simulation/requirements.txt` take precedence
-over ARDY's general-purpose dependency ranges.
+over ARDY's general-purpose dependency ranges. In addition,
+the two `simulation/requirements*.lock.txt` files also pin the tested transitive
+dependencies, preventing unrelated package upgrades from changing the deployment.
 
 Torch is **2.6.0 + CUDA 12.4**. The Mamba-3 kernels require **Triton 3.5.1**, which
 is deliberately installed after Torch with `--no-deps`. Do not run a general

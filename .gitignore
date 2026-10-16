@@ -30,6 +30,7 @@ checkpoints/
 
 # Local release environments, assets and generated runtime state
 cache/
+/cache
 runtime/
 !simulation/runtime/
 !simulation/runtime/**
