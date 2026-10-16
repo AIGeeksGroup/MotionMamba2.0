@@ -1,0 +1,7 @@
+{
+  "version": "g1_official_codec_v2",
+  "global_root_source": "/data4/zts/result/bones_seed_ardy_train",
+  "frozen_codec_source": "/data3/zts/cache/huggingface/hub/models--nvidia--ARDY-G1-RP-25FPS-Horizon52/snapshots/059b8007df0ba194a006a877b59a563955ac7b70/stats/motion",
+  "decoder_history_frames": 52,
+  "stats_sha256": "0a17358ae88534f159f3ae73ae9a1997b89f80824af1e54250ed1a52325151c9"
+}

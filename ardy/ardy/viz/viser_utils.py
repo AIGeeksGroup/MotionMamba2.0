@@ -6,6 +6,8 @@ import os
 import xml.etree.ElementTree as ET
 from typing import List, Optional, Tuple, Union
 import time
+import threading
+from functools import wraps
 
 import numpy as np
 import torch
@@ -194,6 +196,7 @@ class WaypointMesh:
             cos_a, sin_a = np.cos(angle), np.sin(angle)
             # Rotation matrix around Y-axis
             rot_y = np.array([[cos_a, 0, sin_a], [0, 1, 0], [-sin_a, 0, cos_a]])
+            self._arrow_geometry_rotation = rot_y
 
             # Use cached arrow meshes
             arrow_base_cache, arrow_head_cache = _get_cached_arrow_meshes()
@@ -232,13 +235,17 @@ class WaypointMesh:
             cos_a, sin_a = np.cos(angle), np.sin(angle)
             rot_y = np.array([[cos_a, 0, sin_a], [0, 1, 0], [-sin_a, 0, cos_a]])
 
-            # Remove old arrow meshes if they exist
-            if self.arrow_base is not None:
-                self.server.scene.remove_by_name(self.arrow_base.name)
-            if self.arrow_head is not None:
-                self.server.scene.remove_by_name(self.arrow_head.name)
+            # Keep browser geometry alive. Its initial rotation is baked into
+            # the vertices; subsequent changes need only a rigid transform.
+            if self.arrow_base is not None and self.arrow_head is not None:
+                rotation = tf.SO3.from_matrix(rot_y @ self._arrow_geometry_rotation.T).wxyz
+                self.arrow_base.position = position + heading_3d / 2
+                self.arrow_head.position = position + heading_3d
+                self.arrow_base.wxyz = rotation
+                self.arrow_head.wxyz = rotation
+                return
 
-            # Use cached arrow meshes
+            self._arrow_geometry_rotation = rot_y
             arrow_base_cache, arrow_head_cache = _get_cached_arrow_meshes()
 
             # Rotate vertices to align with heading direction
@@ -352,7 +359,7 @@ class VelocityArrowMesh:
         self.should_show = True
 
         # Calculate arrow geometry
-        root_2d_pos = np.array([root_pos[0], 0.0, root_pos[2]])  # Project to ground
+        root_2d_pos = np.array([root_pos[0], 0.0, root_pos[2]])  # Official ground projection.
         velocity_dir = velocity_xz / velocity_magnitude
         arrow_length = velocity_magnitude / 4.0
         arrow_end = root_2d_pos + velocity_dir * arrow_length
@@ -380,25 +387,15 @@ class VelocityArrowMesh:
                 vertices=arrow_head.vertices,
                 faces=arrow_head.faces,
                 color=self.color,
-                position=arrow_end,
+                position=arrow_end - 0.05 * velocity_dir,
                 wxyz=quat,
             )
         else:
-            # Update existing components atomically
-            # Hide both during update
-            old_line_visible = self.arrow_line.visible
-            old_cone_visible = self.arrow_cone.visible
-            self.arrow_line.visible = False
-            self.arrow_cone.visible = False
-
-            # Update geometry
+            # The containing pose update is atomic; do not flash visibility
+            # off/on while moving an already visible arrow.
             self.arrow_line.points = np.array([[root_2d_pos, arrow_end]])
             self.arrow_cone.position = arrow_end - 0.05 * velocity_dir
             self.arrow_cone.wxyz = quat
-
-            # Restore visibility
-            self.arrow_line.visible = old_line_visible
-            self.arrow_cone.visible = old_cone_visible
 
         # Set visibility based on skeleton visibility and should_show
         self.arrow_line.visible = visible and self.should_show
@@ -610,7 +607,19 @@ class SkeletonMesh:
         root_velocity: Optional[Union[np.ndarray, torch.Tensor]], [3] root joint velocity (x, y, z) in m/s
         """
         self.cur_joints_pos = joints_pos
+        self._latest_foot_contacts = foot_contacts
+        self._latest_root_velocity = root_velocity
+        self._latest_frame_idx = frame_idx
         joints_pos = joints_pos.cpu().numpy()
+
+        skeleton_visible = self.joints_batched_mesh.visible
+        arrow_visible = getattr(self, 'velocity_arrow_visible', skeleton_visible)
+        if not skeleton_visible and not self.bones_batched_mesh.visible:
+            # The G1 STL rig is drawn independently. Hidden skeleton geometry
+            # must not rebuild all bone rotations on every presentation tick.
+            self.velocity_arrow_mesh.update(root_velocity, joints_pos[self.skeleton.root_idx],
+                                            visible=arrow_visible)
+            return
 
         if self.mesh_info_cache is not None:
             assert frame_idx is not None
@@ -635,11 +644,10 @@ class SkeletonMesh:
 
         # Update root velocity arrow visualization (XZ projection)
         root_pos = joints_pos[self.skeleton.root_idx]
-        skeleton_visible = self.joints_batched_mesh.visible
         self.velocity_arrow_mesh.update(
             root_velocity=root_velocity,
             root_pos=root_pos,
-            visible=skeleton_visible,
+            visible=arrow_visible,
         )
 
         # update colors for foot contacts
@@ -660,6 +668,11 @@ class SkeletonMesh:
             self.root_2d_sphere.visible = visible
         # Update velocity arrow visibility
         self.velocity_arrow_mesh.set_visibility(visible)
+        if visible and hasattr(self, 'cur_joints_pos'):
+            self.set_pose(self.cur_joints_pos,
+                          foot_contacts=getattr(self, '_latest_foot_contacts', None),
+                          frame_idx=getattr(self, '_latest_frame_idx', None),
+                          root_velocity=getattr(self, '_latest_root_velocity', None))
 
     def get_pose(self) -> np.ndarray:
         return self.cur_joints_pos
@@ -1452,6 +1465,20 @@ class CharacterMotion:
 
 
 class ConstraintSet:
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        # GUI callbacks and playback workers share these dictionaries. Lock
+        # complete operations, including read snapshots and nested clear().
+        for name in ('add_keyframe', 'remove_keyframe', 'add_interval', 'remove_interval',
+                     'get_constraint_info', 'clear', 'update_line_segments'):
+            method = cls.__dict__.get(name)
+            if method is None:
+                continue
+            def guarded(self, *args, _method=method, **kw):
+                with self._data_lock:
+                    return _method(self, *args, **kw)
+            setattr(cls, name, wraps(method)(guarded))
+
     def __init__(
         self,
         name: str,
@@ -1460,6 +1487,7 @@ class ConstraintSet:
         display_name: Optional[str] = None,
     ):
         self.name = name
+        self._data_lock = threading.RLock()
         self.server = server
         self.skeleton = skeleton
         self.display_name = display_name if display_name is not None else name
@@ -2564,6 +2592,8 @@ class RootKeyframe2DSet(ConstraintSet):
     def clear(self, frame_idx: Optional[int] = None):
         frame_idx_list = list(self.keyframes.keys()) if frame_idx is None else [frame_idx]
         for fidx in frame_idx_list:
+            if fidx not in self.keyframes:
+                continue  # idempotent clear under the same constraint lock
             self.scene_elements[fidx]["waypoint"].clear()
             if "label" in self.scene_elements[fidx]:
                 self.server.scene.remove_by_name(self.scene_elements[fidx]["label"].name)
@@ -2571,6 +2601,7 @@ class RootKeyframe2DSet(ConstraintSet):
             self.keyframes.pop(fidx)
             self.scene_elements.pop(fidx)
             # Also clear heading if it exists
+            self.frame2keyid.pop(fidx, None)
             if fidx in self.root_headings:
                 self.root_headings.pop(fidx)
 

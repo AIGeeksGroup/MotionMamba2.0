@@ -254,7 +254,25 @@ class ConstraintsMixin:
 
         interval = session.gui_elements.gui_waypoint_interval.value
         target_frame = max(0, session.frame_idx) + interval
+        route = None
+        if getattr(session.model, 'is_remote_mm2', False) and session.playing:
+            from .control_planning import waypoint_route
+            model = session.model
+            # Use the independent consumer clock, not a potentially delayed GUI.
+            earliest = ((int(model.consumed_frame)+int(np.ceil(model.replan_budgets[1]*25))+3)//4)*4
+            anchor_frame = max(0,min(earliest-1,session.max_frame_idx))
+            if session.joints_pos is not None and session.max_frame_idx >= 0:
+                origin = session.joints_pos[0,anchor_frame,0,:].cpu().numpy()[[0,2]]
+                route = waypoint_route(origin,[x,z],earliest,int(interval))
+                target_frame = route[-1]['frame']
+                session.model.notice(session, f'目标安排在源帧{target_frame}，按距离预留移动时间。', 'blue')
         constraint = session.constraints["2D Root"]
+        # Live pointing replaces the preceding live destination; paused ARDY
+        # timeline planning keeps its explicitly entered sequence of points.
+        prior = getattr(session,'mm2_live_waypoint',None)
+        if route is not None and session.playing and prior is not None and prior[1] > session.model.consumed_frame:
+            constraint.remove_keyframe(prior[0],prior[1])
+            self.remove_keyframe_from_timeline(client_id,'2D Root',prior[1],prior[0])
 
         # If dense mode is enabled, first add a waypoint at the current frame
         if session.gui_elements.gui_dense_root_checkbox.value:
@@ -305,6 +323,12 @@ class ConstraintsMixin:
             exists_ok=True,
             update_path=False,
         )
+        if route is not None:
+            session.mm2_waypoint_route = route
+            if session.playing:
+                session.mm2_live_waypoint = (waypoint_id,target_frame)
+        elif getattr(session.model, 'is_remote_mm2', False):
+            session.mm2_waypoint_route = None
 
         # Try to add to timeline GUI
         success = self.add_keyframe_to_timeline(client_id, "2D Root", target_frame, waypoint_id)
@@ -320,6 +344,8 @@ class ConstraintsMixin:
 
         print(f"Added target waypoint: ({x:.2f}, {z:.2f}) at frame {target_frame}")
 
+        if getattr(session.model, 'is_remote_mm2', False):
+            return session.model.control_changed(self, session)
         threading.Thread(target=self.on_replan_trigger, args=(client_id,), daemon=True).start()
 
     def load_root_constraints(self, client_id: int, filepath: str = "root_constraints.json"):

@@ -25,6 +25,32 @@ checkpoints/
 
 # Required lightweight ARDY assets
 !ardy/ardy/assets/**/*.npz
+!simulation/assets/**/*.npy
+!simulation/runtime/**/assets/**/*.npz
+
+# Local release environments, assets and generated runtime state
+cache/
+runtime/
+!simulation/runtime/
+!simulation/runtime/**
+vendor/TensorRT/
+vendor/onnxruntime/
+**/.nodeenv/
+**/node_modules/
+**/.venv_sim/
+**/build/
+!vendor/viser/viser/client/build/
+!vendor/viser/viser/client/build/**
+**/target/
+*.onnx
+*.engine
+*.trt
+*.before_*
+*.bak
+# Reapply Python exclusions after the runtime snapshot exception.
+**/__pycache__/
+*.py[cod]
+.cache/
 
 # System/editor
 .DS_Store

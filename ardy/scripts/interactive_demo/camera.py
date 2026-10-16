@@ -17,10 +17,24 @@ class CameraMixin:
 
         # Only process if target velocity is enabled
         if not gui_elements.gui_use_target_velocity_checkbox.value:
+            if getattr(session.model, 'is_remote_mm2', False):
+                now = time.monotonic()
+                if now - getattr(session, 'mm2_key_hint_at', 0.0) > 3.0:
+                    session.mm2_key_hint_at = now
+                    session.model.notice(session, '方向键尚未启用：按 t 或在 Generate → Target Velocity 勾选 Use Target Velocity。', 'blue')
             return
 
         # Get current target velocity (x, z)
         current_vel = gui_elements.gui_target_root_velocity.value
+        edit_frame = getattr(session, 'mm2_keyboard_edit_frame', None)
+        if getattr(session.model, 'is_remote_mm2', False) and edit_frame is not None:
+            recorded = session.model.target_velocity_at(session, session.frame_idx)
+            if recorded is not None:
+                current_vel = recorded
+            elif session.root_velocities is not None:
+                velocity = session.root_velocities[0, session.frame_idx].cpu().numpy()
+                current_vel = (float(velocity[0]), float(velocity[2]))
+            session.mm2_keyboard_edit_frame = None
         vel_x, vel_z = current_vel[0], current_vel[1]
 
         # Calculate current magnitude and direction

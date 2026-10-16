@@ -1,0 +1,5 @@
+# The redistributable SDK libraries are below GitHub's ordinary file limit.
+# Keep them self-contained without requiring the repository's exhausted LFS
+# quota. Large model weights/engines are downloaded separately, never tracked.
+*.a -filter -diff -merge -text
+*.so* -filter -diff -merge -text

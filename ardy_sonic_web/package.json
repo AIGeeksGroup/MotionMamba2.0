@@ -1,0 +1,9 @@
+{
+  "name": "ardy-sonic-web",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "three": "0.162.0",
+    "urdf-loader": "0.12.6"
+  }
+}

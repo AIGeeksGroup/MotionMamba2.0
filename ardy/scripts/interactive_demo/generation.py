@@ -8,11 +8,49 @@ from .window_budget import compute_window_num_frames
 
 
 class GenerationMixin:
+    def _interaction_trace(self, client_id, event, **fields):
+        """Opt-in disk trace for the isolated original-backend comparison."""
+        folder = os.environ.get('G1_INTERACTION_TRACE_DIR')
+        if not folder:
+            return
+        from pathlib import Path
+        path = Path(folder)
+        path.mkdir(parents=True, exist_ok=True)
+        session = self.client_sessions[client_id]
+        record = dict(event=event, wall_time=time.time(), client_id=client_id,
+            source_frame=session.frame_idx, prompt=session.gui_elements.gui_prompt_text.value, **fields)
+        with (path/'events.jsonl').open('a') as stream:
+            stream.write(json.dumps(record)+'\n')
+
+    def on_text_prompt_update(self, client_id, trigger_replan=True, initial_prompt=False):
+        session = self.client_sessions.get(client_id)
+        if session is not None and getattr(session.model, "is_remote_mm2", False):
+            return session.model.update_prompt(self, session, trigger_replan)
+        self._interaction_trace(client_id, 'input_received')
+        result = super().on_text_prompt_update(client_id, trigger_replan, initial_prompt)
+        self._interaction_trace(client_id, 'input_handler_returned')
+        return result
+
     def restart(self, client_id: int):
+        session = self.client_sessions.get(client_id)
+        if session is not None and getattr(session.model, "is_remote_mm2", False):
+            if not session.model.owns_bridge(self, session):
+                return
+            with session.replan_lock:
+                session.model.reset(session)
+                return self._restart_impl(client_id)
+        return self._restart_impl(client_id)
+
+    def _restart_impl(self, client_id: int):
         """Restart the demo for a client."""
         if not self.client_active(client_id):
             return
         session = self.client_sessions[client_id]
+        if session.model is None:
+            return
+
+        if getattr(self, "sonic_output", None) is not None and not getattr(session.model, 'reference_preview', False):
+            self.sonic_output.restart()
 
         playing = session.playing
         session.playing = False
@@ -52,12 +90,18 @@ class GenerationMixin:
 
         session.playing = playing
         self.set_frame(client_id, 0)
+        if getattr(self, "sonic_output", None) is not None and not getattr(session.model, 'reference_preview', False):
+            self.sonic_output.set_playing(
+                session.playing, source_frame=0, source_fps=session.model_fps
+            )
 
     def restart_from_now(self, client_id: int):
         """Restart generation from the current frame, clearing all motions after it."""
         if not self.client_active(client_id):
             return
         session = self.client_sessions[client_id]
+        if getattr(session.model, "is_remote_mm2", False):
+            return session.model.replan(self, session)
 
         if session.model is None:
             print(f"Model not loaded for client {client_id}!")
@@ -182,6 +226,8 @@ class GenerationMixin:
         if not self.client_active(client_id):
             return
         session = self.client_sessions[client_id]
+        if getattr(session.model, "is_remote_mm2", False):
+            return session.model.generate(self, session)
 
         if session.model is None:
             print(f"Model not loaded for client {client_id}!")
@@ -190,6 +236,8 @@ class GenerationMixin:
         start_time = time.time()
 
         history_motion_tensor, history_start_idx, history_end_idx, history_length = self._get_history_motion(session)
+        self._interaction_trace(client_id, 'generation_requested',
+            history_start=history_start_idx, history_end=history_end_idx, history_length=history_length)
         print(
             f"Generate with frame idx {session.frame_idx}, history start: {history_start_idx}, end: {history_end_idx}, length: {history_length}"
         )
@@ -402,6 +450,67 @@ class GenerationMixin:
 
         # Update frame index input max value
         session.gui_elements.gui_frame_idx_input.max = session.max_frame_idx
+
+        # Keep future timeline space clickable as autoregressive generation grows.
+        if hasattr(session.client, "timeline"):
+            try:
+                window_end = max(
+                    session.max_frame_idx,
+                    session.frame_idx + TIMELINE_WINDOW_AFTER,
+                )
+                session.client.timeline.set_frame_range(
+                    start_frame=0,
+                    end_frame=window_end,
+                )
+            except (AttributeError, Exception) as exc:
+                print(f"Could not update generated timeline range: {exc}")
+
+        # Publish the complete trajectory only after the locked ARDY state update.
+        if self.sonic_output is not None and session.mujoco_converter is not None:
+            try:
+                with session.motion_tensor_lock:
+                    full_motion = session.motion_tensor[:1].detach().clone()
+                full_motion = session.motion_rep.unnormalize(full_motion)
+                full_output = session.motion_rep.inverse(full_motion, is_normalized=False)
+                qpos = session.mujoco_converter.dict_to_qpos(
+                    full_output, device=self.device, numpy=True
+                )
+                prompt_segments = []
+                if hasattr(session.client, "timeline"):
+                    source_last_frame = max(0, int(qpos.shape[-2]) - 1)
+                    for prompt in sorted(
+                        session.client.timeline._prompts.values(),
+                        key=lambda item: (item.start_frame, item.end_frame),
+                    ):
+                        start_frame = max(0, int(prompt.start_frame))
+                        end_frame = min(source_last_frame, int(prompt.end_frame))
+                        if start_frame <= end_frame:
+                            prompt_segments.append(
+                                {
+                                    "text": str(prompt.text),
+                                    "start_frame": start_frame,
+                                    "end_frame": end_frame,
+                                }
+                            )
+                self.sonic_output.replace_motion(
+                    qpos,
+                    source_fps=session.model_fps,
+                    source_frame=max(0, session.frame_idx),
+                    name=session.gui_elements.gui_prompt_text.value,
+                    prompt_segments=prompt_segments,
+                )
+                if os.environ.get('G1_INTERACTION_TRACE_DIR'):
+                    from pathlib import Path
+                    trace_name = f'raw_{client_id}_{time.time_ns()}.npy'
+                    np.save(Path(os.environ['G1_INTERACTION_TRACE_DIR'])/trace_name, qpos)
+                    self._interaction_trace(client_id, 'published', raw_file=trace_name,
+                        generated_from=history_end_idx+1, source_end=session.max_frame_idx+1,
+                        seconds=time.time()-start_time)
+            except Exception:
+                import traceback
+
+                print("[ARDY->SONIC] failed to publish generated motion")
+                traceback.print_exc()
 
         end_time = time.time()
         print(f"Generate step time: {end_time - start_time} seconds")

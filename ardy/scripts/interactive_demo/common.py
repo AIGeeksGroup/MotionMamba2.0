@@ -65,7 +65,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 # When CHECKPOINTS_DIR is set, models are discovered/loaded from that local
 # folder; when unset, the released models are listed and pulled from Hugging Face.
 CHECKPOINTS_DIR = os.environ.get("CHECKPOINTS_DIR")
-DEFAULT_MODEL_DIR = "ARDY-Core-RP-20FPS-Horizon40"
+DEFAULT_MODEL_DIR = os.environ.get("ARDY_DEFAULT_MODEL", "ARDY-Core-RP-20FPS-Horizon40")
 
 
 def scan_checkpoint_dirs(base_dir: str = "checkpoints") -> list[str]:
@@ -160,16 +160,16 @@ DEFAULT_HISTORY_CROP_LENGTH = 4
 # cache at startup.
 DEFAULT_PROMPT = "A person is walking."
 PRESET_PROMPTS = [
-    "A person is walking.",
-    "A person jumps backwards.",
+    "A person continuously walks straight ahead with a natural gait.",
+    "A person walks backward naturally.",
+    "Turn left smoothly while continuing to walk.",
+    "Wave with the right hand naturally.",
+    "A person is doing kungfu.",
+    "A person is dancing.",
+    "A young lady walks forward elegantly.",
     "A person side steps to the right.",
-    "A person is walking backwards.",
     "A person is kicking with their right leg.",
     "A person is standing.",
-    "A young lady walks forward elegantly.",
-    "A person bows down and then stands upright.",
-    "A ballet dancer, performs a forward, turn joining feet, in a repeating loop",
-    "a performer gives high bow, with arms to the side, right leg crossed behind the left",
 ]
 
 LIGHT_THEME = dict(
@@ -313,6 +313,17 @@ class ClientSession:
     playing: bool = False
     cur_time: float = -1.0
     playback_fps: int = 30
+    # Monotonic presentation clock. ``frame_idx`` remains the integer GUI
+    # cursor; rendering may use ``frame_float`` between source samples.
+    playback_epoch_ns: int = 0
+    playback_start_frame: float = 0.0
+    frame_float: float = 0.0
+    playback_epoch_id: int = 0
+    playback_pose_updates: int = 0
+    playback_expired_frames: int = 0
+    playback_set_frame_ms: list[float] = field(default_factory=list)
+    playback_metrics_anchor_ns: int = 0
+    playback_last_report_ns: int = 0
 
     # Camera state for smoothing
     camera_position: Optional[np.ndarray] = None

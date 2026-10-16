@@ -267,6 +267,7 @@ class GuiIOMixin:
                 return
 
             session = self.client_sessions[client_id]
+            session.mm2_arrow_keys_pressed = arrow_keys_pressed
 
             # Handle keyup events first
             if event.event_type == "keyup":
@@ -287,10 +288,7 @@ class GuiIOMixin:
             if event.key == " ":
                 if not space_pressed[0]:
                     space_pressed[0] = True
-                    session.playing = not session.playing
-                    g.gui_play_pause_button.label = "Pause" if session.playing else "Play"
-                    g.gui_next_frame_button.disabled = session.playing
-                    g.gui_prev_frame_button.disabled = session.playing
+                    self.set_playback_state(client_id, not session.playing)
                 return
 
             # Handle arrow keys for timeline visualization (not for navigation)
@@ -344,6 +342,8 @@ class GuiIOMixin:
                 # Toggle target velocity control along with target heading and arrow key visualization
                 current_state = g.gui_use_target_velocity_checkbox.value
                 new_state = not current_state
+                remote = getattr(session.model, 'is_remote_mm2', False)
+                session.mm2_control_batch = remote
 
                 # Toggle all three controls together
                 g.gui_use_target_velocity_checkbox.value = new_state
@@ -371,6 +371,7 @@ class GuiIOMixin:
                             session.root_velocities is not None
                             and session.frame_idx >= 0
                             and session.frame_idx < session.root_velocities.shape[1]
+                            and not remote
                         ):
                             # Get root velocity for first character at current frame
                             root_vel = session.root_velocities[0, session.frame_idx].cpu().numpy()
@@ -379,7 +380,11 @@ class GuiIOMixin:
                                 float(root_vel[2]),
                             )
                         # Trigger a frame update to show the arrow
-                        self.set_frame(client_id, session.frame_idx)
+                        self.set_frame(client_id, session.frame_idx, render_only=True)
+
+                session.mm2_control_batch = False
+                if remote:
+                    session.model.control_changed(self, session)
 
                 status = "enabled" if new_state else "disabled"
                 print(f"[Keyboard T] Target velocity control {status}")

@@ -55,6 +55,9 @@ class GenConstraintsMixin:
                         session.motion_rep.skeleton,
                         frame_indices,
                         root_pos_2d,
+                        global_root_heading=(
+                            _to_device_tensor(constraint_info['global_root_heading'][valid_idx], device)
+                            if 'global_root_heading' in constraint_info else None),
                     )
                 )
 
@@ -156,6 +159,21 @@ class GenConstraintsMixin:
     def _update_root_constraints_from_target_velocity(
         self, client_id: int, current_frame_idx: int, target_velocity: np.ndarray
     ):
+        if not self.client_active(client_id):
+            return
+        session = self.client_sessions[client_id]
+        lock = session.__dict__.setdefault('velocity_waypoint_lock', threading.RLock())
+        with lock, session.client.atomic():
+            key = (int(current_frame_idx), tuple(float(v) for v in target_velocity),
+                   bool(session.gui_elements.gui_use_target_heading_checkbox.value))
+            if getattr(session, 'velocity_waypoint_key', None) == key:
+                return
+            self._update_velocity_waypoints_impl(client_id, current_frame_idx, target_velocity)
+            session.velocity_waypoint_key = key
+
+    def _update_velocity_waypoints_impl(
+        self, client_id: int, current_frame_idx: int, target_velocity: np.ndarray
+    ):
         """Predict future root positions using target velocity and update 2D root constraints.
 
         Args:
@@ -225,36 +243,33 @@ class GenConstraintsMixin:
         future_root_pos = torch.stack(future_root_pos, dim=0)  # [F, 3]
         interpolated_velocities = torch.stack(interpolated_velocities, dim=0)  # [F, 3]
 
-        # Remove the root constraints added by velocity control
-        root_constraint = session.constraints["2D Root"]
-        keyframes_to_remove = []
-        frames_with_target_vel = set()
+        recycled = {}
+        root_constraint = session.constraints['2D Root']
+        # Keep the original waypoint meshes alive while their absolute frame
+        # numbers advance. Recreating five subdivision-3 spheres every update
+        # resends their entire geometry and stalls browser rendering.
+        if getattr(session.model, 'is_remote_mm2', False):
+            with root_constraint._data_lock:
+                for frame, ids in list(root_constraint.frame2keyid.items()):
+                    if len(ids) == 1 and str(ids[0]).startswith('target_vel_waypoint_'):
+                        key = ids[0]
+                        recycled[key] = (frame, root_constraint.scene_elements.pop(frame))
+                        root_constraint.keyframes.pop(frame)
+                        root_constraint.frame2keyid.pop(frame)
+                        root_constraint.root_headings.pop(frame, None)
 
-        # Collect all target velocity waypoints to remove (make a copy to avoid modification during iteration)
-        for frame_idx, keyframe_ids in list(root_constraint.frame2keyid.items()):
-            for keyframe_id in list(keyframe_ids):
-                if isinstance(keyframe_id, str) and keyframe_id.startswith("target_vel_waypoint_"):
-                    keyframes_to_remove.append((frame_idx, keyframe_id))
-                    frames_with_target_vel.add(frame_idx)
-
-        # Remove collected keyframes
-        for frame_idx, keyframe_id in keyframes_to_remove:
-            # Remove from constraint data structures
-            root_constraint.remove_keyframe(keyframe_id, frame_idx)
-
-            # Remove from timeline GUI using the proper API
-            self.remove_keyframe_from_timeline(
-                client_id=client_id,
-                constraint_type="2D Root",
-                frame_idx=frame_idx,
-                constraint_id=keyframe_id,
-            )
+        # The remote keyboard guide uses the original sparse waypoints. Do not
+        # force the independent dense-path smoother used by the old overlay.
+        if getattr(session.model, 'is_remote_mm2', False):
+            session.constraints['2D Root'].smooth_path = False
+        self._clear_target_velocity_waypoints(client_id, update_path=False)
 
         # Add new 2D root waypoint constraints at regular intervals (e.g., every 4 frames)
         waypoint_interval = TARGET_VELOCITY_GOAL_FRAME_INTERVAL  # Add waypoint every N frames
         root_constraint = session.constraints["2D Root"]
 
         num_new_waypoints = 0
+        timeline_waypoints = {}
         for i in range(waypoint_interval, num_future_frames + 1, waypoint_interval):
             if i > len(future_root_pos):
                 break
@@ -278,25 +293,154 @@ class GenConstraintsMixin:
                 vel_x = velocity_for_frame[0].item()
                 vel_z = velocity_for_frame[2].item()
 
-                # Calculate heading from interpolated velocity (angle in XZ plane)
-                # heading = atan2(vel_z, vel_x) where heading=0 points forward (+Z)
+                # WaypointMesh's visual heading is atan2(z, x), as in the
+                # referenced repository. The remote model's +Z-zero heading
+                # remains encoded separately by controls(); these preview
+                # keyframes are excluded from mouse/model conditioning.
                 import math
 
-                heading_rad = math.atan2(vel_z, vel_x)
-                global_root_heading = heading_rad
+                global_root_heading = (math.atan2(vel_z, vel_x)
+                    if getattr(session.model, 'is_remote_mm2', False)
+                    else math.atan2(vel_x, vel_z))
 
-            # Add waypoint constraint
-            root_constraint.add_keyframe(
-                keyframe_id=waypoint_id,
-                frame_idx=future_frame_idx,
-                root_pos=root_pos,
-                global_root_heading=global_root_heading,
-                viz_label=False,  # Don't show labels for auto-generated waypoints
-                exists_ok=True,
-                update_path=False,
-                add_annulus=False,
-            )
+            with root_constraint._data_lock:
+                old = recycled.pop(waypoint_id, None)
+                if old is not None:
+                    _, scene = old
+                    if future_frame_idx not in root_constraint.keyframes:
+                        root_constraint.scene_elements[future_frame_idx] = scene
+                        root_constraint.keyframes[future_frame_idx] = root_pos.numpy()
+                        root_constraint.frame2keyid[future_frame_idx] = []
+                        if global_root_heading is None:
+                            for name in ('arrow_base', 'arrow_head'):
+                                mesh = getattr(scene['waypoint'], name, None)
+                                if mesh is not None:
+                                    session.client.scene.remove_by_name(mesh.name)
+                                    setattr(scene['waypoint'], name, None)
+                    else:
+                        scene['waypoint'].clear()
+                root_constraint.add_keyframe(
+                    keyframe_id=waypoint_id,
+                    frame_idx=future_frame_idx,
+                    root_pos=root_pos,
+                    global_root_heading=global_root_heading,
+                    viz_label=False,
+                    exists_ok=True,
+                    update_path=False,
+                    add_annulus=False,
+                )
+                if getattr(session.model, 'is_remote_mm2', False):
+                    root_constraint.scene_elements[future_frame_idx]['waypoint'].sphere.visible = True
             num_new_waypoints += 1
+            if getattr(session.model, 'is_remote_mm2', False):
+                timeline_waypoints[waypoint_id] = future_frame_idx
+            else:
+                self.add_keyframe_to_timeline(client_id, "2D Root", future_frame_idx, waypoint_id)
 
-            # Add to timeline GUI
-            self.add_keyframe_to_timeline(client_id, "2D Root", future_frame_idx, waypoint_id)
+        for key, (frame, scene) in recycled.items():
+            scene['waypoint'].clear()
+            self.remove_keyframe_from_timeline(client_id, '2D Root', frame, key)
+
+        if timeline_waypoints:
+            self._sync_velocity_waypoint_timeline(client_id, timeline_waypoints)
+
+        if getattr(session.model, 'is_remote_mm2', False):
+            # Draw the sparse route between the same five registered waypoints;
+            # no extra root segment, dense smoothing or second set of dots.
+            points = future_root_pos[waypoint_interval - 1::waypoint_interval].cpu().numpy().copy()
+            points[:, 1] = 0.
+            if root_constraint.line_segments is None:
+                root_constraint.line_segments = session.client.scene.add_line_segments(
+                    name=f'/{root_constraint.name}/line_segments',
+                    points=np.zeros((1, 2, 3)), colors=(255, 0, 0), line_width=5.0)
+            root_constraint.line_segments.points = np.stack([points[:-1], points[1:]], axis=1)
+            root_constraint.line_segments.visible = True
+
+    def _sync_velocity_waypoint_timeline(self, client_id, waypoints):
+        """Move real 2D Root keys without replacing their browser identities.
+
+        This Viser release has no public batch/update API. Use its dataclass
+        state for an existing set and publish once; other releases fall back
+        to the public add API with stable UUIDs.
+        """
+        from dataclasses import is_dataclass, replace
+
+        session = self.client_sessions[client_id]
+        data = session.timeline_data
+        timeline = getattr(session.client, 'timeline', None)
+        if data is None or timeline is None:
+            return
+        track_id = data.get('tracks_ids', {}).get('2D Root')
+        if track_id is None:
+            return
+        with data['keyframe_update_lock']:
+            tracked = data['keyframes']
+            state = getattr(timeline, '_keyframes', {})
+            publish = getattr(timeline, '_send_timeline_update', None)
+            if callable(publish) and all(
+                key in tracked and is_dataclass(state.get(tracked[key]['timeline_uuid']))
+                for key in waypoints
+            ):
+                changed = False
+                for key, frame in waypoints.items():
+                    entry = tracked[key]
+                    if entry['frame'] != frame:
+                        uuid = entry['timeline_uuid']
+                        state[uuid] = replace(state[uuid], frame=frame)
+                        entry['frame'] = frame
+                        changed = True
+                if changed:
+                    publish()
+                return
+            for key, frame in waypoints.items():
+                entry = tracked.get(key)
+                if entry is not None and entry['frame'] == frame:
+                    continue
+                kwargs = {'uuid': entry['timeline_uuid']} if entry else {}
+                uuid = timeline.add_keyframe(track_id, frame, **kwargs)
+                tracked[key] = dict(frame=frame, track_id=track_id, timeline_uuid=uuid)
+
+    def _clear_target_velocity_waypoints(self, client_id: int, *, update_path: bool = True):
+        """Remove only keyboard-generated 2D Root keys and their timeline IDs."""
+        if not self.client_active(client_id):
+            return
+        session = self.client_sessions[client_id]
+        lock = session.__dict__.setdefault('velocity_waypoint_lock', threading.RLock())
+        with lock, session.client.atomic():
+            self._clear_velocity_waypoints_impl(client_id, update_path=update_path)
+            session.velocity_waypoint_key = None
+
+    def _clear_velocity_waypoints_impl(self, client_id: int, *, update_path: bool):
+        session = self.client_sessions[client_id]
+        root_constraint = session.constraints.get('2D Root')
+        if root_constraint is None:
+            return
+        keyframes_to_remove = []
+
+        # Collect all target velocity waypoints to remove (make a copy to avoid modification during iteration)
+        with root_constraint._data_lock:
+            existing_ids = [(frame, list(ids)) for frame, ids in root_constraint.frame2keyid.items()]
+        for frame_idx, keyframe_ids in existing_ids:
+            for keyframe_id in list(keyframe_ids):
+                if isinstance(keyframe_id, str) and keyframe_id.startswith("target_vel_waypoint_"):
+                    keyframes_to_remove.append((frame_idx, keyframe_id))
+
+        # Remove collected keyframes
+        for frame_idx, keyframe_id in keyframes_to_remove:
+            # Remove from constraint data structures
+            root_constraint.remove_keyframe(keyframe_id, frame_idx)
+
+            # Remove from timeline GUI using the proper API
+            self.remove_keyframe_from_timeline(
+                client_id=client_id,
+                constraint_type="2D Root",
+                frame_idx=frame_idx,
+                constraint_id=keyframe_id,
+            )
+
+        if update_path and getattr(session.model, 'is_remote_mm2', False):
+            if root_constraint.line_segments is not None:
+                if root_constraint.dense_path and len(root_constraint.keyframes) >= 2:
+                    root_constraint.update_line_segments()
+                else:
+                    root_constraint.line_segments.visible = False

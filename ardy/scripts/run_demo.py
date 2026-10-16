@@ -30,6 +30,7 @@ from interactive_demo.loading import ModelLoadingMixin
 from interactive_demo.motion_io import MotionIOMixin
 from interactive_demo.playback import PlaybackMixin
 from interactive_demo.session_io import SessionIOMixin
+from interactive_demo.sonic_output_bridge import SonicOutputBridge
 
 
 class InteractiveTimelineDemo(
@@ -95,11 +96,14 @@ class InteractiveTimelineDemo(
         # Per-client sessions
         self.client_sessions: dict[int, ClientSession] = {}
 
+        # Rank zero owns the optional SONIC sockets. Other workers never bind ports.
+        self.sonic_output = SonicOutputBridge.from_env()
+
         # Server setup
         self.server = viser.ViserServer(
             host="0.0.0.0",
-            port=2333,
-            label="ARDY Interactive Demo",
+            port=int(os.environ.get('ARDY_VIEWER_PORT', '2333')),
+            label=os.environ.get("MM2_MODEL_LABEL", "ARDY"),
             enable_camera_keyboard_controls=False,
             show_timeline_arrow_keys=False,
         )
@@ -142,7 +146,16 @@ def main() -> None:
     args = parser.parse_args()
 
     demo = InteractiveTimelineDemo(compile_model=not args.no_compile)
-    demo.run()
+    try:
+        demo.run()
+    finally:
+        for session in list(demo.client_sessions.values()):
+            if getattr(session.model, "is_remote_mm2", False):
+                session.stop_playback = True
+                with session.replan_lock:
+                    session.model.close()
+        if demo.sonic_output is not None:
+            demo.sonic_output.close()
 
 
 if __name__ == "__main__":

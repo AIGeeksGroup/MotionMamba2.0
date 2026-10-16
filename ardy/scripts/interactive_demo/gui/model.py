@@ -28,8 +28,19 @@ class GuiModelMixin:
                 default = str(DEFAULT_HORIZON.get(skeleton, ""))
                 return default if default in labels else labels[0]
 
-            _init_skeleton = "core" if "core" in _grouped else _skeleton_order[0]
-            _init_horizon = _default_horizon_label(_init_skeleton)
+            _parsed_default = parse_model_name(DEFAULT_MODEL_DIR)
+            _default_skeleton = _parsed_default[0] if _parsed_default else None
+            _init_skeleton = (
+                _default_skeleton
+                if _default_skeleton in _grouped
+                else ("core" if "core" in _grouped else _skeleton_order[0])
+            )
+            _default_horizon = str(_parsed_default[1]) if _parsed_default else None
+            _init_horizon = (
+                _default_horizon
+                if _default_horizon in _grouped[_init_skeleton]
+                else _default_horizon_label(_init_skeleton)
+            )
 
             g.gui_skeleton_dropdown = client.gui.add_dropdown(
                 "Skeleton",

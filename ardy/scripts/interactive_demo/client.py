@@ -3,22 +3,8 @@
 
 """Part of InteractiveTimelineDemo (split for readability)."""
 
-import base64
-import functools
-
 from .common import *  # noqa: F401,F403
 from .gui.instructions import QUICK_START_MD
-
-_ASSETS_DIR = os.path.join(os.path.dirname(__file__), "assets")
-
-
-@functools.lru_cache(maxsize=None)
-def _titlebar_logo_data_uri(filename: str) -> str:
-    """Read a titlebar logo PNG from assets/ once and cache it as a base64 data URI."""
-    with open(os.path.join(_ASSETS_DIR, filename), "rb") as f:
-        encoded = base64.standard_b64encode(f.read()).decode("ascii")
-    return f"data:image/png;base64,{encoded}"
-
 
 class ClientMixin:
     def on_client_connect(self, client: viser.ClientHandle) -> None:
@@ -156,6 +142,12 @@ class ClientMixin:
     def setup_scene(self, client: viser.ClientHandle):
         """Setup the 3D scene for a client."""
         self.configure_theme(client)
+
+        # Apply on every connection, including after a checkpoint restart.
+        # Three cascaded shadow passes are costly on integrated/software WebGL;
+        # keep the same robot meshes, colors and lights without those passes.
+        if os.environ.get('ARDY_GENERATOR_BACKEND') == 'motion_mamba':
+            client.scene.configure_default_lights(enabled=True, cast_shadow=False)
 
         # Add grid
         client.scene.add_grid(
@@ -327,7 +319,34 @@ class ClientMixin:
         @client.timeline.on_frame_change
         def handle_timeline_frame_change(new_frame_idx: int):
             """Update the frame when the user clicks on the timeline."""
-            self.set_frame(client_id, new_frame_idx, trigger_by_gui_timeline=True)
+            if not self.client_active(client_id):
+                return
+            session = self.client_sessions[client_id]
+            requested_frame = int(new_frame_idx)
+            if getattr(session.model, 'is_remote_mm2', False) and not session.playing:
+                if not session.model.planning:
+                    session.model.begin_planning(self, session, True)
+                session.model.select_planning_frame(self, session, requested_frame)
+                return
+            frontier = max(0, session.max_frame_idx)
+            target_frame = max(0, min(requested_frame, frontier))
+            self.set_frame(client_id, target_frame, trigger_by_gui_timeline=True)
+
+            if requested_frame != target_frame:
+                # Keep the timeline cursor consistent with the clamped Frame Index.
+                client.timeline.set_current_frame(target_frame)
+
+            if (
+                requested_frame > frontier
+                and session.gui_elements.gui_enable_auto_replan_checkbox.value
+                and not session.replan_lock.locked()
+            ):
+                threading.Thread(
+                    target=self.on_replan_trigger,
+                    args=(client_id,),
+                    kwargs={"skip_if_busy": True},
+                    daemon=True,
+                ).start()
 
         @client.timeline.on_keyframe_add
         def _(keyframe_id: str, track_id: str, frame: int):
@@ -441,6 +460,18 @@ class ClientMixin:
             session = self.client_sessions[client_id]
             # Signal playback thread to stop
             session.stop_playback = True
+            if getattr(session.model, "is_remote_mm2", False):
+                # Closing a spectator/raw-preview tab must not pause the
+                # physical owner's shared bridge. Do not call owns_bridge():
+                # its acquisition side effect is inappropriate during teardown.
+                physical_owner = (
+                    getattr(self, "mm2_physical_owner", None) == client_id
+                    and not session.model.reference_preview
+                )
+                with session.replan_lock:
+                    session.model.close()
+                    if self.sonic_output is not None and physical_owner:
+                        self.sonic_output.viewer_playback_control("pause")
             # Wait for thread to finish (with timeout)
             if session.playback_thread is not None and session.playback_thread.is_alive():
                 session.playback_thread.join(timeout=1.0)
@@ -458,7 +489,7 @@ class ClientMixin:
         dark_mode_checkbox_uuid: str | None = None,
     ):
         """Configure the UI theme."""
-        client.gui.set_panel_label("ARDY")
+        client.gui.set_panel_label("Motion Mamba 2.0")
         titlebar_content = viser.theme.TitlebarConfig(
             buttons=(
                 viser.theme.TitlebarButton(
@@ -472,13 +503,8 @@ class ClientMixin:
                     href="https://github.com/nv-tlabs/ardy",
                 ),
             ),
-            image=viser.theme.TitlebarImage(
-                image_url_light=_titlebar_logo_data_uri("nvidia_logo.png"),
-                image_url_dark=_titlebar_logo_data_uri("nvidia_logo_dark.png"),
-                image_alt="NVIDIA",
-                href="https://www.nvidia.com/",
-            ),
-            title_text="ARDY",
+            image=None,
+            title_text="Motion Mamba 2.0",
         )
         client.gui.configure_theme(
             titlebar_content=titlebar_content,

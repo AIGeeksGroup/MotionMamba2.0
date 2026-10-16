@@ -40,17 +40,17 @@ class CharactersMixin:
                 # Clean up any existing scene elements with this name (safety check)
                 arrow_name = f"target_velocity_{client_id}"
                 try:
-                    self.server.scene.remove_by_name(f"{arrow_name}/velocity_line")
+                    session.client.scene.remove_by_name(f"{arrow_name}/velocity_line")
                 except:
                     pass
                 try:
-                    self.server.scene.remove_by_name(f"{arrow_name}/velocity_cone")
+                    session.client.scene.remove_by_name(f"{arrow_name}/velocity_cone")
                 except:
                     pass
 
                 session.target_velocity_arrow = VelocityArrowMesh(
                     name=arrow_name,
-                    server=self.server,
+                    server=session.client,
                     skeleton=skeleton,
                     color=(255, 100, 0),  # Orange color for target velocity
                 )
@@ -81,6 +81,8 @@ class CharactersMixin:
             print(f"[Client {client_id}] Clearing target velocity arrow")
             session.target_velocity_arrow.clear()
             session.target_velocity_arrow = None
+        if getattr(session.model, 'is_remote_mm2', False):
+            self._clear_target_velocity_waypoints(client_id)
 
         # Clear hand gizmos
         self.clear_hand_gizmos(client_id)

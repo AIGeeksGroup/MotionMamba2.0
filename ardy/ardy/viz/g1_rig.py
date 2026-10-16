@@ -107,6 +107,10 @@ class G1MeshRig:
                     }
                 )
 
+        self._joint_indices = np.array([item['joint_idx'] for item in self.mesh_items], dtype=int)
+        self._geom_positions = np.array([item['geom_pos'] for item in self.mesh_items])
+        self._geom_rotations = np.array([item['geom_rot'] for item in self.mesh_items])
+
         if self._defer_initial_visibility:
             for handle in self.mesh_handles:
                 handle.visible = True
@@ -198,19 +202,16 @@ class G1MeshRig:
             handle.color = color
 
     def set_pose(self, joints_pos: np.ndarray, joints_rot: np.ndarray) -> None:
-        for item in self.mesh_items:
-            handle = item["handle"]
-            joint_idx = item["joint_idx"]
-            geom_pos = item["geom_pos"]
-            geom_rot = item["geom_rot"]
-
-            joint_pos = joints_pos[joint_idx]
-            joint_rot = joints_rot[joint_idx]
-            mesh_pos = joint_pos + joint_rot @ geom_pos
-            mesh_rot = joint_rot @ geom_rot
-
-            handle.position = mesh_pos
-            handle.wxyz = tf.SO3.from_matrix(mesh_rot).wxyz
+        if not self.mesh_items:
+            return
+        joint_rot = joints_rot[self._joint_indices]
+        positions = joints_pos[self._joint_indices] + np.einsum('nij,nj->ni', joint_rot, self._geom_positions)
+        rotations = tf.SO3.from_matrix(joint_rot @ self._geom_rotations).wxyz
+        # Vectorize the identical rigid transforms and publish a complete pose.
+        with self.server.atomic():
+            for item, position, rotation in zip(self.mesh_items, positions, rotations):
+                item['handle'].position = position
+                item['handle'].wxyz = rotation
 
     def clear(self) -> None:
         for handle in self.mesh_handles:

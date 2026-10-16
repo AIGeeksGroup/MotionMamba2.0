@@ -9,6 +9,7 @@ from .common import *  # noqa: F401,F403
 
 
 class ModelLoadingMixin:
+    _remote_load_lock = threading.Lock()
     def _build_text_encoder(self):
         """Build the shared text encoder once, at demo startup.
 
@@ -54,6 +55,12 @@ class ModelLoadingMixin:
         return CoreSkeleton27, "core_skin", "cskel27"
 
     def load_model(self, client_id: int, model_name: str, progress=None):
+        if os.environ.get("ARDY_GENERATOR_BACKEND") == "motion_mamba":
+            with self._remote_load_lock:
+                return self._load_model_impl(client_id, model_name, progress)
+        return self._load_model_impl(client_id, model_name, progress)
+
+    def _load_model_impl(self, client_id: int, model_name: str, progress=None):
         """Load the motion generation model for a specific client.
 
         ``model_name`` is a released model name (dropdown value). It is loaded from CHECKPOINTS_DIR
@@ -67,6 +74,7 @@ class ModelLoadingMixin:
             return None
 
         session = self.client_sessions[client_id]
+        remote = os.environ.get("ARDY_GENERATOR_BACKEND") == "motion_mamba"
 
         def _progress(message: str) -> None:
             """Log a loading-phase message to the console and, when a progress callback was
@@ -79,24 +87,49 @@ class ModelLoadingMixin:
 
         # Reuse the shared text encoder built once at startup. Passing
         # checkpoints_dir=None makes load_model download from Hugging Face.
-        if CHECKPOINTS_DIR:
+        if remote:
+            _progress("Connecting to the isolated Motion Mamba 2.0 generator...")
+        elif CHECKPOINTS_DIR:
             _progress(f"Loading model '{model_name}' from checkpoints...")
         else:
             _progress(f"Downloading model '{model_name}' from Hugging Face...")
         try:
-            model, model_cfg = load_model(
-                model_name,
-                device=self.device,
-                return_config=True,
-                text_encoder=self.text_encoder,
-                checkpoints_dir=CHECKPOINTS_DIR,
-            )
+            if remote:
+                from .motion_mamba_backend import RemoteMotionMambaModel
+                if any(getattr(s.model, "is_remote_mm2", False) for cid, s in self.client_sessions.items() if cid != client_id):
+                    raise RuntimeError("This SONIC simulator already has an active controlling viewer. Close that viewer first.")
+                if getattr(session.model, "is_remote_mm2", False):
+                    session.model.close()
+                model = RemoteMotionMambaModel(self.text_encoder)
+                model_cfg = None
+                _progress(f"Connected to {model.model_label} (G1, 25 FPS, 52 frames)")
+            elif os.environ.get("MM2_CHECKPOINT"):
+                import sys
+                sys.path.insert(0, str(Path(__file__).resolve().parents[3]/"simulation"))
+                from model_loader import load_selected
+                model, _, _, selected_profile = load_selected(
+                    os.environ["MM2_CHECKPOINT"], device=self.device,
+                    text_encoder=self.text_encoder)
+                if selected_profile["backend"] != "ardy":
+                    raise ValueError("Selected checkpoint requires the isolated sequence-model service")
+                model_cfg = None
+                _progress(f"Loaded {selected_profile['label']}: {selected_profile['checkpoint']}")
+            else:
+                model, model_cfg = load_model(
+                    model_name,
+                    device=self.device,
+                    return_config=True,
+                    text_encoder=self.text_encoder,
+                    checkpoints_dir=CHECKPOINTS_DIR,
+                )
         except Exception as e:
             print(f"Failed to load model '{model_name}': {e}")
+            if remote:
+                session.client.add_notification(title="Motion Mamba backend", body=str(e), color="red", auto_close_seconds=15)
             return None
 
         # Local folder for engine caching (local dir or cached HF snapshot).
-        model_dir = resolve_model_dir(model_name)
+        model_dir = None if remote or os.environ.get("MM2_CHECKPOINT") else resolve_model_dir(model_name)
 
         model_fps = model.motion_rep.fps
         print(f"Model FPS: {model_fps}")
@@ -216,7 +249,7 @@ class ModelLoadingMixin:
 
         # Optionally accelerate inference with TRT engines or torch.compile
         compile_mode = session.gui_elements.gui_compile_mode.value
-        if compile_mode != "None":
+        if not remote and not os.environ.get("MM2_CHECKPOINT") and compile_mode != "None":
             # Acceleration is an optimization — if it fails (e.g. a TensorRT
             # engine cached by another TensorRT version, driver issues), fall
             # back to the plain PyTorch model instead of aborting the load.
@@ -294,5 +327,7 @@ class ModelLoadingMixin:
                 model.denoiser = orig_denoiser
                 _progress(f"{compile_mode} acceleration failed ({e}); continuing without acceleration.")
 
+        if remote:
+            model.configure(self, session)
         print(f"Model loaded successfully for client {client_id}!")
         return model

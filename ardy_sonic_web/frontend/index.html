@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SONIC Demo - ARDY Live</title>
+  <link rel="stylesheet" href="/static/styles.css?v=20261007-five1">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "/vendor/three/build/three.module.js",
+      "three/addons/": "/vendor/three/examples/jsm/",
+      "three/examples/jsm/": "/vendor/three/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main class="demo-root" id="viewport">
+    <canvas id="canvas" aria-label="SONIC MuJoCo actual-state viewer"></canvas>
+
+    <aside class="side-panel">
+      <section class="glass project-header">
+        <div class="logo"><span>SONIC</span> Demo</div>
+        <div class="tagline">Whole-Body Motion Tracking · G1 Humanoid</div>
+        <div class="source-label" id="source-label">Reference motion generator</div>
+      </section>
+
+      <section class="glass panel-section compact-status" aria-live="polite">
+        <div class="status-row">
+          <div class="status-main"><i class="status-dot loading" id="status-dot"></i><span id="status-text">Loading G1…</span></div>
+          <span id="status-fps"></span>
+        </div>
+      </section>
+
+      <section class="glass panel-section">
+        <div class="panel-title">Reference Motion</div>
+        <div class="motion-item active">
+          <span class="motion-name" id="motion-name">Waiting for ARDY</span>
+          <span class="motion-meta" id="motion-meta">No motion received</span>
+        </div>
+        <dl class="motion-details">
+          <div><dt>Debug mode</dt><dd id="debug-mode">streaming</dd></div>
+          <div><dt>Reference frame</dt><dd id="ref-frame">0 / 0</dd></div>
+          <div><dt>Time</dt><dd id="ref-time">0.00 / 0.00 s</dd></div>
+          <div><dt>Tracking RMS</dt><dd id="tracking-error">--</dd></div>
+        </dl>
+      </section>
+
+      <section class="glass panel-section">
+        <div class="panel-title">World Motion</div>
+        <dl class="motion-details world-motion">
+          <div><dt>Reference root</dt><dd id="ref-root">--</dd></div>
+          <div><dt>Actual root</dt><dd id="actual-root">--</dd></div>
+          <div><dt>Actual velocity</dt><dd id="actual-velocity">--</dd></div>
+        </dl>
+      </section>
+
+      <section class="glass panel-section">
+        <div class="panel-title">Simulation</div>
+        <div class="controls">
+          <div class="ctrl-row"><span class="ctrl-label">Physics</span><button class="icon-btn text-btn active" id="btn-physics" type="button">ON</button></div>
+          <div class="ctrl-row"><span class="ctrl-label">Policy</span><button class="icon-btn text-btn active" id="btn-policy" type="button">ON</button></div>
+          <div class="ctrl-row"><span class="ctrl-label">Camera follow</span><button class="icon-btn text-btn active" id="btn-follow" type="button">ON</button></div>
+          <div class="ctrl-row"><label class="ctrl-label" for="hand-style">Hand appearance</label><select class="icon-btn" id="hand-style" title="手指为固定姿态，随手腕运动；不提供独立手指控制。"><option value="five" selected>Five fingers</option><option value="original">Original three fingers</option></select></div>
+        </div>
+      </section>
+    </aside>
+
+    <section class="glass info-panel">
+      <div class="info-row"><span class="info-key">Motion</span><span class="info-val" id="info-motion">ARDY Live</span></div>
+      <div class="info-row"><span class="info-key">Physics</span><span class="info-val" id="info-physics">ON</span></div>
+      <div class="info-row"><span class="info-key">Policy</span><span class="info-val policy-on" id="info-policy">ON</span></div>
+      <div class="info-row"><span class="info-key">Actual state</span><span class="info-val" id="info-actual">WAIT</span></div>
+    </section>
+
+    <nav class="glass help-bar" aria-label="Simulation controls">
+      <button id="play-button" type="button" title="播放已生成动作"><kbd>▶</kbd><span>播放 Play</span></button>
+      <button id="pause-button" type="button" title="暂停动作和仿真"><kbd>⏸</kbd><span>暂停 Pause</span></button>
+      <button id="physics-button" type="button" title="Toggle physics"><kbd>P</kbd><span>Physics</span></button>
+      <button id="restart-button" type="button" title="Restart SONIC and MuJoCo"><kbd>R</kbd><span>Restart</span></button>
+      <button id="policy-button" type="button" title="Toggle SONIC policy"><kbd>O</kbd><span>Policy</span></button>
+      <button id="follow-button" type="button" title="Toggle camera follow"><kbd>F</kbd><span>Follow</span></button>
+      <div class="help-item pointer-help">Drag to orbit · Wheel to zoom</div>
+    </nav>
+
+    <div id="toast" role="status"></div>
+    <div id="loading-overlay">
+      <div class="spinner"></div>
+      <div class="loading-logo"><span>SONIC</span> Demo</div>
+      <div id="loading-status">Loading G1 model…</div>
+    </div>
+  </main>
+  <script type="module" src="/static/app.js?v=20261012-global-time1"></script>
+</body>
+</html>

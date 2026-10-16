@@ -3,6 +3,7 @@
 
 import argparse
 import os
+from pathlib import Path
 
 import gradio as gr
 import numpy as np
@@ -15,7 +16,7 @@ os.environ.setdefault("HF_ENABLE_PARALLEL_LOADING", "YES")
 DEFAULT_TEXT = "A person walks and falls to the ground."
 DEFAULT_SERVER_NAME = "0.0.0.0"
 DEFAULT_SERVER_PORT = 9550
-DEFAULT_TMP_FOLDER = "/tmp/text_encoder/"
+DEFAULT_TMP_FOLDER = str(Path(__file__).resolve().parents[2]/"runtime/tmp/text_encoder")
 
 
 class DemoWrapper:

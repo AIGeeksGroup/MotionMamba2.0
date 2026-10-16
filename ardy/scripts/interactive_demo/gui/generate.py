@@ -260,14 +260,14 @@ class GuiGenerateMixin:
                         )
 
             # Waypoint controls
-            with client.gui.add_folder("Waypoint", expand_by_default=False):
+            with client.gui.add_folder("Waypoint", expand_by_default=os.environ.get('ARDY_GENERATOR_BACKEND') == 'motion_mamba'):
                 g.gui_waypoint_mode_checkbox = client.gui.add_checkbox("Enable Waypoint Mode", initial_value=False)
                 g.gui_dense_root_checkbox = client.gui.add_checkbox("Use Dense Root", initial_value=False)
                 g.gui_waypoint_interval = client.gui.add_number(
                     "Waypoint Interval", initial_value=60, min=1, max=300, step=1
                 )
 
-            with client.gui.add_folder("Target Velocity", expand_by_default=False):
+            with client.gui.add_folder("Target Velocity", expand_by_default=os.environ.get('ARDY_GENERATOR_BACKEND') == 'motion_mamba'):
                 # Target root velocity control
                 g.gui_use_target_velocity_checkbox = client.gui.add_checkbox("Use Target Velocity", initial_value=False)
                 g.gui_target_root_velocity = client.gui.add_vector2(
@@ -299,7 +299,9 @@ class GuiGenerateMixin:
                     session = self.client_sessions[client.client_id]
                     if session.target_velocity_arrow is not None and g.gui_use_target_velocity_checkbox.value:
                         # Trigger a frame update to refresh the arrow
-                        self.set_frame(client.client_id, session.frame_idx)
+                        self.set_frame(client.client_id, session.frame_idx, render_only=True, preview_target_velocity=True)
+                    if getattr(session.model, 'is_remote_mm2', False):
+                        session.model.control_changed(self, session)
 
                 @g.gui_use_target_velocity_checkbox.on_update
                 def _(_) -> None:
@@ -347,9 +349,20 @@ class GuiGenerateMixin:
                         if not g.gui_use_target_velocity_checkbox.value:
                             # Hide arrow when disabled
                             session.target_velocity_arrow.set_visibility(False)
+                            if getattr(session.model, 'is_remote_mm2', False):
+                                self._clear_target_velocity_waypoints(client.client_id)
                         else:
                             # Trigger a frame update to show the arrow if enabled
-                            self.set_frame(client.client_id, session.frame_idx)
+                            self.set_frame(client.client_id, session.frame_idx, render_only=True, preview_target_velocity=True)
+                    if getattr(session.model, 'is_remote_mm2', False):
+                        session.model.control_changed(self, session)
+
+                @g.gui_use_target_heading_checkbox.on_update
+                def _(_) -> None:
+                    if self.client_active(client_id):
+                        session = self.client_sessions[client_id]
+                        if getattr(session.model, 'is_remote_mm2', False):
+                            session.model.control_changed(self, session)
 
             with client.gui.add_folder("Post Process", expand_by_default=False):
                 g.gui_enable_postprocess_checkbox = client.gui.add_checkbox(
