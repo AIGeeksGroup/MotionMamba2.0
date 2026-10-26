@@ -1,0 +1,400 @@
+{
+  "version": 1,
+  "model": "Motion Mamba 2.0",
+  "fps": 25,
+  "dimensions": 36,
+  "scenarios": [
+    {
+      "id": "scenario-01",
+      "label": "Dance · stop",
+      "showcase_title": "Dance, then stop",
+      "clips": [
+        {
+          "id": "scenario-01-10",
+          "file": "scenario-01-10.bin",
+          "frames": 780,
+          "fps": 25.0,
+          "duration": 31.2,
+          "segments": [
+            {
+              "prompt": "A person is dancing.",
+              "start_frame": 0,
+              "end_frame": 620
+            },
+            {
+              "prompt": "A person is standing.",
+              "start_frame": 620,
+              "end_frame": 780
+            }
+          ],
+          "execution": {
+            "file": "scenario-01-10-sonic-actual.bin",
+            "frames": 780,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-02",
+      "label": "Kung fu · walk",
+      "showcase_title": "Kung fu, then walk",
+      "clips": [
+        {
+          "id": "scenario-02-11",
+          "file": "scenario-02-11.bin",
+          "frames": 624,
+          "fps": 25.0,
+          "duration": 24.96,
+          "segments": [
+            {
+              "prompt": "A person is doing kungfu.",
+              "start_frame": 0,
+              "end_frame": 388
+            },
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 388,
+              "end_frame": 624
+            }
+          ],
+          "execution": {
+            "file": "scenario-02-11-sonic-actual.bin",
+            "frames": 624,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-03",
+      "label": "Mouse control",
+      "showcase_title": "Mouse-controlled path",
+      "clips": [
+        {
+          "id": "scenario-03-2",
+          "file": "scenario-03-2.bin",
+          "frames": 519,
+          "fps": 25.0,
+          "duration": 20.76,
+          "segments": [
+            {
+              "prompt": "A person is walking in a circle.",
+              "start_frame": 0,
+              "end_frame": 519
+            }
+          ],
+          "execution": {
+            "file": "scenario-03-2-sonic-actual.bin",
+            "frames": 519,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-04",
+      "label": "Keyboard control",
+      "showcase_title": "Keyboard-controlled path",
+      "clips": [
+        {
+          "id": "scenario-04-1",
+          "file": "scenario-04-1.bin",
+          "frames": 601,
+          "fps": 25.0,
+          "duration": 24.04,
+          "segments": [
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 0,
+              "end_frame": 440
+            },
+            {
+              "prompt": "Wave with the right hand naturally.",
+              "start_frame": 440,
+              "end_frame": 601
+            }
+          ],
+          "execution": {
+            "file": "scenario-08-1-sonic-actual.bin",
+            "frames": 601,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-05",
+      "label": "Wave · walk",
+      "showcase_title": "Wave, then walk",
+      "clips": [
+        {
+          "id": "scenario-05-3",
+          "file": "scenario-05-3.bin",
+          "frames": 464,
+          "fps": 25.0,
+          "duration": 18.56,
+          "segments": [
+            {
+              "prompt": "Wave with the right hand naturally.",
+              "start_frame": 0,
+              "end_frame": 165
+            },
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 165,
+              "end_frame": 464
+            }
+          ],
+          "execution": {
+            "file": "scenario-05-3-sonic-actual.bin",
+            "frames": 464,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-06",
+      "label": "Walk · stand · bow",
+      "showcase_title": "Walk, stand, bow",
+      "clips": [
+        {
+          "id": "scenario-06-4",
+          "file": "scenario-06-4.bin",
+          "frames": 528,
+          "fps": 25.0,
+          "duration": 21.12,
+          "segments": [
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 0,
+              "end_frame": 109
+            },
+            {
+              "prompt": "A person is standing.",
+              "start_frame": 109,
+              "end_frame": 266
+            },
+            {
+              "prompt": "A person is bowing.",
+              "start_frame": 266,
+              "end_frame": 528
+            }
+          ],
+          "execution": {
+            "file": "scenario-11-4-sonic-actual.bin",
+            "frames": 528,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-07",
+      "label": "Celebrate · walk · stand",
+      "showcase_title": "Celebrate, walk, stand",
+      "clips": [
+        {
+          "id": "scenario-07-5",
+          "file": "scenario-07-5.bin",
+          "frames": 510,
+          "fps": 25.0,
+          "duration": 20.4,
+          "segments": [
+            {
+              "prompt": "A person is celebrating.",
+              "start_frame": 0,
+              "end_frame": 155
+            },
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 155,
+              "end_frame": 300
+            },
+            {
+              "prompt": "A person is standing.",
+              "start_frame": 300,
+              "end_frame": 510
+            }
+          ],
+          "execution": {
+            "file": "scenario-07-5-sonic-actual.bin",
+            "frames": 510,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-08",
+      "label": "Turn · wave · walk",
+      "showcase_title": "Turn, wave, walk",
+      "clips": [
+        {
+          "id": "scenario-08-6",
+          "file": "scenario-08-6.bin",
+          "frames": 448,
+          "fps": 25.0,
+          "duration": 17.92,
+          "segments": [
+            {
+              "prompt": "A person turns around on the spot.",
+              "start_frame": 0,
+              "end_frame": 155
+            },
+            {
+              "prompt": "Wave with the right hand naturally.",
+              "start_frame": 155,
+              "end_frame": 290
+            },
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 290,
+              "end_frame": 448
+            }
+          ],
+          "execution": {
+            "file": "scenario-08-6-sonic-actual.bin",
+            "frames": 448,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-09",
+      "label": "Slow walk · run · stand",
+      "showcase_title": "Slow walk, run, stand",
+      "clips": [
+        {
+          "id": "scenario-09-7",
+          "file": "scenario-09-7.bin",
+          "frames": 418,
+          "fps": 25.0,
+          "duration": 16.72,
+          "segments": [
+            {
+              "prompt": "A person is walking slowly.",
+              "start_frame": 0,
+              "end_frame": 155
+            },
+            {
+              "prompt": "A person is running.",
+              "start_frame": 155,
+              "end_frame": 260
+            },
+            {
+              "prompt": "A person is standing.",
+              "start_frame": 260,
+              "end_frame": 418
+            }
+          ],
+          "execution": {
+            "file": "scenario-09-7-sonic-actual.bin",
+            "frames": 418,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-10",
+      "label": "Walk · turn left",
+      "showcase_title": "Walk, then turn left",
+      "clips": [
+        {
+          "id": "scenario-10-8",
+          "file": "scenario-10-8.bin",
+          "frames": 364,
+          "fps": 25.0,
+          "duration": 14.56,
+          "segments": [
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 0,
+              "end_frame": 104
+            },
+            {
+              "prompt": "Turn left smoothly while continuing to walk.",
+              "start_frame": 104,
+              "end_frame": 364
+            }
+          ],
+          "execution": {
+            "file": "scenario-09-8-sonic-actual.bin",
+            "frames": 364,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-11",
+      "label": "Kick · walk",
+      "showcase_title": "Kick, then walk",
+      "clips": [
+        {
+          "id": "scenario-11-9",
+          "file": "scenario-11-9.bin",
+          "frames": 520,
+          "fps": 25.0,
+          "duration": 20.8,
+          "segments": [
+            {
+              "prompt": "A person is kicking with their right leg.",
+              "start_frame": 0,
+              "end_frame": 104
+            },
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 104,
+              "end_frame": 520
+            }
+          ],
+          "execution": {
+            "file": "scenario-10-9-sonic-actual.bin",
+            "frames": 520,
+            "fps": 25.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-12",
+      "label": "Walk · stop · resume",
+      "showcase_title": "Walk, stop, walk again",
+      "clips": [
+        {
+          "id": "scenario-12-walk-stop-resume",
+          "file": "scenario-12-walk-stop-resume.bin",
+          "frames": 468,
+          "fps": 25,
+          "duration": 18.72,
+          "segments": [
+            {
+              "prompt": "A person continuously walks straight ahead with a natural gait.",
+              "start_frame": 0,
+              "end_frame": 156
+            },
+            {
+              "prompt": "Stop walking and stand still naturally.",
+              "start_frame": 156,
+              "end_frame": 312
+            },
+            {
+              "prompt": "Start walking forward again with a natural gait.",
+              "start_frame": 312,
+              "end_frame": 468
+            }
+          ],
+          "execution": {
+            "file": "scenario-12-walk-stop-resume-sonic-actual.bin",
+            "frames": 468,
+            "fps": 25
+          }
+        }
+      ]
+    }
+  ]
+}

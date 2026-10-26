@@ -212,6 +212,7 @@
     .hero-inner {
       max-width: 1120px;
       text-align: center;
+      transform: translateX(-12px);
     }
 
     h1 {
@@ -387,6 +388,222 @@
       height: 2px;
       margin: 20px auto 0;
       background: var(--clay);
+    }
+
+    .section-subtitle {
+      margin: -2px 0 0;
+      color: var(--muted);
+      font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.75;
+      letter-spacing: -.01em;
+      text-align: center;
+    }
+
+    .simulation-section {
+      padding-bottom: 96px;
+    }
+
+    .simulation-section + .real-world-section {
+      padding-top: 92px;
+      border-top: 1px solid var(--line);
+    }
+
+    .simulation-section-head {
+      margin-bottom: 42px;
+    }
+
+    .simulation-view-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 5px;
+      border: 1px solid rgba(255, 255, 255, .88);
+      border-radius: 999px;
+      background: rgba(255, 251, 247, .78);
+      box-shadow: 0 12px 34px rgba(90, 59, 39, .08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .simulation-view-switch button {
+      min-width: 96px;
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--faint);
+      font: 500 14px ui-serif, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      cursor: pointer;
+      transition: color .2s ease, background-color .2s ease, box-shadow .2s ease;
+    }
+
+    .simulation-view-switch button.selected {
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 5px 14px rgba(90, 59, 39, .1);
+    }
+
+    .simulation-view-switch button:focus-visible {
+      outline: 2px solid var(--clay);
+      outline-offset: 2px;
+    }
+
+    .simulation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 38px 28px;
+    }
+
+    .simulation-card {
+      min-width: 0;
+    }
+
+    .simulation-stage {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      aspect-ratio: 2.14 / 1;
+      border: 1px solid #e4e6ec;
+      border-radius: 18px;
+      background: linear-gradient(90deg, #f3f4f7 50%, #15221c 50%);
+      box-shadow: var(--shadow);
+    }
+
+    .simulation-stage canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+
+    .simulation-heading {
+      position: absolute;
+      z-index: 2;
+      top: 20px;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+    }
+
+    .simulation-heading-left { left: 24px; }
+    .simulation-heading-right {
+      left: calc(50% + 24px);
+      color: #f1f5f2;
+    }
+
+    .simulation-heading-number {
+      margin-bottom: 9px;
+      color: #9a9ea7;
+      font: 7px "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      letter-spacing: .15em;
+    }
+
+    .simulation-heading-right .simulation-heading-number { color: #879e92; }
+
+    .simulation-heading-name {
+      font-size: 21px;
+      font-weight: 550;
+      line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+
+    .simulation-heading-description {
+      margin-top: 5px;
+      color: #90959f;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: .02em;
+    }
+
+    .simulation-heading-right .simulation-heading-description { color: #8ca498; }
+
+    .simulation-time {
+      position: absolute;
+      z-index: 2;
+      top: 22px;
+      right: 22px;
+      color: #73847b;
+      font: 9px "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-variant-numeric: tabular-nums;
+      pointer-events: none;
+    }
+
+    .simulation-elapsed {
+      color: #e2ebe6;
+      font-size: 15px;
+    }
+
+    .simulation-play {
+      position: absolute;
+      z-index: 3;
+      right: 22px;
+      bottom: 22px;
+      width: 37px;
+      height: 37px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .08);
+      color: #f0f5f2;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: background-color .2s ease, transform .2s ease;
+    }
+
+    .simulation-play:hover,
+    .simulation-play:focus-visible {
+      background: rgba(255, 255, 255, .2);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .simulation-loading {
+      position: absolute;
+      z-index: 4;
+      inset: 0;
+      display: none;
+      place-content: center;
+      justify-items: center;
+      gap: 10px;
+      background: rgba(244, 245, 248, .94);
+      color: #8d929f;
+      font-size: 10px;
+    }
+
+    .simulation-loading.is-visible { display: grid; }
+    .simulation-loading span {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #d9dfe9;
+      border-top-color: var(--clay);
+      border-radius: 50%;
+      animation: simulation-spin 1s linear infinite;
+    }
+
+    .simulation-loading.is-error span { display: none; }
+    .simulation-loading small { max-width: 70%; text-align: center; }
+    @keyframes simulation-spin { to { transform: rotate(360deg); } }
+
+    .simulation-stage[data-view="viser"] .simulation-heading-right { display: none; }
+    .simulation-stage[data-view="viser"] .simulation-time { color: #8e949e; }
+    .simulation-stage[data-view="viser"] .simulation-elapsed { color: #596176; }
+    .simulation-stage[data-view="sonic"] .simulation-heading-left { display: none; }
+    .simulation-stage[data-view="sonic"] .simulation-heading-right { left: 24px; }
+    .simulation-timeline {
+      margin-top: 10px;
+    }
+
+    .simulation-error {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: var(--muted);
+      text-align: center;
     }
 
     .section-note {
@@ -565,6 +782,7 @@
       .nav a:last-child { display: none; }
       .hero { min-height: 510px; }
       .hero-front { padding: 74px 0 80px; }
+      .hero-inner { transform: none; }
       h1 {
         width: 100%;
         overflow-wrap: anywhere;
@@ -581,7 +799,13 @@
       .publication-button { min-width: 96px; padding: 8px 13px; }
       main { padding: 64px 0 76px; }
       .section-head { margin-bottom: 30px; }
+      .section-subtitle { font-size: 14px; line-height: 1.65; }
       h2 { font-size: 30px; overflow-wrap: anywhere; word-break: normal; }
+      .simulation-section { padding-bottom: 64px; }
+      .simulation-section + .real-world-section { padding-top: 64px; }
+      .simulation-view-switch button { min-width: 82px; padding: 9px 13px; font-size: 13px; }
+      .simulation-grid { grid-template-columns: 1fr; gap: 28px; }
+      .simulation-stage { border-radius: 14px; }
       .video-grid { grid-template-columns: 1fr; gap: 20px; }
       .video-card { border-radius: 14px; }
       .prompt-timeline { min-height: 48px; margin-top: 9px; }
@@ -594,6 +818,9 @@
       .hero-video-strip { display: none; }
     }
   </style>
+  <script type="importmap">
+    {"imports":{"three":"./simulation/vendor/three/build/three.module.js","three/addons/":"./simulation/vendor/three/examples/jsm/","three/examples/jsm/":"./simulation/vendor/three/examples/jsm/"}}
+  </script>
 </head>
 <body>
   <svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden">
@@ -606,6 +833,7 @@
       <a class="brand" href="#top" aria-label="Motion Mamba 2.0 home">Motion Mamba <span>2.0</span></a>
       <nav class="nav" aria-label="Page navigation">
         <a href="#paper">Paper</a>
+        <a href="#simulation">Simulation</a>
         <a href="#evaluation">Real World Demonstration</a>
       </nav>
     </div>
@@ -660,18 +888,32 @@
     </div>
   </section>
 
-  <main id="evaluation">
+  <main id="results">
     <div class="shell">
-      <div class="section-head">
-        <h2>Real World Demonstration</h2>
-      </div>
+      <section class="simulation-section" id="simulation" aria-labelledby="simulation-title">
+        <div class="section-head simulation-section-head">
+          <h2 id="simulation-title">Simulation</h2>
+          <div class="simulation-view-switch" role="group" aria-label="Simulation view">
+            <button class="selected" type="button" data-simulation-view="split" aria-pressed="true">Split&nbsp; ◫</button>
+            <button type="button" data-simulation-view="viser" aria-pressed="false">Viser</button>
+            <button type="button" data-simulation-view="sonic" aria-pressed="false">MuJoCo</button>
+          </div>
+        </div>
+        <div class="simulation-grid" id="simulation-grid" aria-live="polite"></div>
+      </section>
 
-      <div class="video-grid">
+      <section class="real-world-section" id="evaluation" aria-labelledby="real-world-title">
+        <div class="section-head">
+          <h2 id="real-world-title">Real World Demonstration</h2>
+          <p class="section-subtitle">Long-horizon motion. Changing instructions.<br>One continuous stream of movement.</p>
+        </div>
+
+        <div class="video-grid">
         <article class="video-card" data-demo="1">
           <div class="video-frame">
             <video autoplay muted loop playsinline preload="metadata" controls aria-label="Real-world demonstration 1"><source src="real-world-video/clean/real-1.mp4" type="video/mp4"></video>
             <span class="video-label">Real</span>
-            <span class="video-label video-label-tech">Three.js</span>
+            <span class="video-label video-label-tech">Viser</span>
           </div>
           <div class="prompt-timeline" aria-label="Prompt timeline for demonstration 1"><div class="prompt-track"></div></div>
         </article>
@@ -679,7 +921,7 @@
           <div class="video-frame">
             <video autoplay muted loop playsinline preload="metadata" controls aria-label="Real-world demonstration 2"><source src="real-world-video/clean/real-2.mp4" type="video/mp4"></video>
             <span class="video-label">Real</span>
-            <span class="video-label video-label-tech">Three.js</span>
+            <span class="video-label video-label-tech">Viser</span>
           </div>
           <div class="prompt-timeline" aria-label="Prompt timeline for demonstration 2"><div class="prompt-track"></div></div>
         </article>
@@ -687,7 +929,7 @@
           <div class="video-frame">
             <video autoplay muted loop playsinline preload="metadata" controls aria-label="Real-world demonstration 3"><source src="real-world-video/clean/real-3.mp4" type="video/mp4"></video>
             <span class="video-label">Real</span>
-            <span class="video-label video-label-tech">Three.js</span>
+            <span class="video-label video-label-tech">Viser</span>
           </div>
           <div class="prompt-timeline" aria-label="Prompt timeline for demonstration 3"><div class="prompt-track"></div></div>
         </article>
@@ -695,11 +937,12 @@
           <div class="video-frame">
             <video autoplay muted loop playsinline preload="metadata" controls aria-label="Real-world demonstration 4"><source src="real-world-video/clean/real-4.mp4" type="video/mp4"></video>
             <span class="video-label">Real</span>
-            <span class="video-label video-label-tech">Three.js</span>
+            <span class="video-label video-label-tech">Viser</span>
           </div>
           <div class="prompt-timeline" aria-label="Prompt timeline for demonstration 4"><div class="prompt-track"></div></div>
         </article>
-      </div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -707,6 +950,7 @@
     <div class="shell"><span class="footer-title">Motion Mamba 2.0:</span> Autoregressive Diffusion Mamba for Long-Horizon Humanoid Control</div>
   </footer>
 
+  <script type="module" src="simulation/src/simulation.js"></script>
   <script>
     const hero = document.querySelector('.hero');
     const heroVideos = [...document.querySelectorAll('.hero-video-strip video')];
