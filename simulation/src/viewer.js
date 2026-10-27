@@ -17,11 +17,16 @@ export const JOINTS = [
 ];
 
 export class ReplayViewer {
-  constructor(canvas, {mode='viser', showcase=false} = {}) {
+  constructor(canvas, {mode='viser', showcase=false, transparent=false} = {}) {
     this.canvas = canvas;
     this.mode = mode;
     this.showcase = showcase;
-    this.renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:'high-performance'});
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias:true,
+      alpha:transparent,
+      powerPreference:'high-performance'
+    });
     const gl = this.renderer.getContext();
     const ext = gl.getExtension('WEBGL_debug_renderer_info');
     this.software = /swiftshader|llvmpipe|software/i.test(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : '');
@@ -31,9 +36,10 @@ export class ReplayViewer {
     this.renderer.toneMappingExposure = 1;
     this.renderer.shadowMap.enabled = !this.software;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    if (transparent) this.renderer.setClearColor(0x000000, 0);
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color('#f3f4f7');
-    this.scene.fog = new THREE.Fog('#f3f4f7', 10, 35);
+    this.scene.background = transparent ? null : new THREE.Color('#f3f4f7');
+    this.scene.fog = transparent ? null : new THREE.Fog('#f3f4f7', 10, 35);
     this.camera = new THREE.PerspectiveCamera(35, 1, .02, 120);
     this.camera.up.set(0,0,1);
     this.controls = new OrbitControls(this.camera, canvas);

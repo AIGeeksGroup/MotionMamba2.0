@@ -401,6 +401,47 @@
       text-align: center;
     }
 
+    .overview-section {
+      padding-bottom: 96px;
+    }
+
+    .overview-section,
+    .simulation-section,
+    .real-world-section {
+      scroll-margin-top: 96px;
+    }
+
+    .overview-section + .simulation-section {
+      padding-top: 92px;
+      border-top: 1px solid var(--line);
+    }
+
+    .overview-section-head {
+      margin-bottom: 42px;
+    }
+
+    .overview-stage {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 3.6 / 1;
+      border: 0;
+      border-radius: 18px;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .overview-stage canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+
+    .overview-stage.is-ready canvas { opacity: 1; }
+
     .simulation-section {
       padding-bottom: 96px;
     }
@@ -801,6 +842,9 @@
       .section-head { margin-bottom: 30px; }
       .section-subtitle { font-size: 14px; line-height: 1.65; }
       h2 { font-size: 30px; overflow-wrap: anywhere; word-break: normal; }
+      .overview-section { padding-bottom: 64px; }
+      .overview-section + .simulation-section { padding-top: 64px; }
+      .overview-stage { border-radius: 14px; }
       .simulation-section { padding-bottom: 64px; }
       .simulation-section + .real-world-section { padding-top: 64px; }
       .simulation-view-switch button { min-width: 82px; padding: 9px 13px; font-size: 13px; }
@@ -833,6 +877,7 @@
       <a class="brand" href="#top" aria-label="Motion Mamba 2.0 home">Motion Mamba <span>2.0</span></a>
       <nav class="nav" aria-label="Page navigation">
         <a href="#paper">Paper</a>
+        <a href="#overview">Overview</a>
         <a href="#simulation">Simulation</a>
         <a href="#evaluation">Real World Demonstration</a>
       </nav>
@@ -890,6 +935,16 @@
 
   <main id="results">
     <div class="shell">
+      <section class="overview-section" id="overview" aria-labelledby="overview-title">
+        <div class="section-head overview-section-head">
+          <h2 id="overview-title">Overview</h2>
+          <p class="section-subtitle">Autoregressive motion generation. Long-horizon control.<br>Diverse behaviors in one continuous stream.</p>
+        </div>
+        <div class="overview-stage" id="overview-stage">
+          <canvas id="overview-canvas" aria-label="Motion Mamba sequences playing together on a shared transparent stage"></canvas>
+        </div>
+      </section>
+
       <section class="simulation-section" id="simulation" aria-labelledby="simulation-title">
         <div class="section-head simulation-section-head">
           <h2 id="simulation-title">Simulation</h2>
@@ -951,6 +1006,7 @@
     <div class="shell"><span class="footer-title">Motion Mamba 2.0:</span> Autoregressive Diffusion Mamba for Long-Horizon Humanoid Control</div>
   </footer>
 
+  <script type="module" src="simulation/src/overview.js?v=10"></script>
   <script type="module" src="simulation/src/simulation.js"></script>
   <script>
     const hero = document.querySelector('.hero');
