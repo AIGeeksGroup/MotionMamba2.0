@@ -8,8 +8,14 @@ const players = [];
 let activeView = 'split';
 let lastFrame = performance.now();
 
-const promptColors = ['var(--peach)', 'var(--gold)'];
-const promptTextColors = ['var(--ink)', 'var(--ink)'];
+const promptColors = [
+  'var(--prompt-blue)', 'var(--prompt-sky)', 'var(--prompt-cyan)',
+  'var(--prompt-teal)', 'var(--prompt-sea)', 'var(--prompt-green)'
+];
+const promptAccents = [
+  'var(--blue)', 'var(--sky)', 'var(--cyan)',
+  'var(--teal)', 'var(--sea)', 'var(--green)'
+];
 
 async function loadManifest() {
   const response = await fetch(new URL('../manifest.json', import.meta.url));
@@ -102,10 +108,11 @@ function buildTimeline(player) {
     const start = segment.start_frame / clip.fps;
     const end = segment.end_frame / clip.fps;
     const segmentDuration = Math.max(.8, end - start);
+    const colorIndex = Math.round(index * (promptColors.length - 1) / Math.max(1, clip.segments.length - 1));
     const chip = document.createElement('div');
     chip.className = 'prompt-chip';
-    chip.style.setProperty('--segment-color', promptColors[index % promptColors.length]);
-    chip.style.setProperty('--segment-text', promptTextColors[index % promptTextColors.length]);
+    chip.style.setProperty('--segment-color', promptColors[colorIndex]);
+    chip.style.setProperty('--segment-accent', promptAccents[colorIndex]);
     chip.style.setProperty('--segment-grow', segmentDuration);
     chip.style.setProperty('--segment-width', `${Math.max(150, segmentDuration * 17, segment.prompt.length * 7.1 + 42)}px`);
     chip.dataset.start = start;

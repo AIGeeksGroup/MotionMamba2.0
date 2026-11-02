@@ -46,7 +46,7 @@ function configureScene() {
   viewer.floor.visible = true;
   viewer.floor.material.dispose();
   viewer.floor.material = new THREE.ShadowMaterial({
-    color: 0x765f52,
+    color: viewer.theme.ink,
     opacity: .14,
     transparent: true,
     depthWrite: false

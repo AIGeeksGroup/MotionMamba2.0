@@ -21,6 +21,12 @@ export class ReplayViewer {
     this.canvas = canvas;
     this.mode = mode;
     this.showcase = showcase;
+    const pageStyle = getComputedStyle(document.documentElement);
+    this.theme = Object.fromEntries([
+      'scene-light', 'scene-dark', 'scene-floor', 'scene-grid',
+      'scene-checker-dark', 'scene-checker-light', 'ink',
+      'blue', 'cyan', 'sea', 'green'
+    ].map(name => [name, pageStyle.getPropertyValue(`--${name}`).trim()]));
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       antialias:true,
@@ -38,8 +44,8 @@ export class ReplayViewer {
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     if (transparent) this.renderer.setClearColor(0x000000, 0);
     this.scene = new THREE.Scene();
-    this.scene.background = transparent ? null : new THREE.Color('#f3f4f7');
-    this.scene.fog = transparent ? null : new THREE.Fog('#f3f4f7', 10, 35);
+    this.scene.background = transparent ? null : new THREE.Color(this.theme['scene-light']);
+    this.scene.fog = transparent ? null : new THREE.Fog(this.theme['scene-light'], 10, 35);
     this.camera = new THREE.PerspectiveCamera(35, 1, .02, 120);
     this.camera.up.set(0,0,1);
     this.controls = new OrbitControls(this.camera, canvas);
@@ -83,9 +89,9 @@ export class ReplayViewer {
     this.scene.environment = this.environment.texture;
     studio.dispose();
     pmrem.dispose();
-    this.hemisphere = new THREE.HemisphereLight(0xffffff,0x85898b,.55);
+    this.hemisphere = new THREE.HemisphereLight(0xffffff,0x81969e,.55);
     this.scene.add(this.hemisphere);
-    const sun = new THREE.DirectionalLight(0xfffaf4, 2);
+    const sun = new THREE.DirectionalLight(0xfcfeff, 2);
     sun.position.set(4,-5,8);
     sun.castShadow = !this.software;
     sun.shadow.mapSize.set(1024,1024);
@@ -102,14 +108,13 @@ export class ReplayViewer {
     this.scene.add(fill,fill.target,rim,rim.target);
     this.studioLights = [[sun,4,-5,8],[fill,-3,2,4],[rim,-1,4,5]];
 
-    // MuJoCo/SONIC uses the muted two-tone green checkerboard seen in the
-    // reference simulator, with one metre cells and no bright grid overlay.
+    // Keep the reference checkerboard, tinted to the page's teal/green palette.
     const checkerCanvas = document.createElement('canvas');
     checkerCanvas.width = checkerCanvas.height = 256;
     const checker = checkerCanvas.getContext('2d');
-    checker.fillStyle = '#51645b';
+    checker.fillStyle = this.theme['scene-checker-dark'];
     checker.fillRect(0,0,256,256);
-    checker.fillStyle = '#82968b';
+    checker.fillStyle = this.theme['scene-checker-light'];
     checker.fillRect(0,0,128,128);
     checker.fillRect(128,128,128,128);
     this.sonicFloorTexture = new THREE.CanvasTexture(checkerCanvas);
@@ -119,7 +124,7 @@ export class ReplayViewer {
     this.sonicFloorTexture.anisotropy = Math.min(8,this.renderer.capabilities.getMaxAnisotropy());
 
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(160,160),
-      new THREE.MeshStandardMaterial({color:0xf3f4f7,roughness:1,metalness:0,envMapIntensity:.18}));
+      new THREE.MeshStandardMaterial({color:this.theme['scene-floor'],roughness:1,metalness:0,envMapIntensity:.18}));
     floor.position.z = -.008;
     floor.receiveShadow = true;
     this.floor = floor;
@@ -134,7 +139,7 @@ export class ReplayViewer {
     // A world-space, anti-aliased grid fades away instead of meeting a hard horizon.
     const grid = new THREE.Mesh(new THREE.PlaneGeometry(160,160),new THREE.ShaderMaterial({
       transparent:true,depthWrite:false,toneMapped:false,
-      uniforms:{center:{value:new THREE.Vector2()},color:{value:new THREE.Color('#c4c9d4')},opacity:{value:.36}},
+      uniforms:{center:{value:new THREE.Vector2()},color:{value:new THREE.Color(this.theme['scene-grid'])},opacity:{value:.36}},
       vertexShader:`varying vec2 worldXY;
         void main(){vec4 p=modelMatrix*vec4(position,1.0);worldXY=p.xy;gl_Position=projectionMatrix*viewMatrix*p;}`,
       fragmentShader:`varying vec2 worldXY;
@@ -321,12 +326,12 @@ export class ReplayViewer {
     this.interactionPoints = points;
     if (!points.length) return;
     const guideGeometry = new THREE.BufferGeometry().setFromPoints(points.map(point=>new THREE.Vector3(point.x,point.y,.018)));
-    const guidePath = new THREE.Line(guideGeometry,new THREE.LineBasicMaterial({color:0xf08a42,transparent:true,opacity:.82,depthWrite:false}));
+    const guidePath = new THREE.Line(guideGeometry,new THREE.LineBasicMaterial({color:this.theme.sea,transparent:true,opacity:.82,depthWrite:false}));
     this.interactionGroup.add(guidePath);
     const materials = {
-      constraint:new THREE.MeshBasicMaterial({color:0xf08a42,transparent:true,opacity:.8,depthWrite:false}),
-      keyboard:new THREE.MeshBasicMaterial({color:0x6b8cff,transparent:true,opacity:.9,depthWrite:false}),
-      mouse:new THREE.MeshBasicMaterial({color:0xf08a42,transparent:true,opacity:.9,depthWrite:false}),
+      constraint:new THREE.MeshBasicMaterial({color:this.theme.green,transparent:true,opacity:.8,depthWrite:false}),
+      keyboard:new THREE.MeshBasicMaterial({color:this.theme.blue,transparent:true,opacity:.9,depthWrite:false}),
+      mouse:new THREE.MeshBasicMaterial({color:this.theme.cyan,transparent:true,opacity:.9,depthWrite:false}),
     };
     const geometryMarker = new THREE.SphereGeometry(.055,12,8);
     for (const point of points) {
@@ -420,12 +425,12 @@ export class ReplayViewer {
     if (this.activeStyle === style) return;
     this.activeStyle = style;
     const sonic = style === 'sonic';
-    this.scene.background.set(sonic ? '#15221c' : '#f3f4f7');
+    this.scene.background.set(this.theme[sonic ? 'scene-dark' : 'scene-light']);
     this.scene.fog.color.copy(this.scene.background);
     this.floor.visible = !sonic;
     this.sonicFloor.visible = sonic;
-    this.floor.material.color.set('#f0f1f5');
-    this.grid.material.uniforms.color.value.set('#b4bccb');
+    this.floor.material.color.set(this.theme['scene-floor']);
+    this.grid.material.uniforms.color.value.set(this.theme['scene-grid']);
     this.grid.material.uniforms.opacity.value = sonic ? 0 : .28;
     this.hemisphere.intensity = sonic ? .75 : .55;
     this.contact.visible = !sonic;
