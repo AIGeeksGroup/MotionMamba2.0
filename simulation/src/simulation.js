@@ -97,13 +97,13 @@ function createCard(scenario, index) {
     dragPlayheadX: 0
   };
 
-  buildTimeline(player);
   bindPlayer(player);
   return player;
 }
 
 function buildTimeline(player) {
   const { clip, track } = player;
+  track.replaceChildren();
   player.chips = clip.segments.map((segment, index) => {
     const start = segment.start_frame / clip.fps;
     const end = segment.end_frame / clip.fps;
@@ -114,7 +114,6 @@ function buildTimeline(player) {
     chip.style.setProperty('--segment-color', promptColors[colorIndex]);
     chip.style.setProperty('--segment-accent', promptAccents[colorIndex]);
     chip.style.setProperty('--segment-grow', segmentDuration);
-    chip.style.setProperty('--segment-width', `${Math.max(150, segmentDuration * 17, segment.prompt.length * 7.1 + 42)}px`);
     chip.dataset.start = start;
     chip.dataset.end = end;
     chip.title = segment.prompt;
@@ -122,10 +121,13 @@ function buildTimeline(player) {
     label.textContent = segment.prompt;
     chip.append(label);
     track.append(chip);
+    const textWidth = label.scrollWidth + 36;
+    chip.style.setProperty('--segment-width', `${Math.max(130, segmentDuration * 15, textWidth)}px`);
     return chip;
   });
   player.timeline.setAttribute('aria-valuemax', clip.duration.toFixed(2));
   player.timeline.title = 'Drag left or right to scrub this motion';
+  updateTimeline(player);
 }
 
 function updateTimeline(player) {
@@ -320,6 +322,7 @@ async function start() {
       const player = createCard(scenario, index);
       players.push(player);
       grid.append(player.card);
+      buildTimeline(player);
     });
 
     const observer = new IntersectionObserver((entries) => {
