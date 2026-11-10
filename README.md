@@ -1,6 +1,15 @@
-# Motion Mamba 2.0
+# Motion Mamba 2.0: Autoregressive Diffusion Mamba for Long-Horizon Humanoid Control
 
-Autoregressive diffusion Mamba for real-time humanoid motion control.
+This is the official repository for the paper:
+
+> **Motion Mamba 2.0: Autoregressive Diffusion Mamba for Long-Horizon Humanoid Control**
+>
+> [Yue Huang](https://github.com/hyue060825-boop)\*, [Tianshan Zhang](https://neptune-t.github.io/)\*, [Zeyu Zhang](https://steve-zeyu-zhang.github.io/)\*<sup>†</sup>, [Jayeon Kang](https://github.com/JayeonKangNature), [Akide Liu](https://scholar.google.com/citations?user=1HjSeKgAAAAJ&hl=en), [Sungjoon Choi](https://scholar.google.com/citations?user=1_PHYMEAAAAJ&hl=en), [Dacheng Tao](https://scholar.google.com/citations?user=RwlJNLcAAAAJ), and [Hao Tang](https://ha0tang.github.io/)<sup>‡</sup>
+>
+> \*Equal contribution. <sup>†</sup>Project lead. <sup>‡</sup>Corresponding author.
+>
+> #### [Paper]() | [Website](https://aigeeksgroup.github.io/MotionMamba2.0/) | [Models](https://huggingface.co/AIGeeksGroup/MotionMamba2.0) | [Data](https://huggingface.co/datasets/AIGeeksGroup/MotionMamba2.0)
+
 
 This is the clean collaboration and paper-code repository. Keep this repository
 focused on reusable code, documented interfaces, and reproducible scripts. Do
