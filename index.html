@@ -529,6 +529,45 @@
       border-top: 1px solid var(--line);
     }
 
+    .real-world-section + .method-section {
+      margin-top: 96px;
+      padding-top: 92px;
+      border-top: 1px solid var(--line);
+      scroll-margin-top: 96px;
+    }
+
+    .method-figure {
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .method-figure + .method-figure {
+      margin-top: 72px;
+    }
+
+    .method-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .method-caption {
+      margin: 32px 0 0;
+      color: var(--muted);
+      font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.75;
+      letter-spacing: -.01em;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .method-caption strong {
+      color: var(--ink);
+      font-weight: 650;
+    }
+
     .simulation-section-head {
       margin-bottom: 42px;
     }
@@ -924,6 +963,10 @@
       .overview-stage { border-radius: 14px; }
       .simulation-section { padding-bottom: 64px; }
       .simulation-section + .real-world-section { padding-top: 64px; }
+      .real-world-section + .method-section { margin-top: 64px; padding-top: 64px; }
+      .method-figure { width: 100%; }
+      .method-figure + .method-figure { margin-top: 48px; }
+      .method-caption { margin-top: 22px; font-size: 14px; line-height: 1.65; text-align: left; }
       .simulation-view-switch button { min-width: 82px; padding: 9px 13px; font-size: 13px; }
       .simulation-grid { grid-template-columns: 1fr; gap: 28px; }
       .simulation-stage { border-radius: 14px; }
@@ -966,6 +1009,7 @@
         <a href="#overview">Overview</a>
         <a href="#simulation">Simulation</a>
         <a href="#evaluation">Real World Demonstration</a>
+        <a href="#method">Method</a>
       </nav>
     </div>
   </header>
@@ -1096,6 +1140,24 @@
           <div class="prompt-timeline" aria-label="Prompt timeline for demonstration 4"><div class="prompt-track"></div></div>
         </article>
         </div>
+      </section>
+
+      <section class="method-section" id="method" aria-labelledby="method-title">
+        <div class="section-head">
+          <h2 id="method-title">Method</h2>
+        </div>
+        <figure class="method-figure">
+          <img src="images/overview.svg" alt="Overview of the Motion Mamba 2.0 framework" loading="lazy" decoding="async" width="1322" height="610">
+          <figcaption class="method-caption"><strong>Overview of Motion Mamba 2.0.</strong> Conditioned on text, spatial controls, and accepted motion history, the framework generates motion autoregressively through a two-stage diffusion denoiser. At each denoising step, the root network predicts the global trajectory, whose local features condition body prediction. Both networks combine attention and Mamba-3 through a hybrid sequence mixer. After each clean motion window is accepted, the history states are updated for subsequent generation.</figcaption>
+        </figure>
+        <figure class="method-figure">
+          <img src="images/hybrid.svg" alt="Streaming generation and hybrid attention–Mamba mixer" loading="lazy" decoding="async" width="516" height="270">
+          <figcaption class="method-caption"><strong>Streaming generation and hybrid attention–Mamba mixing.</strong> <strong>(a)</strong> Motion is generated window by window through root–body diffusion, with the history held fixed during denoising and updated only after the sampled window is accepted. <strong>(b)</strong> Base attention retrieves recent motion features, while PCM attention additionally accesses persistent content slots. Their gated residual difference is combined with the Mamba-3 output resumed from the committed recurrent state.</figcaption>
+        </figure>
+        <figure class="method-figure">
+          <img src="images/cuda_graph_fusion.svg" alt="CUDA Graph replay and fused Mamba transition kernel" loading="lazy" decoding="async" width="1510" height="377">
+          <figcaption class="method-caption"><strong>CUDA Graph and Fusion Kernel.</strong> CUDA Graph replay of the three CFG branches and fused Mamba transition preprocessing.</figcaption>
+        </figure>
       </section>
     </div>
   </main>
