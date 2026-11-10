@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="100%" src="assets/header.gif" alt="Motion Mamba 2.0">
+  <img width="100%" src="assets/banner.gif" alt="Motion Mamba 2.0">
 </div>
 
 # Motion Mamba 2.0: Autoregressive Diffusion Mamba for Long-Horizon Humanoid Control
