@@ -1,0 +1,289 @@
+{
+  "modules": {
+    "motion_mamba2.model.auto_latent_twostage_denoiser": "motion_mamba2.model.denoiser",
+    "motion_mamba2.model.cfg": "motion_mamba2.model.guidance",
+    "motion_mamba2.model.latent_utils": "motion_mamba2.model.latent_conversion",
+    "motion_mamba2.model.tools": "motion_mamba2.model.tensor_utils",
+    "motion_mamba2.model.adapters.hybrid_dit_block": "motion_mamba2.model.dit",
+    "motion_mamba2.model.adapters.hybrid_mamba_block": "motion_mamba2.model.mamba_block",
+    "motion_mamba2.model.adapters.diffusion_memory": "motion_mamba2.model.memory_controller",
+    "motion_mamba2.model.adapters.history_commit": "motion_mamba2.model.history_commit",
+    "motion_mamba2.model.adapters.inference_state": "motion_mamba2.model.inference_state",
+    "motion_mamba2.model.adapters.integration": "motion_mamba2.model.integration",
+    "motion_mamba2.model.adapters.differentiable_rollout": "motion_mamba2.model.differentiable_rollout",
+    "motion_mamba2.model.adapters.text_encoder": "motion_mamba2.model.text_encoder",
+    "motion_mamba2.model.autoencoder.fsq": "motion_mamba2.model.autoencoder",
+    "motion_mamba2.model.autoencoder.transformer": "motion_mamba2.model.codec_transformer",
+    "motion_mamba2.model.representation.reps.motion_representation": "motion_mamba2.model.representation",
+    "motion_mamba2.model.representation.reps.base": "motion_mamba2.model.representation_base",
+    "motion_mamba2.model.representation.stats": "motion_mamba2.model.normalization",
+    "motion_mamba2.model.representation.tools": "motion_mamba2.model.motion_features",
+    "motion_mamba2.model.representation.feet": "motion_mamba2.model.contacts",
+    "motion_mamba2.model.representation.conditioning": "motion_mamba2.model.conditioning",
+    "motion_mamba2.model.representation.smooth_root": "motion_mamba2.model.root_smoothing",
+    "motion_mamba2.model.skeleton.base": "motion_mamba2.model.skeleton_base",
+    "motion_mamba2.model.skeleton.definitions": "motion_mamba2.model.skeleton",
+    "motion_mamba2.model.skeleton.kinematics": "motion_mamba2.model.kinematics",
+    "motion_mamba2.model.skeleton.transforms": "motion_mamba2.model.skeleton_transforms",
+    "motion_mamba2.model.llm2vec.llm2vec": "motion_mamba2.model.language_encoder",
+    "motion_mamba2.model.llm2vec.llm2vec_wrapper": "motion_mamba2.model.language_wrapper",
+    "motion_mamba2.model.llm2vec.models.bidirectional_llama": "motion_mamba2.model.bidirectional_llama",
+    "motion_mamba2.model.llm2vec.models.utils": "motion_mamba2.model.language_utils",
+    "motion_mamba2.kernels.dit.layer": "motion_mamba2.model.dit_layer",
+    "motion_mamba2.kernels.dit.stack": "motion_mamba2.model.dit_stack",
+    "motion_mamba2.kernels.dit.state": "motion_mamba2.model.dit_state",
+    "motion_mamba2.kernels.minimal.attention": "motion_mamba2.model.attention_backend",
+    "motion_mamba2.kernels.minimal.operator": "motion_mamba2.model.attention",
+    "motion_mamba2.kernels.minimal.config": "motion_mamba2.model.attention_configuration",
+    "motion_mamba2.kernels.minimal.kv_cache": "motion_mamba2.model.kv_cache",
+    "motion_mamba2.kernels.minimal.dual_attention": "motion_mamba2.model.dual_attention",
+    "motion_mamba2.kernels.sequence.config": "motion_mamba2.model.sequence_configuration",
+    "motion_mamba2.kernels.sequence.operator": "motion_mamba2.model.sequence_mixer",
+    "motion_mamba2.kernels.sequence.state": "motion_mamba2.model.recurrent_state",
+    "motion_mamba2.kernels.sequence.token_state": "motion_mamba2.model.token_state",
+    "motion_mamba2.kernels.sequence.innovation": "motion_mamba2.model.state_interaction",
+    "motion_mamba2.kernels.sequence.delta_rule": "motion_mamba2.model.delta_rule",
+    "motion_mamba2.kernels.memory.content_memory": "motion_mamba2.model.content_memory",
+    "motion_mamba2.kernels.memory.state_projector": "motion_mamba2.model.state_projector",
+    "motion_mamba2.kernels.memory.mamba3_chunk_wrapper": "motion_mamba2.model.mamba_state",
+    "motion_mamba2.kernels.dit.inference_graph": "motion_mamba2.kernels.cuda_graph",
+    "motion_mamba2.kernels.dit.graph_checks": "motion_mamba2.kernels.graph_checks",
+    "motion_mamba2.kernels.dit.fused_pointwise": "motion_mamba2.kernels.fused_pointwise",
+    "motion_mamba2.kernels.dit.fused_adaln": "motion_mamba2.kernels.fused_normalization",
+    "motion_mamba2.kernels.memory.fused_adt": "motion_mamba2.kernels.fused_recurrence",
+    "motion_mamba2.model.runtime.g1_boundary_kinematics": "motion_mamba2.model.boundary_kinematics",
+    "motion_mamba2.model.runtime.g1_bounded_codec": "motion_mamba2.model.bounded_codec",
+    "motion_mamba2.model.runtime.g1_continuation_target": "motion_mamba2.model.continuation_target",
+    "motion_mamba2.model.runtime.g1_control_intents": "motion_mamba2.model.control_intents",
+    "motion_mamba2.model.runtime.g1_joint_limits": "motion_mamba2.model.joint_limits",
+    "motion_mamba2.model.runtime.g1_motion_contract": "motion_mamba2.model.decoder_history",
+    "motion_mamba2.model.runtime.g1_online_controls": "motion_mamba2.model.online_controls",
+    "motion_mamba2.model.runtime.g1_optimizer_precision": "motion_mamba2.training.optimizer",
+    "motion_mamba2.model.runtime.g1_padding_contract": "motion_mamba2.model.padding",
+    "motion_mamba2.model.runtime.g1_root_body_gradient": "motion_mamba2.model.root_body_gradient",
+    "motion_mamba2.model.runtime.g1_training_launch": "motion_mamba2.training.launch",
+    "motion_mamba2.model.runtime.g1_training_precision": "motion_mamba2.training.precision",
+    "motion_mamba2.model.runtime.g1_inference_launch": "motion_mamba2.model.kernel_launch",
+    "motion_mamba2.model.exports.mujoco": "motion_mamba2.model.mujoco_export",
+    "motion_mamba2.model.viz.core_skin": "motion_mamba2.model.core_skin",
+    "motion_mamba2.model.viz.g1_rig": "motion_mamba2.model.g1_rig",
+    "motion_mamba2.model.viz.soma_skin": "motion_mamba2.model.soma_skin",
+    "motion_mamba2.model.viz.viser_utils": "motion_mamba2.model.viser_utils",
+    "motion_mamba2.model.paths": "motion_mamba2.model.resources",
+    "motion_mamba2.model.load_model": "motion_mamba2.model.frontend",
+    "motion_mamba2.model.registry": "motion_mamba2.model.model_registry",
+    "motion_mamba2.legacy_compat": "motion_mamba2.model.metadata"
+  },
+  "exports": {
+    "motion_mamba2.kernels.memory": {
+      "ContentMemoryPending": [
+        "motion_mamba2.model.content_memory",
+        "ContentMemoryPending"
+      ],
+      "PersistentContentMemory": [
+        "motion_mamba2.model.content_memory",
+        "PersistentContentMemory"
+      ],
+      "StateProjector": [
+        "motion_mamba2.model.state_projector",
+        "StateProjector"
+      ],
+      "StateTransition": [
+        "motion_mamba2.model.state_projector",
+        "StateTransition"
+      ],
+      "project_transition": [
+        "motion_mamba2.model.state_projector",
+        "project_transition"
+      ]
+    },
+    "motion_mamba2.model.skeleton": {
+      "SkeletonBase": [
+        "motion_mamba2.model.skeleton_base",
+        "SkeletonBase"
+      ],
+      "CoreSkeleton27": [
+        "motion_mamba2.model.skeleton",
+        "CoreSkeleton27"
+      ],
+      "G1Skeleton34": [
+        "motion_mamba2.model.skeleton",
+        "G1Skeleton34"
+      ],
+      "SOMASkeleton30": [
+        "motion_mamba2.model.skeleton",
+        "SOMASkeleton30"
+      ],
+      "SOMASkeleton77": [
+        "motion_mamba2.model.skeleton",
+        "SOMASkeleton77"
+      ],
+      "batch_rigid_transform": [
+        "motion_mamba2.model.kinematics",
+        "batch_rigid_transform"
+      ],
+      "fk": [
+        "motion_mamba2.model.kinematics",
+        "fk"
+      ],
+      "global_rots_to_local_rots": [
+        "motion_mamba2.model.skeleton_transforms",
+        "global_rots_to_local_rots"
+      ],
+      "to_standard_tpose": [
+        "motion_mamba2.model.skeleton_transforms",
+        "to_standard_tpose"
+      ]
+    },
+    "motion_mamba2.model.representation.reps": {
+      "MotionMamba2MotionRep": [
+        "motion_mamba2.model.representation",
+        "MotionMamba2MotionRep"
+      ],
+      "MotionRepBase": [
+        "motion_mamba2.model.representation_base",
+        "MotionRepBase"
+      ]
+    },
+    "motion_mamba2.kernels.minimal": {
+      "flash2_attention_available": [
+        "motion_mamba2.model.attention_backend",
+        "flash2_attention_available"
+      ],
+      "MinimalAttentionKernelConfig": [
+        "motion_mamba2.model.attention_configuration",
+        "AttentionConfig"
+      ],
+      "CachedChunk": [
+        "motion_mamba2.model.kv_cache",
+        "CachedChunk"
+      ],
+      "ChunkSlidingWindowKVCache": [
+        "motion_mamba2.model.kv_cache",
+        "ChunkSlidingWindowKVCache"
+      ],
+      "PendingChunkKV": [
+        "motion_mamba2.model.kv_cache",
+        "PendingChunkKV"
+      ],
+      "MinimalAttentionKernel": [
+        "motion_mamba2.model.attention",
+        "SlidingWindowAttention"
+      ]
+    },
+    "motion_mamba2.model.llm2vec": {
+      "LLM2Vec": [
+        "motion_mamba2.model.language_encoder",
+        "LLM2Vec"
+      ],
+      "LLM2VecEncoder": [
+        "motion_mamba2.model.language_wrapper",
+        "LLM2VecEncoder"
+      ]
+    },
+    "motion_mamba2.model.adapters": {
+      "MotionMamba2DiTSequenceBlock": [
+        "motion_mamba2.model.dit",
+        "MotionDiTBlock"
+      ],
+      "MotionMamba2MambaBlock": [
+        "motion_mamba2.model.mamba_block",
+        "MotionMambaBlock"
+      ],
+      "MotionMamba2DiffusionMemoryController": [
+        "motion_mamba2.model.memory_controller",
+        "MemoryController"
+      ],
+      "MotionMamba2SequenceKernelClient": [
+        "motion_mamba2.model.memory_controller",
+        "MemoryClient"
+      ],
+      "DiffusionMemoryTrace": [
+        "motion_mamba2.model.memory_controller",
+        "DiffusionMemoryTrace"
+      ],
+      "MotionMamba2SequenceKernelConfig": [
+        "motion_mamba2.model.integration",
+        "SequenceModelConfig"
+      ],
+      "install_motion_mamba2_sequence_kernel": [
+        "motion_mamba2.model.integration",
+        "install_motion_mamba2_sequence_kernel"
+      ],
+      "ExactMotionMamba2TextEncoder": [
+        "motion_mamba2.model.text_encoder",
+        "ExactMotionMamba2TextEncoder"
+      ]
+    },
+    "motion_mamba2.kernels.dit": {
+      "DiTSequenceLayer": [
+        "motion_mamba2.model.dit_layer",
+        "DiTSequenceLayer"
+      ],
+      "DiTSequenceStack": [
+        "motion_mamba2.model.dit_stack",
+        "DiTSequenceStack"
+      ],
+      "DiTSequenceState": [
+        "motion_mamba2.model.dit_state",
+        "DiTSequenceState"
+      ],
+      "PendingDiTSequenceState": [
+        "motion_mamba2.model.dit_state",
+        "PendingDiTSequenceState"
+      ]
+    },
+    "motion_mamba2.model": {
+      "MotionMamba2": [
+        "motion_mamba2.model.motion_model",
+        "MotionMamba2"
+      ],
+      "LLM2VecEncoder": [
+        "motion_mamba2.model.language_wrapper",
+        "LLM2VecEncoder"
+      ]
+    },
+    "motion_mamba2.model.representation": {
+      "MotionMamba2MotionRep": [
+        "motion_mamba2.model.representation",
+        "MotionMamba2MotionRep"
+      ],
+      "MotionRepBase": [
+        "motion_mamba2.model.representation_base",
+        "MotionRepBase"
+      ]
+    },
+    "motion_mamba2.kernels.sequence": {
+      "SequenceKernelConfig": [
+        "motion_mamba2.model.sequence_configuration",
+        "SequenceKernelConfig"
+      ],
+      "SequenceKernel": [
+        "motion_mamba2.model.sequence_mixer",
+        "SequenceKernel"
+      ],
+      "PendingSequenceKernelState": [
+        "motion_mamba2.model.recurrent_state",
+        "PendingSequenceKernelState"
+      ],
+      "SequenceKernelState": [
+        "motion_mamba2.model.recurrent_state",
+        "SequenceKernelState"
+      ],
+      "TokenStateInteraction": [
+        "motion_mamba2.model.token_state",
+        "TokenStateInteraction"
+      ],
+      "TokenStateVariant": [
+        "motion_mamba2.model.token_state",
+        "TokenStateVariant"
+      ]
+    },
+    "mamba_ssm": {
+      "Mamba3": [
+        "motion_mamba2.model.mamba",
+        "Mamba3"
+      ]
+    }
+  }
+}

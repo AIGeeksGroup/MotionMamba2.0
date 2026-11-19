@@ -1,0 +1,466 @@
+fps: 25
+window_frames: 52
+history_frames: 24
+command_speed_threshold: 0.1
+family_bootstrap_repeats: 1000
+bootstrap_seed: 20261021
+domains:
+  bones:
+    inputs: bones_inputs.npz
+    cases: bones_cases.jsonl
+    text_features: bones_text_features.npy
+    text_index: bones_text_index.json
+    prompts:
+      forward: Walk forward.
+      stand: Stand still.
+      backward: Walk backward.
+      walk: Walk.
+    tasks:
+      frames_52:
+        windows: 1
+        stages:
+        - - walk
+          - 1
+      frames_208:
+        windows: 4
+        stages:
+        - - forward
+          - 1
+        - - stand
+          - 1
+        - - backward
+          - 1
+        - - walk
+          - 1
+  humanml3d:
+    inputs: humanml3d_inputs.npz
+    cases: humanml3d_cases.jsonl
+    text_features: humanml3d_text_features.npy
+    text_index: humanml3d_text_index.json
+    prompts:
+      forward: Walk forward.
+      stand: Stand still.
+      backward: Walk backward.
+      walk: Walk.
+    tasks:
+      frames_52:
+        windows: 1
+        stages:
+        - - walk
+          - 1
+      frames_208:
+        windows: 4
+        stages:
+        - - forward
+          - 1
+        - - stand
+          - 1
+        - - backward
+          - 1
+        - - walk
+          - 1
+  hiphi:
+    inputs: hiphi_inputs.npz
+    cases: hiphi_cases.jsonl
+    text_features: hiphi_text_features.npy
+    text_index: hiphi_text_index.json
+    prompts:
+      '0': Amble forward at a relaxed strolling pace with natural arm swing, repeatedly.
+      '1': Amble forward with longer, rolling strides and a loose full-body sway,
+        repeatedly.
+      '2': Barge forward with big pounding steps and your whole upper body driving
+        hard ahead, repeatedly.
+      '3': Barge forward with firm heavy steps and your shoulders driving ahead, repeatedly.
+      '4': Bend forward deeply at the waist and drive back up strongly, repeatedly.
+      '5': Bend your head forward at the neck to a clear nodding angle and come back
+        upright, repeatedly.
+      '6': Bend your head forward deeply at the neck and return quickly to upright,
+        repeatedly.
+      '7': Bend your knees into a clear squat and stand back up, repeatedly.
+      '8': Bend your knees into a deep squat and spring back up powerfully, repeatedly.
+      '9': Bend your knees just a little and rise back up, repeatedly.
+      '10': Bend your wrist strongly up and down with quick, decisive motion, repeatedly.
+      '11': Bend your wrist through a clear up-and-down range, like a small wave,
+        repeatedly.
+      '12': Bob by bending and straightening your knees in short, springy pulses that
+        lift and drop your body, repeatedly.
+      '13': Bob by bending and straightening your knees in tiny, quick pulses while
+        keeping your torso mostly upright, repeatedly.
+      '14': Bob by doing deep, rapid knee pulses so your whole body pops up and down
+        strongly, repeatedly.
+      '15': Bob your head up and down with clear, quick dips, repeatedly.
+      '16': Bob your head up and down with deep, fast dips that make your upper body
+        bounce a little, repeatedly.
+      '17': Bob your shoulders and upper torso up and down with clear, springy lifts
+        and drops, repeatedly.
+      '18': Bob your shoulders and upper torso up and down with large, fast vertical
+        pops that jolt your whole frame, repeatedly.
+      '19': Bop backward with brisk shuffling steps and a steady rhythmic bounce,
+        repeatedly.
+      '20': Bop forward fast with bigger shuffling steps and a pronounced full-body
+        bounce, repeatedly.
+      '21': Bop forward with quick shuffling steps and a clear rhythmic bounce through
+        your body, repeatedly.
+      '22': Bounce in place by lifting and dropping your heels in a steady rhythm
+        so your body clearly bobs, repeatedly.
+      '23': Bounce in place by lightly lifting and dropping your heels so your body
+        bobs a little, repeatedly.
+      '24': Bounce in place with big, quick heel lifts and drops so your whole body
+        bobs strongly, repeatedly.
+      '25': Bring your elbows in close and fling your forearms outward in a hard whipping
+        throw that rocks your whole upper body, repeatedly.
+      '26': Bustle forward with brisk short steps, a clear forward lean, and active
+        arm swings, repeatedly.
+      '27': Caper forward with high skipping knee lifts and a light bounce through
+        your whole body, repeatedly.
+      '28': Caper forward with quick skipping steps and a lively bounce, repeatedly.
+      '29': Clap by bringing your palms together in front of your chest with clear,
+        steady arm motion, repeatedly.
+      '30': Clap by swinging your arms wider and bringing your palms together quickly
+        in front of your chest, repeatedly.
+      '31': Clap low near your thighs with deep knee bends and fast claps as your
+        palms meet, repeatedly.
+      '32': Clap with your hands raised above your head, bringing your palms together
+        at a steady rhythm, repeatedly.
+      '33': Clap with your hands raised above your head, using big arm swings so your
+        palms meet sharply, repeatedly.
+      '34': Clomp forward with heavy flat-footed steps and a solid arm swing, repeatedly.
+      '35': Cross your arms over your chest and let your whole upper body shiver in
+        sharp, fast tremors that bounce your elbows and shoulders, repeatedly.
+      '36': Cross your arms over your chest and make clear upper-body twists, keeping
+        your hips mostly still, repeatedly.
+      '37': Cross your arms over your chest and snap your upper body through strong
+        twists, keeping your hips mostly still, repeatedly.
+      '38': Dart backward with quick retreating steps and tight quick arm pumps, repeatedly.
+      '39': Drive your hips through fast wide wriggling twists so your torso follows,
+        repeatedly.
+      '40': Drop into a deep curtsy with one foot placed behind the other and pop
+        back up with energy, repeatedly.
+      '41': Drop sharply down at the knees and waist into a deep duck, as if a low
+        object is sweeping over you, repeatedly.
+      '42': Drop your hips down a little into a shallow squat and come back up, repeatedly.
+      '43': Drop your hips down into a deep squat and drive back up fast each time,
+        repeatedly.
+      '44': Duck by quickly dropping your head and upper body to a clear lower level
+        and popping back up, as if avoiding an incoming hit, repeatedly.
+      '45': Flap both arms up and down at your sides with clear wing-like strokes,
+        repeatedly.
+      '46': Flap both arms up and down hard and fast so your shoulders and upper body
+        join in, repeatedly.
+      '47': Flex at the hips by marching in place with high, fast knee lifts that
+        make your whole body bounce, repeatedly.
+      '48': Flex your ankle by pulling the front of your foot up and lowering it back
+        down in a steady rhythm, repeatedly.
+      '49': Flex your upper arm by doing big, quick elbow curls and fully straightening
+        between them, repeatedly.
+      '50': Fling both arms up above your head with a full-body whip, rising onto
+        your toes as they shoot up, repeatedly.
+      '51': Fling one leg forward with a big whipping kick-like throw that makes your
+        hips bounce, repeatedly.
+      '52': Flounce forward in long dramatic steps with your arms thrown wide, repeatedly.
+      '53': Flounce forward with big stomping steps and wide dramatic arm swings,
+        repeatedly.
+      '54': Flutter both arms out to the sides with a clear, light, irregular flapping
+        motion, repeatedly.
+      '55': Flutter both arms out to the sides with fast, wide, irregular flaps that
+        involve your upper body, repeatedly.
+      '56': Hold both arms out in front and flap your hands up and down from the wrists
+        quickly with strong snaps, repeatedly.
+      '57': Hold both arms out in front and flap your hands up and down from the wrists
+        through a clear range, repeatedly.
+      '58': Hold both arms out in front and wiggle your forearms up and down with
+        a clear bounce each time, repeatedly.
+      '59': Hold both arms out in front and wiggle your forearms up and down with
+        big, fast bounces, repeatedly.
+      '60': Hold both forearms in front of your body and bob your hands up and down
+        together in quick, clear strokes, repeatedly.
+      '61': Hold both forearms in front of your body and bob your hands up and down
+        together with big, fast vertical pumps, repeatedly.
+      '62': Hold your hands in front of your chest and flutter them with quick, irregular
+        wrist flaps, repeatedly.
+      '63': Hold your hands in front of your chest and flutter them with rapid, larger,
+        irregular wrist flaps that shake your forearms, repeatedly.
+      '64': Hurry forward with compact fast steps and a narrow arm swing, repeatedly.
+      '65': Hurry forward with longer brisk strides and active arm pumps, repeatedly.
+      '66': Jerk both shoulders in sharp, fast twitches that shake through your upper
+        body, repeatedly.
+      '67': Keep one foot planted and stamp the other foot down in place with a big
+        lift and a heavy slam into the floor, repeatedly.
+      '68': Keep one foot planted and stamp the other foot down in place with a clear
+        lift and a solid drop, repeatedly.
+      '69': Keep your upper arms close to your torso and flap your forearms up and
+        down in big, rapid pumps, repeatedly.
+      '70': Keep your upper arms close to your torso and flap your forearms up and
+        down with a steady bounce, repeatedly.
+      '71': Let your head hang forward, and let your shoulders slump a bit under it.
+      '72': Let your head tip to one side into a clear hanging tilt, keeping your
+        neck loose.
+      '73': Lift both arms above your head and flutter them with rapid, bigger, irregular
+        flaps that make your shoulders and torso bounce, repeatedly.
+      '74': Lift both arms up over your head with a big reach and bring them down
+        quickly, repeatedly.
+      '75': Lift one arm overhead with a fast upward drive and drop it back down,
+        repeatedly.
+      '76': Lift one foot slightly and make that knee snap in sharp, fast twitches
+        that jolt your leg, repeatedly.
+      '77': Lift one foot slightly and make that knee twitch with clear, quick jerks
+        that bump the leg up and down, repeatedly.
+      '78': Lift your shoulders up in clear shrugs and let them drop down relaxed
+        each time, repeatedly.
+      '79': Limp forward with a clearly shorter step on one side and an uneven weight
+        shift from step to step, repeatedly.
+      '80': Limp forward with one foot dragging briefly between steps so the walk
+        looks uneven, repeatedly.
+      '81': Lurch forward in long uneven strides, pitching your body ahead clearly
+        and recovering with the next step, repeatedly.
+      '82': Make one shoulder twitch upward in clear, quick jerks and drop back to
+        neutral each time, repeatedly.
+      '83': Make small shoulder shrugs and let your shoulders drop back down loose
+        each time, repeatedly.
+      '84': Make small, quick dips of your head and upper body down and back up, like
+        dodging something coming toward you, repeatedly.
+      '85': March backward with clear knee lifts, repeatedly.
+      '86': March backward with high quick knee lifts, repeatedly.
+      '87': March forward with clearly lifted knees, an upright torso, and straight
+        arms swinging in rhythm; repeat.
+      '88': March forward with even measured steps, an upright body, and steady arm
+        swings in a clear military rhythm, repeatedly.
+      '89': March forward with larger measured steps, higher knee lift, and strong
+        arm swings while keeping a firm military rhythm, repeatedly.
+      '90': Move both arms from hanging down to overhead and back down, repeatedly.
+      '91': Move both arms quickly from down at your sides to overhead and back down
+        in big motions, repeatedly.
+      '92': Move forward carefully with longer, quicker steps while staying close
+        to the outer boundary, repeatedly.
+      '93': Move your forearms up toward your shoulders and back down fast with a
+        large range, repeatedly.
+      '94': Move your hips side to side with a steady rhythm, repeatedly.
+      '95': Move your hips side to side with big, fast shifts, repeatedly.
+      '96': Move your knees by bending into deeper pulses and driving back up quickly,
+        repeatedly.
+      '97': Move your shoulders by shrugging them up and dropping them down, repeatedly.
+      '98': Pad backward with longer steady retreating steps at a brisker pace, keeping
+        your footfalls soft and dull, repeatedly.
+      '99': Pad forward with even steady steps at an easy pace, keeping each footfall
+        soft and dull, repeatedly.
+      '100': Pad forward with longer steady steps at a brisker pace, keeping each
+        footfall soft and dull, repeatedly.
+      '101': Pivot in place with small turns and toss your head sharply backward between
+        the turns, repeatedly.
+      '102': Prance forward with bouncy heel-kick steps, keeping the thighs mostly
+        steady while the heels kick back toward the buttocks; repeat.
+      '103': Prance forward with crisp springing steps and your elbows held wide for
+        a showy look, repeatedly.
+      '104': Prance forward with exaggerated knee lifts and light, jaunty landings,
+        repeatedly.
+      '105': Press forward with your whole body leaned into the motion and short driving
+        steps, repeatedly.
+      '106': Prowl backward with quiet stalking steps, your body lowered and your
+        arms kept close, repeatedly.
+      '107': Prowl forward with quiet stalking steps, your body lowered and your arms
+        kept close, repeatedly.
+      '108': Quickly bend at the knees and waist to slip your head a little lower,
+        as if something passes just above you, repeatedly.
+      '109': Quickly fold down at the knees and waist so your head clearly drops,
+        as if ducking under something overhead, repeatedly.
+      '110': Reach one arm straight back behind you and return it to neutral, repeatedly.
+      '111': Reach one arm straight out in front of you at about chest height and
+        pull it back in, repeatedly.
+      '112': Reach up hard and make big side-bending stretches that lengthen your
+        whole side body to full reach, alternating sides, repeatedly.
+      '113': Rise and sink through your knees while tossing your head sharply backward,
+        repeatedly.
+      '114': Sashay backward with brisk steps, a bold hip sway, and pronounced shoulder
+        rolls, repeatedly.
+      '115': Sashay backward with steady steps, a clear hip sway, and rolling shoulders,
+        repeatedly.
+      '116': Sashay forward with longer strides, a bold hip sway, and pronounced shoulder
+        rolls, repeatedly.
+      '117': Sashay forward with steady steps, a clear hip sway, and rolling shoulders,
+        repeatedly.
+      '118': Scoot backward in short fast shuffles with your body staying compact,
+        repeatedly.
+      '119': Scoot forward with fast little shuffles and abrupt bursts of motion,
+        repeatedly.
+      '120': Scurry backward with short quick steps and brisk bent-arm swings, repeatedly.
+      '121': Scurry backward with very short rapid steps and strong bent-arm swings,
+        repeatedly.
+      '122': Scurry forward with short quick steps and brisk arm pumps close to your
+        sides, repeatedly.
+      '123': Shake both shoulders with bigger, faster shrugs, repeatedly.
+      '124': Shake both shoulders with light up-and-down shrugs, repeatedly.
+      '125': Shake both shoulders with quick, steady up-and-down shrugs, repeatedly.
+      '126': Shake your hands at your sides with clear, brisk motions, like shaking
+        off water, repeatedly.
+      '127': Shake your hands hard at your sides with wide, rapid motions, like shaking
+        off water, repeatedly.
+      '128': Shake your hands loosely at your sides with small flicking motions, like
+        shaking off water, repeatedly.
+      '129': Shake your head side to side fast with a larger swing, repeatedly.
+      '130': Shake your head side to side in short, easy motions, repeatedly.
+      '131': Shake your head side to side with a clear, steady motion, repeatedly.
+      '132': Shake your torso side to side with bigger, faster twists, repeatedly.
+      '133': Shake your torso side to side with clear, loose twists, repeatedly.
+      '134': Shake your torso side to side with small, loose twists, repeatedly.
+      '135': Shrink forward with your body drawn in, shoulders rounded, and small
+        quiet steps, repeatedly.
+      '136': Shrug your shoulders up high and drop them down fast so your upper body
+        bounces a bit, repeatedly.
+      '137': Shuffle backward more quickly with firm dragging steps, keeping your
+        elbows bent and your arms working more actively for balance, repeatedly.
+      '138': Shuffle forward and back at a steady rhythm, dragging your feet and swinging
+        your arms with each change of direction, repeatedly.
+      '139': Shuffle forward at a steady pace with dragging steps, keeping your feet
+        close to the floor and your arms swinging with each step, repeatedly.
+      '140': Shuffle forward briskly with longer dragging steps, keeping your feet
+        skimming the floor and swinging your arms more fully, repeatedly.
+      '141': Shuffle forward in a compact steady rhythm with quick dragging steps
+        and bent-arm pumps close to your body, repeatedly.
+      '142': Shuffle forward in a faster compact rhythm with quicker dragging steps
+        and stronger bent-arm pumps close to your body, repeatedly.
+      '143': Skim forward in a fast easy glide with your feet staying low, repeatedly.
+      '144': Slip forward by placing each foot gently and shifting your weight smoothly,
+        repeatedly.
+      '145': Step backward carefully along the outer edge with quicker, longer steps,
+        repeatedly.
+      '146': Stomp forward with heavy forceful steps, repeatedly.
+      '147': Stride backward in long, even steps with clear arm swing, repeatedly.
+      '148': Strut backward with your torso tall and your steps placed sharply, repeatedly.
+      '149': Strut forward with your torso held tall and sharply placed steps, repeatedly.
+      '150': Swagger backward in a wide, swaying gait with relaxed arm swing, repeatedly.
+      '151': Swagger forward with a rolling side-to-side sway and broad, showy steps,
+        repeatedly.
+      '152': Swing both arms side to side across the front of your body in smooth,
+        even arcs, repeatedly.
+      '153': Swing both arms up and down in front of you with a clear arc each time,
+        repeatedly.
+      '154': Swing both arms up and down in front of you with big, fast arcs, repeatedly.
+      '155': Swing one arm forward and backward in big, fast pendulum arcs, repeatedly.
+      '156': Swing one leg forward and backward with a clear range, like a pendulum,
+        repeatedly.
+      '157': Swing one leg side to side in a steady rhythm, repeatedly.
+      '158': Swing one leg side to side with wide, fast arcs, repeatedly.
+      '159': Toss your head sharply back and let it return to neutral, repeatedly.
+      '160': Turn in place briskly while clapping your palms together rapidly with
+        wide arm swings, repeatedly.
+      '161': Turn in place slowly while clapping your palms together with small motions,
+        repeatedly.
+      '162': Turn in place while clapping your palms together at a steady rhythm,
+        repeatedly.
+      '163': Waddle backward with quick short steps and a strong clumsy sway through
+        your body, repeatedly.
+      '164': Walk backward at a brisk pace with quick, tidy steps, repeatedly.
+      '165': Walk backward with regular careful steps and clear arm movements for
+        balance, repeatedly.
+      '166': Walk backward with wavering, off-balance steps and constant recovery,
+        repeatedly.
+      '167': Walk forward at a brisk pace with quick, springy steps, repeatedly.
+      '168': Walk forward in tiny quick steps with a showy hip sway, repeatedly.
+      '169': Walk forward with gliding steps, a clear hip sway, and loose arm swings,
+        repeatedly.
+      '170': Walk forward with longer gliding steps, a pronounced hip sway, and broad
+        arm swings, repeatedly.
+      '171': Walk forward with regular steps at a clear walking pace, letting your
+        arms swing naturally with each step, repeatedly.
+      '172': Walk forward with wavering steps and frequent balance checks, as though
+        you might topple, repeatedly.
+      '173': Wave both arms to and fro in front of your chest in even, steady side-to-side
+        motions, repeatedly.
+      '174': Wave one arm to and fro across the front of your torso with a clear diagonal
+        back-and-forth, repeatedly.
+      '175': Wave one arm to and fro across the front of your torso with large, quick
+        diagonal sweeps, repeatedly.
+      '176': Wave one arm to and fro overhead with a steady, obvious back-and-forth
+        motion, repeatedly.
+      '177': Wave one arm to and fro overhead with wide, vigorous swings, repeatedly.
+      '178': Wave one hand to and fro at about shoulder height with a clear back-and-forth
+        motion, repeatedly.
+      '179': Wave one hand to and fro at about shoulder height with big, fast swings
+        of the whole arm, repeatedly.
+      '180': Wiggle your hips side to side with a clear, steady shimmy, repeatedly.
+      '181': Wiggle your hips side to side with big, fast pulses that move your whole
+        body, repeatedly.
+      '182': Wriggle your hips with clear quick twisting shifts that rock your torso
+        too, repeatedly.
+      '183': Wriggle your torso with clear twisting so your shoulders and hips rotate
+        against each other in a smooth ripple, repeatedly.
+      '184': Wriggle your torso with fast broad twists that pull your whole upper
+        body around, repeatedly.
+      '185': Writhe your torso with strong twisting so the rotation ripples through
+        your whole body in fast, deep spirals, repeatedly.
+    tasks:
+      frames_52:
+        windows: 1
+        stages:
+        - - walk
+          - 1
+        phases:
+        - 3
+      frames_208:
+        windows: 4
+        stages:
+        - - forward
+          - 1
+        - - stand
+          - 1
+        - - backward
+          - 1
+        - - walk
+          - 1
+        phases:
+        - 0
+        - 1
+        - 2
+        - 3
+      frames_468:
+        windows: 9
+        stages:
+        - - forward
+          - 3
+        - - stand
+          - 1
+        - - backward
+          - 2
+        - - walk
+          - 3
+        phases:
+        - 0
+        - 0
+        - 0
+        - 1
+        - 2
+        - 2
+        - 3
+        - 3
+        - 3
+      frames_988:
+        windows: 19
+        stages:
+        - - forward
+          - 6
+        - - stand
+          - 2
+        - - backward
+          - 5
+        - - walk
+          - 6
+        phases:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 1
+        - 1
+        - 2
+        - 2
+        - 2
+        - 2
+        - 2
+        - 3
+        - 3
+        - 3
+        - 3
+        - 3
+        - 3

@@ -1,0 +1,32 @@
+# MotionMamba2 from scratch; pretrained frozen motion tokenizer only.
+model_config: configs/model.yaml
+paths_config: configs/paths.env
+seed: 123
+updates: 100000
+global_batch: 512
+microbatch: 8
+cpu_read_workers: 4
+save_every: 1000
+output_path: ""
+optimizer:
+  initial_learning_rate: 0.000001
+  learning_rate: 0.00005
+  minimum_learning_rate: 0.00001
+  warmup_updates: 500
+  epsilon: 0.00000001
+  betas: [0.9, 0.999]
+  weight_decay: 0.01
+  gradient_clip: 1.0
+data:
+  # Index of retargeted 25-FPS G1 physical414 .npy files and their captions.
+  index_path: ""
+  feature_root: ""
+  text_features_paths: []
+  # Keep additional held-out family identities out of training.
+  excluded_families: []
+  # Both the historical context and the supervised continuation are real GT.
+  text_dropout: 0.1
+  constraint_dropout: 0.1
+  # Per 20 updates: H/F buckets use counts 2,5,4,2,4,3.
+  # H/F: 0/0, 52/0, 196/0, 0/196, 52/144, 144/52; G is always 52.
+  # BONES/HumanML3D/HiPHI use shuffled 14/3/3 source cycles.

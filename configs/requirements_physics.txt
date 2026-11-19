@@ -1,0 +1,12 @@
+numpy==1.26.4
+scipy==1.15.3
+mujoco==3.10.0
+tyro==1.0.15
+pyzmq==27.1.0
+PyYAML==6.0.3
+cyclonedds==0.10.2
+easydict==1.13
+loguru==0.7.3
+opencv-python==4.11.0.86
+msgpack==1.2.1
+msgpack-numpy==0.4.8

@@ -1,0 +1,14 @@
+{
+  "bones_inputs.npz": "29fdfa71915f60be74a6ab2f4f752dd19ab9357d21415e32abe00da19c68154c",
+  "bones_cases.jsonl": "1fc06d20281a8a7af2e2799c6c0dcc9286cbc83573741f250bbef091242b2472",
+  "bones_text_features.npy": "a6c98f41af3d5a091a2154d7e52085b58d6de0a35c74f8de12e6fde9805cb0cd",
+  "bones_text_index.json": "1aa6d2a2a5405751ef4fd814a2979a58e78125165eaed30c73ae26518e3a4e62",
+  "humanml3d_inputs.npz": "47d0eefc9e24b276e22abf79c1cd8147a86eb2fef016810af69edec10d1d6685",
+  "humanml3d_cases.jsonl": "e6cc7cdc65849215cb4da936b74a26dd5c862b39c9aa5dd9cbe8a064bc92ee41",
+  "humanml3d_text_features.npy": "a6c98f41af3d5a091a2154d7e52085b58d6de0a35c74f8de12e6fde9805cb0cd",
+  "humanml3d_text_index.json": "1aa6d2a2a5405751ef4fd814a2979a58e78125165eaed30c73ae26518e3a4e62",
+  "hiphi_inputs.npz": "5ef10cdd79bd57932d515389a45822e5331f99eaf3eabc797aaa84f6146e879a",
+  "hiphi_cases.jsonl": "43b8e71eadccad967ba660eba0a35a93116620afc6f97702e005dc3814ef163f",
+  "hiphi_text_features.npy": "9804443b566d688a7e5262e17cc90b0bcf7faaa08b9212c90fcc8141c8395537",
+  "hiphi_text_index.json": "9ee95b1598ec3451eb8c3ad6727dcd535402144665b651e8c37cd3eb6a08325a"
+}

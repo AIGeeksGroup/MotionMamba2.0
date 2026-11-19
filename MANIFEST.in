@@ -1,0 +1,4 @@
+include README.md LICENSE NOTICE
+recursive-include configs *.json *.yaml *.yml *.env
+recursive-include doc *.md *.txt
+recursive-include assets *.npz *.npy *.json *.jsonl *.svg *.gif

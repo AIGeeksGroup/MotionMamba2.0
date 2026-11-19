@@ -1,0 +1,23 @@
+snapshots:
+- repository: AIGeeksGroup/MotionMamba2.0
+  revision: fe884db63e2a1be15d6675a332c533ea6591fcca
+  directory: motion
+  patterns:
+  - MotionMamba2.pt
+  - frontend/**
+- repository: McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp
+  revision: 31474e395ada192e8ed1586db6be79fb3b70c9c0
+  directory: text/base
+  patterns: null
+- repository: McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised
+  revision: baa8ebf04a1c2500e61288e7dad65e8ae42601a7
+  directory: text/adapter
+  patterns: null
+skeleton_repository: AIGeeksGroup/MotionMamba2.0
+skeleton_revision: dcaac4d15eb8d1015e014395088100188236cd7c
+skeleton_prefix: ardy/ardy/assets/
+llama_repository: meta-llama/Meta-Llama-3-8B-Instruct
+llama_revision: 8afb486c1db24fe5011ec46dfbe5b5dccdb575c2
+sonic_repository: nvidia/GEAR-SONIC
+sonic_revision: 5e22ddc69abcea2a9aafc40536b14c232d3f9d7f
+sonic_source_revision: 26073b6239d63a5f8e31c3635c8c6c12ea2fc48c

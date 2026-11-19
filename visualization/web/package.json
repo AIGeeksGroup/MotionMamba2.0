@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "three": "0.162.0",
+    "urdf-loader": "0.12.6"
+  }
+}

@@ -1,0 +1,17 @@
+[build-system]
+requires=["setuptools>=68", "wheel"]
+build-backend="setuptools.build_meta"
+
+[project]
+name="motion-mamba2"
+version="2.0.0"
+description="Motion Mamba 2.0 streaming generation and geometric benchmarks"
+requires-python=">=3.10"
+dependencies=["numpy", "torch", "scipy", "pyyaml", "einops", "hydra-core", "omegaconf", "safetensors", "pydantic>=2", "vector-quantize-pytorch", "tqdm", "triton>=3.5.1; platform_system == 'Linux'"]
+
+[project.optional-dependencies]
+simulation=["viser", "trimesh", "yourdfpy", "pillow", "gradio", "gradio-client", "fastapi", "uvicorn", "websockets", "pyzmq", "transformers", "peft", "accelerate", "sentencepiece"]
+
+[tool.setuptools.packages.find]
+where=["."]
+include=["motion_mamba2*", "scripts*", "benchmarks*", "visualization*"]

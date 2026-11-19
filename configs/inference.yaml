@@ -1,0 +1,6 @@
+device: cuda:0
+denoising_steps: 10
+cfg_text: 2.0
+cfg_constraint: 2.0
+acceleration: cuda_graph
+graph_cache_capacity: 64
