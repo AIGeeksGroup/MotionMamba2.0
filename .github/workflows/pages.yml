@@ -15,18 +15,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  # Upload the site in one job and deploy it in a second job, as in the GitHub
+  # Pages starter workflow. Deploying in the same job right after the upload can
+  # query the artifact before GitHub has registered it ("Found 0 artifact(s)").
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4
         with:
-          timeout: 1800000
+          timeout: 600000
