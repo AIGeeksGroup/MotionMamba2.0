@@ -4,6 +4,8 @@
 
 # Motion Mamba 2.0: Autoregressive Diffusion Mamba for Long-Horizon Humanoid Control
 
+[![Paper of the month](https://img.shields.io/badge/%231%20Paper%20of%20the%20month-ADD8E6?style=for-the-badge&v=2)](https://huggingface.co/papers/2611.29897)
+
 This is the official repository for the paper:
 
 > **Motion Mamba 2.0: Autoregressive Diffusion Mamba for Long-Horizon Humanoid Control**
