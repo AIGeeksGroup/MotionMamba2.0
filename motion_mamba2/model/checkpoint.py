@@ -5,13 +5,14 @@ import copy
 import json
 import os
 import torch
-from motion_mamba2.model.configuration import ROOT,load_environment,read_config,require_path
+from motion_mamba2.model.configuration import ROOT,load_environment,require_path
+from motion_mamba2.model.variants import read_model_config
 
 def _frontend(config,device):
     from motion_mamba2.model.loading import instantiate_from_dict
     return instantiate_from_dict(config,overrides=dict(device=device,text_encoder=None))
 
-def load_model(config='configs/model.yaml',paths='configs/paths.env',device='cuda:0',*,text_encoder=False):
+def load_model(config='configs/model.yaml',paths='configs/paths.env',device='cuda:0',*,text_encoder=False,minimal_baseline=False):
     values=load_environment(paths)
     checkpoint=require_path(values,'MM2_CHECKPOINT')
     require_path(values,'MM2_CODEC_CHECKPOINT')
@@ -21,8 +22,9 @@ def load_model(config='configs/model.yaml',paths='configs/paths.env',device='cud
     from motion_mamba2.model.decoder_history import install_decoder_history
     from motion_mamba2.model.padding import install_padding_contract
     from motion_mamba2.model.integration import SequenceModelConfig,install_motion_mamba2_sequence_kernel
-    spec=read_config(config)
-    install_forward_launch_contract(spec['execution']['mamba_forward_launch'])
+    spec=read_model_config(config, minimal_baseline=minimal_baseline)
+    if not minimal_baseline:
+        install_forward_launch_contract(spec['execution']['mamba_forward_launch'])
     model=_frontend(spec['frontend'],device)
     representation=spec['representation']
     if model.skeleton.nbjoints!=34 or model.gen_horizon_len!=52 or model.motion_rep.fps!=25:

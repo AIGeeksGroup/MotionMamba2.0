@@ -32,13 +32,6 @@ The model combines three components:
   <img width="100%" src="assets/overview.svg" alt="Motion Mamba 2.0 overview">
 </div>
 
-### Minimal attention baseline
-
-Minimal is the attention-only baseline for the root and body denoisers. At each layer, queries from the current chunk use softmax attention over three sources of keys and values: four learned sink tokens, up to four previously accepted motion chunks, and the current chunk. When the window fills, the cache evicts the oldest whole chunk. The sinks are model parameters and remain available at every step. Motion Mamba 2.0 builds on this local attention path with recurrent Mamba state and Persistent Content Memory. [Attention implementation](motion_mamba2/model/attention.py) · [Sliding KV cache](motion_mamba2/model/kv_cache.py)
-
-- **Training.** The standalone ARDY baseline trainer initializes from a DiT checkpoint. It builds the cache from clean teacher-generated history, predicts the teacher's root and body outputs for the current noisy chunk, and rebuilds the cache after each optimizer update. The released Motion Mamba 2.0 trainer primes the cache from clean ground-truth motion when a history prefix is present. [Minimal training script](https://github.com/AIGeeksGroup/MotionMamba2.0/blob/91090b986c99e8ff574e4fa2c96f822ddac3b18b/mamba-transformer-keneral/examples/train_ardy_minimal_cached.py) · [Release training history](motion_mamba2/training/history.py)
-- **Inference.** The standalone generator selects the baseline with `--minimal --sequence-checkpoint <minimal-checkpoint>`. All denoising and classifier-free guidance passes for a chunk read the same committed history. Once the sampler accepts a clean chunk, the root and body denoisers each commit its KV once for the next window. [Minimal generation script](https://github.com/AIGeeksGroup/MotionMamba2.0/blob/91090b986c99e8ff574e4fa2c96f822ddac3b18b/mamba-transformer-keneral/examples/ardy_sequence_kernel_generate.py) · [Release inference controller](motion_mamba2/model/memory_controller.py)
-
 ## 📦Data and model resources
 
 Training uses retargeted G1 motion from BONES Seed, HumanML3D and HiPHI. See the [data format and preparation guide](doc/data.md) for the motion representation, JSONL index and cached text features.
@@ -73,20 +66,40 @@ python -m pip install -e .
 
 Python dependencies are listed in `pyproject.toml`. Simulation requires additional Python packages, Node.js/npm, tmux, TensorRT, ONNX Runtime and a separately installed SONIC physics/policy stack; installation commands are provided in the simulation section. Environments, compiled binaries, datasets and model weights are supplied separately.
 
-## 🔥Training
+## 🔥 Training
 
-The training recipe initializes the generator and PCM from scratch and jointly trains them for 100,000 updates with global batch size 512. The pretrained motion codec remains frozen in FP32. Supervision comes from real GT motion, with a 52-frame continuation, optional clean GT history and visible spatial constraints.
+Prepare the retargeted G1 motions, JSONL index and cached text features using the [data guide](doc/data.md). Set the codec and skeleton paths in `configs/paths.env`, then set `data.index_path`, `data.feature_root`, `data.text_features_paths` and `output_path` in `configs/training_motion_mamba2.yaml`.
 
-Prepare the JSONL index and cached text features as described in [doc/data.md](doc/data.md). Set `data.index_path`, `data.feature_root`, `data.text_features_paths` and `output_path` in `configs/training_motion_mamba2.yaml`, then launch:
+Both architectures train the root and body denoisers from scratch on the same 52-frame continuation task. When a sample includes history, a differentiable pass encodes its clean ground-truth prefix. Only the continuation receives diffusion noise. Both models use the frozen FP32 codec, a global batch of 512 and 100,000 updates. The objective gives equal weight to hybrid Smooth L1, decoded-body L1, visible-control L1 and forward-kinematics consistency.
 
 ```bash
 python -m scripts.training_motion_mamba2 --help
-python -m scripts.training_motion_mamba2
+python -m scripts.training_motion_mamba2 --mamba_transformer_pcm
 ```
 
-For samples with a history prefix, a differentiable clean-history pass initializes the KV cache, Mamba state and PCM slots before predicting the continuation. Only the generation window receives diffusion noise. Training sums four equally weighted losses: hybrid Smooth L1, decoded-body L1, visible-control L1 and FK consistency. This recipe uses GT history rather than generated-history rollout or action-teacher supervision.
+`--mamba_transformer_pcm` selects the full Motion Mamba 2.0 model (the default). Each layer combines local attention with recurrent Mamba state and two writable PCM slots. The completed run exports `MotionMamba2.pt` under `output_path`.
 
-## 📊Evaluation
+### 🪟 Minimal attention baseline
+
+Minimal uses softmax attention in both denoisers. Each motion token can attend to the current window, the four most recently committed chunks and four learned attention sinks per layer. The oldest chunk drops out when the window fills. The sinks stay visible throughout the rollout. This gives an attention-only reference for measuring what Mamba state and PCM add to long-horizon motion. [Attention](motion_mamba2/model/attention.py) · [KV cache](motion_mamba2/model/kv_cache.py)
+
+Train Minimal with the same data and training configuration. Its checkpoints are saved under `<output_path>/minimal_baseline/`.
+
+```bash
+python -m scripts.training_motion_mamba2 --minimal_baseline
+```
+
+To try a four-window rollout, point `MM2_CHECKPOINT` at the exported baseline weights and set `MM2_OUTPUT_PATH` to your benchmark output directory. During denoising, all guidance passes read the same history. The sampler commits each accepted window once before generating the next 52 frames.
+
+```bash
+export MM2_CHECKPOINT=/path/to/training-output/minimal_baseline/MinimalBaseline.pt
+export MM2_OUTPUT_PATH=/path/to/evaluation-output
+python -m scripts.evaluate --minimal_baseline --domain humanml3d --task frames_208 --limit 1
+```
+
+This example generates 208 frames for one HumanML3D case with each of its three benchmark seeds. The trajectories and scores are written under `$MM2_OUTPUT_PATH/minimal_baseline/humanml3d/frames_208/`. To evaluate the full model on the same case, point `MM2_CHECKPOINT` at `MotionMamba2.pt` and use `--mamba_transformer_pcm`.
+
+## 📊 Evaluation
 
 Evaluate Motion Mamba 2.0 on BONES Seed, HumanML3D and HiPHI using the included benchmark assets. Set the model/frontend paths and `MM2_OUTPUT_PATH` in your path configuration, then run:
 

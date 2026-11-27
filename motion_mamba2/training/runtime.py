@@ -1,28 +1,29 @@
 """Fresh generator/PCM construction with a frozen motion tokenizer."""
 from pathlib import Path
 import torch
-from motion_mamba2.model.configuration import load_environment, require_path, read_config
+from motion_mamba2.model.configuration import load_environment, require_path
+from motion_mamba2.model.variants import read_model_config
 from motion_mamba2.model.checkpoint import _frontend
 from .precision import configure_training_precision, FP32_BOUNDARIES
 from .launch import install_training_launch_contract
 from .history_backward import install
 
-def create_model(config, paths, device):
+def create_model(config, paths, device, *, minimal_baseline=False):
     values=load_environment(paths)
     for key in ['MM2_CODEC_CHECKPOINT', 'MM2_NORMALIZATION_PATH', 'MM2_SKELETON_PATH']:
         require_path(values,key,directory=key!='MM2_CODEC_CHECKPOINT')
-    from motion_mamba2.model.kernel_launch import install_forward_launch_contract
     from motion_mamba2.model.decoder_history import install_decoder_history
     from motion_mamba2.model.padding import install_padding_contract
     from motion_mamba2.model.integration import SequenceModelConfig,install_motion_mamba2_sequence_kernel
-    spec=read_config(config)
+    spec=read_model_config(config, minimal_baseline=minimal_baseline)
     if spec['frontend']['denoiser'].get('ckpt_path') is not None:
         raise ValueError('Generator must start with random weights')
     seq=spec['sequence']
-    if not (seq['content_memory_enabled'] and seq['content_memory_read_enabled'] and seq['content_memory_slots']==2):
-        raise ValueError('This recipe requires enabled two-slot PCM')
-    install_training_launch_contract()
-    install()
+    if not minimal_baseline:
+        if not (seq['content_memory_enabled'] and seq['content_memory_read_enabled'] and seq['content_memory_slots']==2):
+            raise ValueError('The full training recipe requires enabled two-slot PCM')
+        install_training_launch_contract()
+        install()
     model=_frontend(spec['frontend'],device)
     representation=spec['representation']
     if model.skeleton.nbjoints!=34 or model.gen_horizon_len!=52 or model.motion_rep.fps!=25:

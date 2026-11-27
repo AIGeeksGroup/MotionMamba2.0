@@ -16,8 +16,9 @@ def install_padding_contract(model, version):
     if current != 'legacy':
         raise ValueError('Cannot replace an installed padding contract')
     blocks = [raw.root_model, raw.body_model]
-    if any((getattr(b, 'sequence_mode', None) != 'hybrid' for b in blocks)):
-        raise ValueError('Hybrid padding contract requires Hybrid root/body blocks')
+    modes = {getattr(block, 'sequence_mode', None) for block in blocks}
+    if modes not in ({'minimal'}, {'hybrid'}):
+        raise ValueError('Padding requires matching Minimal or hybrid root/body blocks')
     original = raw.forward
     signature = inspect.signature(original)
     nfpt = int(raw.num_frames_per_token)

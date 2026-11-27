@@ -1,4 +1,4 @@
-"""Train MotionMamba2 + two-slot PCM from random initialization on real GT."""
+"""Train the selected root/body diffusion model from scratch on real motion."""
 import argparse
 import json
 import math
@@ -10,6 +10,7 @@ from pathlib import Path
 import torch
 
 from motion_mamba2.model.configuration import ROOT, load_environment, read_config
+from motion_mamba2.model.variants import add_model_flags
 from . import batching, checkpoint, data, distributed as parallel, history, losses
 from .optimizer import FP32MasterAdamW
 from .precision import prediction_loss_context
@@ -87,7 +88,9 @@ class Trainer:
         # All ranks construct exactly the same random generator and PCM weights.
         checkpoint.seed_all(config['seed'])
         device = f'cuda:{int(os.environ.get("LOCAL_RANK", "0"))}'
-        self.model, self.client, self.spec = create_model(config['model_config'], config['paths_config'], device)
+        self.model, self.client, self.spec = create_model(
+            config['model_config'], config['paths_config'], device,
+            minimal_baseline=config.get('minimal_baseline', False))
         self.raw = self.model.denoiser.model
         named = [(name, parameter) for name, parameter in self.raw.named_parameters() if parameter.requires_grad]
         options = config['optimizer']
@@ -180,6 +183,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', default='configs/training_motion_mamba2.yaml')
     parser.add_argument('--resume', help='Trusted full-state checkpoint from this same run')
+    add_model_flags(parser)
     args = parser.parse_args()
     os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG', ':4096:8')
     torch.use_deterministic_algorithms(True)
@@ -189,6 +193,9 @@ def main():
     if not config['output_path']:
         raise ValueError('Fill output_path in the training configuration')
     output = Path(config['output_path']).expanduser().resolve()
+    if args.minimal_baseline:
+        config['minimal_baseline'] = True
+        output = output / 'minimal_baseline'
     output.mkdir(parents=True, exist_ok=True)
     trainer = Trainer(config)
     contracts = parallel.gather(resource_contract(config, trainer.plan) if parallel.rank() == 0 else None)
@@ -234,7 +241,8 @@ def main():
         checkpoint.save(output / f'checkpoint_{trainer.completed:06d}.pt', trainer.raw,
                         trainer.optimizer, trainer.completed, contract, parallel)
     if parallel.rank() == 0 and trainer.completed == config['updates']:
-        checkpoint.export_model(output / 'MotionMamba2.pt', trainer.raw)
+        filename = 'MinimalBaseline.pt' if args.minimal_baseline else 'MotionMamba2.pt'
+        checkpoint.export_model(output / filename, trainer.raw)
     if parallel.rank() == 0:
         checkpoint.atomic_json(output / ('complete.json' if trainer.completed == 100000 else 'stopped.json'),
                                dict(completed=trainer.completed, sampler_cursor=trainer.completed * 512))

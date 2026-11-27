@@ -10,6 +10,8 @@ from benchmarks.metrics import measure
 from benchmarks.results import file_hash,write_results
 from motion_mamba2.model.configuration import ROOT,load_environment,read_config
 
+from motion_mamba2.model.variants import add_model_flags
+
 def assets_for(domain,config,folder):
     spec=config['domains'][domain];folder=Path(folder)
     frozen=json.loads((ROOT/'configs/benchmark_assets.json').read_text())
@@ -30,6 +32,7 @@ def main(argv=None):
     p.add_argument('--check',action='store_true',help='Validate frozen inputs without loading weights or using a GPU')
     p.add_argument('--score-only',action='store_true',help='Score existing geometry files without loading the model')
     p.add_argument('--limit',type=int,help='Development check only; limited results are marked incomplete')
+    add_model_flags(p)
     a=p.parse_args(argv)
     if a.limit is not None and a.limit<1:p.error('--limit must be positive')
     values=load_environment(a.paths);settings=read_config('configs/benchmarks.yaml');inference=read_config('configs/inference.yaml')
@@ -37,6 +40,9 @@ def main(argv=None):
     folder=Path(values.get('MM2_BENCHMARK_DATA_PATH') or ROOT/'benchmarks'/'benchmark_assets')
     if not a.check and not values.get('MM2_OUTPUT_PATH'):p.error('Fill MM2_OUTPUT_PATH in configs/paths.env')
     output=Path(values.get('MM2_OUTPUT_PATH') or '.')
+    if a.minimal_baseline:
+        output = output / 'minimal_baseline'
+        inference['acceleration'] = 'eager'
     model=client=None
     for domain in domains:
         spec,data,cases,features=assets_for(domain,settings,folder)
@@ -49,7 +55,7 @@ def main(argv=None):
         if not a.score_only and model is None:
             from motion_mamba2.model.checkpoint import load_model
             from motion_mamba2.model.inference_runtime import configure_acceleration
-            model,client,_=load_model(paths=a.paths,device=inference['device'])
+            model,client,_=load_model(paths=a.paths,device=inference['device'], minimal_baseline=a.minimal_baseline)
             configure_acceleration(client,inference)
         schedule=importlib.import_module('benchmarks.'+domain).schedule
         for task in tasks:
@@ -63,11 +69,13 @@ def main(argv=None):
                 limited=a.limit is not None,selected_cases=[c['case_id'] for _,c in selected],
                 inference_config_sha256=file_hash(ROOT/'configs/inference.yaml'),
                 protocol_config_sha256=file_hash(ROOT/'configs/benchmarks.yaml'),metrics_code_sha256=file_hash(ROOT/'benchmarks/metrics.py'))
+            if a.minimal_baseline:
+                identity.update(architecture='minimal_baseline', acceleration=inference['acceleration'])
             binding=dest/'inputs.json'
             if binding.exists():
                 previous=json.loads(binding.read_text())
                 if a.score_only:
-                    if any(previous.get(k)!=identity[k] for k in ['input_assets_sha256','selected_cases','model_config_sha256','protocol_config_sha256','inference_config_sha256','metrics_code_sha256']):raise ValueError('Saved inputs or protocol differ')
+                    if previous.get('architecture') != identity.get('architecture') or any(previous.get(k)!=identity[k] for k in ['input_assets_sha256','selected_cases','model_config_sha256','protocol_config_sha256','inference_config_sha256','metrics_code_sha256']):raise ValueError('Saved inputs or protocol differ')
                     identity=previous
                 elif previous!=identity:raise ValueError('Output directory belongs to a different model/configuration')
             elif a.score_only:raise FileNotFoundError(binding)
