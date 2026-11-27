@@ -32,6 +32,13 @@ The model combines three components:
   <img width="100%" src="assets/overview.svg" alt="Motion Mamba 2.0 overview">
 </div>
 
+### Minimal attention baseline
+
+Minimal is the attention-only baseline for the root and body denoisers. At each layer, queries from the current chunk use softmax attention over three sources of keys and values: four learned sink tokens, up to four previously accepted motion chunks, and the current chunk. When the window fills, the cache evicts the oldest whole chunk. The sinks are model parameters and remain available at every step. Motion Mamba 2.0 builds on this local attention path with recurrent Mamba state and Persistent Content Memory. [Attention implementation](motion_mamba2/model/attention.py) · [Sliding KV cache](motion_mamba2/model/kv_cache.py)
+
+- **Training.** The standalone ARDY baseline trainer initializes from a DiT checkpoint. It builds the cache from clean teacher-generated history, predicts the teacher's root and body outputs for the current noisy chunk, and rebuilds the cache after each optimizer update. The released Motion Mamba 2.0 trainer primes the cache from clean ground-truth motion when a history prefix is present. [Minimal training script](https://github.com/AIGeeksGroup/MotionMamba2.0/blob/91090b986c99e8ff574e4fa2c96f822ddac3b18b/mamba-transformer-keneral/examples/train_ardy_minimal_cached.py) · [Release training history](motion_mamba2/training/history.py)
+- **Inference.** The standalone generator selects the baseline with `--minimal --sequence-checkpoint <minimal-checkpoint>`. All denoising and classifier-free guidance passes for a chunk read the same committed history. Once the sampler accepts a clean chunk, the root and body denoisers each commit its KV once for the next window. [Minimal generation script](https://github.com/AIGeeksGroup/MotionMamba2.0/blob/91090b986c99e8ff574e4fa2c96f822ddac3b18b/mamba-transformer-keneral/examples/ardy_sequence_kernel_generate.py) · [Release inference controller](motion_mamba2/model/memory_controller.py)
+
 ## 📦Data and model resources
 
 Training uses retargeted G1 motion from BONES Seed, HumanML3D and HiPHI. See the [data format and preparation guide](doc/data.md) for the motion representation, JSONL index and cached text features.
